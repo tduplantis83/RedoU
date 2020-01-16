@@ -1,6 +1,7 @@
 package com.redou.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Goal {
 	private LocalDate dateCreated;
 	
 	@OneToMany(mappedBy="goal")
-	private UserCurrentGoal userCurrentGoal;
+	private List<UserCurrentGoal> userCurrentGoals;
 	
 	
 	//CONSTRUCTOR
@@ -61,17 +62,16 @@ public class Goal {
 	}
 
 
-	public UserCurrentGoal getUserCurrentGoal() {
-		return userCurrentGoal;
+	public List<UserCurrentGoal> getUserCurrentGoals() {
+		return userCurrentGoals;
 	}
 
 
-	public void setUserCurrentGoal(UserCurrentGoal userCurrentGoal) {
-		this.userCurrentGoal = userCurrentGoal;
+	public void setUserCurrentGoals(List<UserCurrentGoal> userCurrentGoals) {
+		this.userCurrentGoals = userCurrentGoals;
 	}
 
 
-	//HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,7 +79,7 @@ public class Goal {
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((goalName == null) ? 0 : goalName.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((userCurrentGoal == null) ? 0 : userCurrentGoal.hashCode());
+		result = prime * result + ((userCurrentGoals == null) ? 0 : userCurrentGoals.hashCode());
 		return result;
 	}
 
@@ -105,10 +105,10 @@ public class Goal {
 			return false;
 		if (id != other.id)
 			return false;
-		if (userCurrentGoal == null) {
-			if (other.userCurrentGoal != null)
+		if (userCurrentGoals == null) {
+			if (other.userCurrentGoals != null)
 				return false;
-		} else if (!userCurrentGoal.equals(other.userCurrentGoal))
+		} else if (!userCurrentGoals.equals(other.userCurrentGoals))
 			return false;
 		return true;
 	}
@@ -124,8 +124,6 @@ public class Goal {
 		builder.append(goalName);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
-		builder.append(", userCurrentGoal=");
-		builder.append(userCurrentGoal);
 		builder.append("]");
 		return builder.toString();
 	}
