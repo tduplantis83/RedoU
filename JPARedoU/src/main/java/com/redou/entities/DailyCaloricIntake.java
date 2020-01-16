@@ -2,11 +2,12 @@ package com.redou.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +23,9 @@ public class DailyCaloricIntake {
 	
 	private int totalCaloriesEaten;
 	
-	@Column(name="user_id")
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	
 	//CONSTRUCTOR
@@ -63,13 +65,13 @@ public class DailyCaloricIntake {
 	}
 
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
@@ -81,7 +83,7 @@ public class DailyCaloricIntake {
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + id;
 		result = prime * result + totalCaloriesEaten;
-		result = prime * result + userId;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -104,7 +106,10 @@ public class DailyCaloricIntake {
 			return false;
 		if (totalCaloriesEaten != other.totalCaloriesEaten)
 			return false;
-		if (userId != other.userId)
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
@@ -120,11 +125,10 @@ public class DailyCaloricIntake {
 		builder.append(dateCreated);
 		builder.append(", totalCaloriesEaten=");
 		builder.append(totalCaloriesEaten);
-		builder.append(", userId=");
-		builder.append(userId);
+		builder.append(", user=");
+		builder.append(user);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }
