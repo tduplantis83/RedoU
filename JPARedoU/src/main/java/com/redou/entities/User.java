@@ -1,11 +1,13 @@
 package com.redou.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -32,6 +34,21 @@ public class User {
 	private LocalDateTime dateCreated;
 	
 	private LocalDateTime dateUpdated;
+	
+	@OneToMany(mappedBy="user")
+	private List<UserCurrentGoal> userCurrentGoals;
+	
+	@OneToMany(mappedBy="user")
+	private List<DailyCaloricIntake> userDailyCaloricIntakes;
+	
+	@OneToMany(mappedBy="user")
+	private List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits;
+	
+	@OneToMany(mappedBy="user")
+	private List<Image> userImages;
+	
+	@OneToMany(mappedBy="user")
+	private List<BodyMeasurementMetric> userBodyMeasurementMetrics;
 	
 	
 	//CONSTRUCTOR
@@ -141,6 +158,57 @@ public class User {
 	}
 
 
+	public List<UserCurrentGoal> getUserCurrentGoals() {
+		return userCurrentGoals;
+	}
+
+
+	public void setUserCurrentGoals(List<UserCurrentGoal> userCurrentGoals) {
+		this.userCurrentGoals = userCurrentGoals;
+	}
+
+
+	public List<DailyCaloricIntake> getUserDailyCaloricIntakes() {
+		return userDailyCaloricIntakes;
+	}
+
+
+	public void setUserDailyCaloricIntakes(List<DailyCaloricIntake> userDailyCaloricIntakes) {
+		this.userDailyCaloricIntakes = userDailyCaloricIntakes;
+	}
+
+
+	public List<DailyExerciseCaloricDeficit> getUserDailyExerciseCaloricDeficits() {
+		return userDailyExerciseCaloricDeficits;
+	}
+
+
+	public void setUserDailyExerciseCaloricDeficits(List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits) {
+		this.userDailyExerciseCaloricDeficits = userDailyExerciseCaloricDeficits;
+	}
+
+
+	public List<Image> getUserImages() {
+		return userImages;
+	}
+
+
+	public void setUserImages(List<Image> userImages) {
+		this.userImages = userImages;
+	}
+
+
+	public List<BodyMeasurementMetric> getUserBodyMeasurementMetrics() {
+		return userBodyMeasurementMetrics;
+	}
+
+
+	public void setUserBodyMeasurementMetrics(List<BodyMeasurementMetric> userBodyMeasurementMetrics) {
+		this.userBodyMeasurementMetrics = userBodyMeasurementMetrics;
+	}
+
+
+	//HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,12 +222,17 @@ public class User {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((userBodyMeasurementMetrics == null) ? 0 : userBodyMeasurementMetrics.hashCode());
+		result = prime * result + ((userCurrentGoals == null) ? 0 : userCurrentGoals.hashCode());
+		result = prime * result + ((userDailyCaloricIntakes == null) ? 0 : userDailyCaloricIntakes.hashCode());
+		result = prime * result
+				+ ((userDailyExerciseCaloricDeficits == null) ? 0 : userDailyExerciseCaloricDeficits.hashCode());
+		result = prime * result + ((userImages == null) ? 0 : userImages.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
 
-	//HASH & EQUALS
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -208,6 +281,31 @@ public class User {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
+		if (userBodyMeasurementMetrics == null) {
+			if (other.userBodyMeasurementMetrics != null)
+				return false;
+		} else if (!userBodyMeasurementMetrics.equals(other.userBodyMeasurementMetrics))
+			return false;
+		if (userCurrentGoals == null) {
+			if (other.userCurrentGoals != null)
+				return false;
+		} else if (!userCurrentGoals.equals(other.userCurrentGoals))
+			return false;
+		if (userDailyCaloricIntakes == null) {
+			if (other.userDailyCaloricIntakes != null)
+				return false;
+		} else if (!userDailyCaloricIntakes.equals(other.userDailyCaloricIntakes))
+			return false;
+		if (userDailyExerciseCaloricDeficits == null) {
+			if (other.userDailyExerciseCaloricDeficits != null)
+				return false;
+		} else if (!userDailyExerciseCaloricDeficits.equals(other.userDailyExerciseCaloricDeficits))
+			return false;
+		if (userImages == null) {
+			if (other.userImages != null)
+				return false;
+		} else if (!userImages.equals(other.userImages))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -244,6 +342,5 @@ public class User {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }

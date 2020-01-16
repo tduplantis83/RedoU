@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Goal {
@@ -18,6 +19,9 @@ public class Goal {
 	private String goalName;
 	
 	private LocalDate dateCreated;
+	
+	@OneToMany(mappedBy="goal")
+	private UserCurrentGoal userCurrentGoal;
 	
 	
 	//CONSTRUCTOR
@@ -57,6 +61,16 @@ public class Goal {
 	}
 
 
+	public UserCurrentGoal getUserCurrentGoal() {
+		return userCurrentGoal;
+	}
+
+
+	public void setUserCurrentGoal(UserCurrentGoal userCurrentGoal) {
+		this.userCurrentGoal = userCurrentGoal;
+	}
+
+
 	//HASH & EQUALS
 	@Override
 	public int hashCode() {
@@ -65,6 +79,7 @@ public class Goal {
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((goalName == null) ? 0 : goalName.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((userCurrentGoal == null) ? 0 : userCurrentGoal.hashCode());
 		return result;
 	}
 
@@ -90,10 +105,15 @@ public class Goal {
 			return false;
 		if (id != other.id)
 			return false;
+		if (userCurrentGoal == null) {
+			if (other.userCurrentGoal != null)
+				return false;
+		} else if (!userCurrentGoal.equals(other.userCurrentGoal))
+			return false;
 		return true;
 	}
 
-	
+
 	//TO STRING
 	@Override
 	public String toString() {
@@ -104,9 +124,10 @@ public class Goal {
 		builder.append(goalName);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
+		builder.append(", userCurrentGoal=");
+		builder.append(userCurrentGoal);
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }

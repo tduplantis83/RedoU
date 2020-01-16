@@ -2,11 +2,12 @@ package com.redou.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,8 +19,9 @@ public class BodyMeasurementMetric {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="user_id")
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	private LocalDate dateMeasured;
 	
@@ -59,13 +61,13 @@ public class BodyMeasurementMetric {
 	}
 
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 
@@ -183,7 +185,7 @@ public class BodyMeasurementMetric {
 		result = prime * result + ((neckMM == null) ? 0 : neckMM.hashCode());
 		result = prime * result + ((shouldersMM == null) ? 0 : shouldersMM.hashCode());
 		result = prime * result + ((thighMM == null) ? 0 : thighMM.hashCode());
-		result = prime * result + userId;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		result = prime * result + waistMM;
 		long temp;
 		temp = Double.doubleToLongBits(weightKg);
@@ -240,7 +242,10 @@ public class BodyMeasurementMetric {
 				return false;
 		} else if (!thighMM.equals(other.thighMM))
 			return false;
-		if (userId != other.userId)
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		if (waistMM != other.waistMM)
 			return false;
@@ -256,8 +261,8 @@ public class BodyMeasurementMetric {
 		StringBuilder builder = new StringBuilder();
 		builder.append("BodyMeasurementMetric [id=");
 		builder.append(id);
-		builder.append(", userId=");
-		builder.append(userId);
+		builder.append(", user=");
+		builder.append(user);
 		builder.append(", dateMeasured=");
 		builder.append(dateMeasured);
 		builder.append(", heightMM=");
@@ -281,5 +286,6 @@ public class BodyMeasurementMetric {
 		builder.append("]");
 		return builder.toString();
 	}
+
 
 }
