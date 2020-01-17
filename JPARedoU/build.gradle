@@ -21,6 +21,9 @@ eclipse {
 // set query location for dependencies
 repositories {
   jcenter()
+  maven {
+       url "https://raw.githubusercontent.com/Snap-Kit/release-maven/repo"
+   }
 }
 
 /*

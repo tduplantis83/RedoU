@@ -172,6 +172,7 @@ CREATE TABLE IF NOT EXISTS `avatar` (
   `user_id` INT NOT NULL,
   `dateCreated` DATE NOT NULL,
   `dateUpdated` DATE NOT NULL,
+  `avatarUrl` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_avatar_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_id_avatar`

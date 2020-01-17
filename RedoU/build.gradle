@@ -14,6 +14,12 @@ repositories {
 
 dependencies {
 compile project(':JPARedoU')
+	implementation([
+           'com.snapchat.kit.sdk:bitmoji:1.1.4', // for Bitmoji Kit
+           'com.snapchat.kit.sdk:login:1.1.4', // for Login Kit
+           'com.snapchat.kit.sdk:creative:1.1.4', // for Creative Kit
+           'com.snapchat.kit.sdk:core:1.1.4',  // core dependency for all of the above Kits
+   ])
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
