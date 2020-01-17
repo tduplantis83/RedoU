@@ -349,6 +349,11 @@ INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `
 INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 'https://i.imgur.com/HM7aIAS.jpg', 'Fat', '2020-01-17', '2020-01-17');
 INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 'https://i.imgur.com/mLpfYbC.jpg', 'Athletic', '2020-01-17', '2020-01-17');
 INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (5, 2, 'https://i.imgur.com/U74DJg6.jpg', 'Muscular', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (6, 3, 'https://i.imgur.com/6XHNaUq.jpg', 'Thin', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (7, 3, 'https://i.imgur.com/uXyVqic.jpg', 'Average', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (8, 3, 'https://i.imgur.com/P0LEumI.jpg', 'Fat', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (9, 3, 'https://i.imgur.com/hwcAc1R.jpg', 'Athletic', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (10, 3, 'https://i.imgur.com/e9q4Cgh.jpg', 'Muscular', '2020-01-17', '2020-01-17');
 
 COMMIT;
 
