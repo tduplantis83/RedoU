@@ -11,71 +11,61 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="daily_exercise_caloric_deficit")
+@Table(name = "daily_exercise_caloric_deficit")
 public class DailyExerciseCaloricDeficit {
-	
-	//FIELDS
+
+	// FIELDS
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private LocalDate dateCreated;
-	
+
 	private int totalCaloriesBurned;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	
-	//CONSTRUCTOR
+
+	// CONSTRUCTOR
 	public DailyExerciseCaloricDeficit() {
-		
+
 	}
 
-
-	//GETS & SETS
+	// GETS & SETS
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
-
 
 	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-
 	public int getTotalCaloriesBurned() {
 		return totalCaloriesBurned;
 	}
-
 
 	public void setTotalCaloriesBurned(int totalCaloriesBurned) {
 		this.totalCaloriesBurned = totalCaloriesBurned;
 	}
 
-
 	public User getUser() {
 		return user;
 	}
-
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
-
-	//HASH & EQUALS
+	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -86,7 +76,6 @@ public class DailyExerciseCaloricDeficit {
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -114,8 +103,7 @@ public class DailyExerciseCaloricDeficit {
 		return true;
 	}
 
-
-	//TO STRING
+	// TO STRING
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -130,6 +118,5 @@ public class DailyExerciseCaloricDeficit {
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }

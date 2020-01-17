@@ -109,9 +109,9 @@ DROP TABLE IF EXISTS `daily_caloric_intake` ;
 
 CREATE TABLE IF NOT EXISTS `daily_caloric_intake` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `dateCreated` DATE NOT NULL,
-  `totalCaloriesEaten` INT NOT NULL,
   `user_id` INT NOT NULL,
+  `totalCaloriesEaten` INT NOT NULL,
+  `dateCreated` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_daily_caloric_intake_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_id_daily_caloric_intake`
@@ -129,9 +129,9 @@ DROP TABLE IF EXISTS `daily_exercise_caloric_deficit` ;
 
 CREATE TABLE IF NOT EXISTS `daily_exercise_caloric_deficit` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `dateCreated` DATE NOT NULL,
-  `totalCaloriesBurned` INT NOT NULL,
   `user_id` INT NOT NULL,
+  `totalCaloriesBurned` INT NOT NULL,
+  `dateCreated` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_daily_exercise_caloric_deficit_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_id_daily_exercise_caloric_deficit`
@@ -170,9 +170,10 @@ DROP TABLE IF EXISTS `avatar` ;
 CREATE TABLE IF NOT EXISTS `avatar` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
+  `avatarUrl` TEXT NOT NULL,
+  `bodyType` VARCHAR(100) NOT NULL,
   `dateCreated` DATE NOT NULL,
   `dateUpdated` DATE NOT NULL,
-  `avatarUrl` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_avatar_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_id_avatar`
@@ -308,12 +309,81 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `daily_caloric_intake`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `totalCaloriesEaten`, `dateCreated`) VALUES (1, 2, 500, '2020-01-16');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `daily_exercise_caloric_deficit`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `dateCreated`) VALUES (1, 2, 1943, '2020-01-16');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `image`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`) VALUES (1, 2, 'https://i.imgur.com/puVjtA9.jpg', '2020-01-15');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`) VALUES (2, 2, 'https://i.imgur.com/zSACF2B.jpg', '2020-01-15');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `avatar`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 'https://i.imgur.com/uJaRmvQ.jpg', 'Thin', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 'https://i.imgur.com/MeZUyU7.jpg', 'Average', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 'https://i.imgur.com/HM7aIAS.jpg', 'Fat', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 'https://i.imgur.com/mLpfYbC.jpg', 'Athletic', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (5, 2, 'https://i.imgur.com/U74DJg6.jpg', 'Muscular', '2020-01-17', '2020-01-17');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `post_topic`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `post_topic` (`id`, `topicName`) VALUES (1, 'Diet');
+INSERT INTO `post_topic` (`id`, `topicName`) VALUES (2, 'Exercise');
+INSERT INTO `post_topic` (`id`, `topicName`) VALUES (3, 'Surgery');
+INSERT INTO `post_topic` (`id`, `topicName`) VALUES (4, 'Recipes');
+INSERT INTO `post_topic` (`id`, `topicName`) VALUES (5, 'Medical Conditions');
+INSERT INTO `post_topic` (`id`, `topicName`) VALUES (6, 'Tips & Tricks');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `post`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `post` (`id`, `user_id`, `postTopic_id`, `title`, `content`, `dateCreated`, `dateUpdated`) VALUES (1, 3, 1, 'Intermittent Fasting', 'I\'m curious how intermittent fasting works. Can anyone give me some details about it and the different methods?', '2020-01-17', '2020-01-17');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `post_reply`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `replyContent`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, 'There are several different types of intermittent fasting including: 16 hours fasting with 8 hours eating, One Meal A Day (OMAD). The general idea is to get your blood sugar down and prevent insulin spikes. In reality you can modify it so that it works best for you, but you should go for 16 hour fasts at a minimum. A lot of new research shows that this is the best way for humans to lose weight. It\'s actually thought that this is how our evolutionary ancestors ate (they didn\'t eat 3 meals a day, but instead ate when they were able to get food.', '2020-01-17', '2020-01-17');
 
 COMMIT;
 
