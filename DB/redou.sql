@@ -161,6 +161,95 @@ CREATE TABLE IF NOT EXISTS `image` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `avatar`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `avatar` ;
+
+CREATE TABLE IF NOT EXISTS `avatar` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_id_avatar_idx` (`user_id` ASC),
+  CONSTRAINT `fk_user_id_avatar`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `post_topic`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `post_topic` ;
+
+CREATE TABLE IF NOT EXISTS `post_topic` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `topicName` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `post`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `post` ;
+
+CREATE TABLE IF NOT EXISTS `post` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `postTopic_id` INT NULL,
+  `title` VARCHAR(50) NOT NULL,
+  `content` TEXT NOT NULL,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_id_message_board_idx` (`user_id` ASC),
+  INDEX `fk_postTopic_id_post_idx` (`postTopic_id` ASC),
+  CONSTRAINT `fk_user_id_message_board`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_postTopic_id_post`
+    FOREIGN KEY (`postTopic_id`)
+    REFERENCES `post_topic` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `post_reply`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `post_reply` ;
+
+CREATE TABLE IF NOT EXISTS `post_reply` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `reply_user_id` INT NOT NULL,
+  `originalPost_id` INT NOT NULL,
+  `replyContent` TEXT NOT NULL,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_reply_user_id_post_reply_idx` (`reply_user_id` ASC),
+  INDEX `fk_originalPost_id_post_reply_idx` (`originalPost_id` ASC),
+  CONSTRAINT `fk_reply_user_id_post_reply`
+    FOREIGN KEY (`reply_user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_originalPost_id_post_reply`
+    FOREIGN KEY (`originalPost_id`)
+    REFERENCES `post` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 SET SQL_MODE = '';
 DROP USER IF EXISTS redouadmin@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
