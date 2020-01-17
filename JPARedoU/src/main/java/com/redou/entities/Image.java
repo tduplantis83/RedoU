@@ -11,69 +11,59 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Image {
-	
-	//FIELDS
+
+	// FIELDS
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	private String imageUrl;
-	
+
 	private LocalDate dateCreated;
-	
-	
-	//CONSTRUCTOR
+
+	// CONSTRUCTOR
 	public Image() {
-		
+
 	}
 
-
-	//GETS & SETS
+	// GETS & SETS
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	public User getUser() {
 		return user;
 	}
-
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
-
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
 
-
 	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
-
 
 	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-
-	//HASH & EQUALS
+	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -84,7 +74,6 @@ public class Image {
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -115,8 +104,7 @@ public class Image {
 		return true;
 	}
 
-
-	//TO STRING
+	// TO STRING
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -131,5 +119,5 @@ public class Image {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

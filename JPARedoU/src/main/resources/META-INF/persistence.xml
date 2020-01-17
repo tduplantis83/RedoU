@@ -10,11 +10,15 @@
 
 <!-- class definitions  -->
 
+<class> com.redou.entities.Avatar</class>
 <class> com.redou.entities.BodyMeasurementMetric</class>
 <class> com.redou.entities.DailyCaloricIntake</class>
 <class> com.redou.entities.DailyExerciseCaloricDeficit</class>
 <class> com.redou.entities.Goal</class>
 <class> com.redou.entities.Image</class>
+<class> com.redou.entities.Post</class>
+<class> com.redou.entities.PostReply</class>
+<class> com.redou.entities.PostTopic</class>
 <class> com.redou.entities.User</class>
 <class> com.redou.entities.UserCurrentGoal</class>
 

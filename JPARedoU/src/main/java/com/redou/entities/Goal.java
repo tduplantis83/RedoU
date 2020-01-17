@@ -11,66 +11,56 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Goal {
-	
-	//FIELDS
+
+	// FIELDS
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String goalName;
-	
+
 	private LocalDate dateCreated;
-	
-	@OneToMany(mappedBy="goal")
+
+	@OneToMany(mappedBy = "goal")
 	private List<UserCurrentGoal> userCurrentGoals;
-	
-	
-	//CONSTRUCTOR
+
+	// CONSTRUCTOR
 	public Goal() {
-		
+
 	}
 
-
-	//GETS & SETS
+	// GETS & SETS
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	public String getGoalName() {
 		return goalName;
 	}
-
 
 	public void setGoalName(String goalName) {
 		this.goalName = goalName;
 	}
 
-
 	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
-
 
 	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-
 	public List<UserCurrentGoal> getUserCurrentGoals() {
 		return userCurrentGoals;
 	}
 
-
 	public void setUserCurrentGoals(List<UserCurrentGoal> userCurrentGoals) {
 		this.userCurrentGoals = userCurrentGoals;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -82,7 +72,6 @@ public class Goal {
 		result = prime * result + ((userCurrentGoals == null) ? 0 : userCurrentGoals.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -113,8 +102,7 @@ public class Goal {
 		return true;
 	}
 
-
-	//TO STRING
+	// TO STRING
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -11,167 +11,141 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="body_measurement_metric")
+@Table(name = "body_measurement_metric")
 public class BodyMeasurementMetric {
-	
-	//FIELDS
+
+	// FIELDS
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	private LocalDate dateMeasured;
-	
+
 	private int heightMM;
-	
+
 	private double weightKg;
-	
+
 	private int waistMM;
-	
+
 	private Integer neckMM;
-	
+
 	private Integer shouldersMM;
-	
+
 	private Integer chestMM;
-	
+
 	private Integer bicepMM;
-	
+
 	private Integer hipsMM;
-	
+
 	private Integer thighMM;
-	
-	
-	//CONSTRUCTOR
+
+	// CONSTRUCTOR
 	public BodyMeasurementMetric() {
-		
+
 	}
 
-
-	//GETS & SETS
+	// GETS & SETS
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	public User getUser() {
 		return user;
 	}
-
 
 	public void setUser(User user) {
 		this.user = user;
 	}
 
-
 	public LocalDate getDateMeasured() {
 		return dateMeasured;
 	}
-
 
 	public void setDateMeasured(LocalDate dateMeasured) {
 		this.dateMeasured = dateMeasured;
 	}
 
-
 	public int getHeightMM() {
 		return heightMM;
 	}
-
 
 	public void setHeightMM(int heightMM) {
 		this.heightMM = heightMM;
 	}
 
-
 	public double getWeightKg() {
 		return weightKg;
 	}
-
 
 	public void setWeightKg(double weightKg) {
 		this.weightKg = weightKg;
 	}
 
-
 	public int getWaistMM() {
 		return waistMM;
 	}
-
 
 	public void setWaistMM(int waistMM) {
 		this.waistMM = waistMM;
 	}
 
-
 	public Integer getNeckMM() {
 		return neckMM;
 	}
-
 
 	public void setNeckMM(Integer neckMM) {
 		this.neckMM = neckMM;
 	}
 
-
 	public Integer getShouldersMM() {
 		return shouldersMM;
 	}
-
 
 	public void setShouldersMM(Integer shouldersMM) {
 		this.shouldersMM = shouldersMM;
 	}
 
-
 	public Integer getChestMM() {
 		return chestMM;
 	}
-
 
 	public void setChestMM(Integer chestMM) {
 		this.chestMM = chestMM;
 	}
 
-
 	public Integer getBicepMM() {
 		return bicepMM;
 	}
-
 
 	public void setBicepMM(Integer bicepMM) {
 		this.bicepMM = bicepMM;
 	}
 
-
 	public Integer getHipsMM() {
 		return hipsMM;
 	}
-
 
 	public void setHipsMM(Integer hipsMM) {
 		this.hipsMM = hipsMM;
 	}
 
-
 	public Integer getThighMM() {
 		return thighMM;
 	}
-
 
 	public void setThighMM(Integer thighMM) {
 		this.thighMM = thighMM;
 	}
 
-
-	//HASH & EQUALS
+	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -192,7 +166,6 @@ public class BodyMeasurementMetric {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -254,8 +227,7 @@ public class BodyMeasurementMetric {
 		return true;
 	}
 
-
-	//TO STRING
+	// TO STRING
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -286,6 +258,5 @@ public class BodyMeasurementMetric {
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }

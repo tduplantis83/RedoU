@@ -11,204 +11,206 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class User {
-	
-	//FIELDS
+
+	// FIELDS
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private String firstName;
-	
+
 	private String lastName;
-	
+
 	private String email;
-	
+
 	private boolean enabled;
-	
+
 	private String role;
-	
+
 	private LocalDateTime dateCreated;
-	
+
 	private LocalDateTime dateUpdated;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<UserCurrentGoal> userCurrentGoals;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<DailyCaloricIntake> userDailyCaloricIntakes;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<Image> userImages;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
+	private List<Avatar> userAvatars;
+
+	@OneToMany(mappedBy = "user")
 	private List<BodyMeasurementMetric> userBodyMeasurementMetrics;
-	
-	
-	//CONSTRUCTOR
+
+	@OneToMany(mappedBy = "user")
+	private List<Post> userPosts;
+
+	@OneToMany(mappedBy = "user")
+	private List<PostReply> userPostReplies;
+
+	// CONSTRUCTOR
 	public User() {
-		
+
 	}
 
-
-	//GETS & SETS
+	// GETS & SETS
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	public String getUsername() {
 		return username;
 	}
-
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-
 	public String getPassword() {
 		return password;
 	}
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
 	public String getFirstName() {
 		return firstName;
 	}
-
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-
 	public String getLastName() {
 		return lastName;
 	}
-
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-
 	public String getEmail() {
 		return email;
 	}
-
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
 	public boolean isEnabled() {
 		return enabled;
 	}
-
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
-
 	public String getRole() {
 		return role;
 	}
-
 
 	public void setRole(String role) {
 		this.role = role;
 	}
 
-
 	public LocalDateTime getDateCreated() {
 		return dateCreated;
 	}
-
 
 	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-
 	public LocalDateTime getDateUpdated() {
 		return dateUpdated;
 	}
-
 
 	public void setDateUpdated(LocalDateTime dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 
-
 	public List<UserCurrentGoal> getUserCurrentGoals() {
 		return userCurrentGoals;
 	}
-
 
 	public void setUserCurrentGoals(List<UserCurrentGoal> userCurrentGoals) {
 		this.userCurrentGoals = userCurrentGoals;
 	}
 
-
 	public List<DailyCaloricIntake> getUserDailyCaloricIntakes() {
 		return userDailyCaloricIntakes;
 	}
-
 
 	public void setUserDailyCaloricIntakes(List<DailyCaloricIntake> userDailyCaloricIntakes) {
 		this.userDailyCaloricIntakes = userDailyCaloricIntakes;
 	}
 
-
 	public List<DailyExerciseCaloricDeficit> getUserDailyExerciseCaloricDeficits() {
 		return userDailyExerciseCaloricDeficits;
 	}
 
-
-	public void setUserDailyExerciseCaloricDeficits(List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits) {
+	public void setUserDailyExerciseCaloricDeficits(
+			List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits) {
 		this.userDailyExerciseCaloricDeficits = userDailyExerciseCaloricDeficits;
 	}
-
 
 	public List<Image> getUserImages() {
 		return userImages;
 	}
 
-
 	public void setUserImages(List<Image> userImages) {
 		this.userImages = userImages;
 	}
 
+	public List<Avatar> getUserAvatars() {
+		return userAvatars;
+	}
+
+	public void setUserAvatars(List<Avatar> userAvatars) {
+		this.userAvatars = userAvatars;
+	}
 
 	public List<BodyMeasurementMetric> getUserBodyMeasurementMetrics() {
 		return userBodyMeasurementMetrics;
 	}
 
-
 	public void setUserBodyMeasurementMetrics(List<BodyMeasurementMetric> userBodyMeasurementMetrics) {
 		this.userBodyMeasurementMetrics = userBodyMeasurementMetrics;
 	}
 
+	public List<Post> getUserPosts() {
+		return userPosts;
+	}
 
-	//HASH & EQUALS
+	public void setUserPosts(List<Post> userPosts) {
+		this.userPosts = userPosts;
+	}
+
+	public List<PostReply> getUserPostReplies() {
+		return userPostReplies;
+	}
+
+	public void setUserPostReplies(List<PostReply> userPostReplies) {
+		this.userPostReplies = userPostReplies;
+	}
+
+	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -222,16 +224,18 @@ public class User {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((userAvatars == null) ? 0 : userAvatars.hashCode());
 		result = prime * result + ((userBodyMeasurementMetrics == null) ? 0 : userBodyMeasurementMetrics.hashCode());
 		result = prime * result + ((userCurrentGoals == null) ? 0 : userCurrentGoals.hashCode());
 		result = prime * result + ((userDailyCaloricIntakes == null) ? 0 : userDailyCaloricIntakes.hashCode());
 		result = prime * result
 				+ ((userDailyExerciseCaloricDeficits == null) ? 0 : userDailyExerciseCaloricDeficits.hashCode());
 		result = prime * result + ((userImages == null) ? 0 : userImages.hashCode());
+		result = prime * result + ((userPostReplies == null) ? 0 : userPostReplies.hashCode());
+		result = prime * result + ((userPosts == null) ? 0 : userPosts.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -281,6 +285,11 @@ public class User {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
+		if (userAvatars == null) {
+			if (other.userAvatars != null)
+				return false;
+		} else if (!userAvatars.equals(other.userAvatars))
+			return false;
 		if (userBodyMeasurementMetrics == null) {
 			if (other.userBodyMeasurementMetrics != null)
 				return false;
@@ -306,6 +315,16 @@ public class User {
 				return false;
 		} else if (!userImages.equals(other.userImages))
 			return false;
+		if (userPostReplies == null) {
+			if (other.userPostReplies != null)
+				return false;
+		} else if (!userPostReplies.equals(other.userPostReplies))
+			return false;
+		if (userPosts == null) {
+			if (other.userPosts != null)
+				return false;
+		} else if (!userPosts.equals(other.userPosts))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -314,8 +333,7 @@ public class User {
 		return true;
 	}
 
-
-	//TO STRING
+	// TO STRING
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

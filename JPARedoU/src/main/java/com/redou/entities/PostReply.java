@@ -1,6 +1,6 @@
 package com.redou.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_current_goal")
-public class UserCurrentGoal {
+@Table(name = "post_reply")
+public class PostReply {
 
 	// FIELDS
 	@Id
@@ -20,17 +20,21 @@ public class UserCurrentGoal {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "reply_user_id")
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(name = "goal_id")
-	private Goal goal;
+	@JoinColumn(name = "originalPost_id")
+	private Post originalPost;
 
-	private LocalDateTime dateCreated;
+	private String replyContent;
+
+	private LocalDate dateCreated;
+
+	private LocalDate dateUpdated;
 
 	// CONSTRUCTOR
-	public UserCurrentGoal() {
+	public PostReply() {
 
 	}
 
@@ -51,20 +55,36 @@ public class UserCurrentGoal {
 		this.user = user;
 	}
 
-	public Goal getGoal() {
-		return goal;
+	public Post getOriginalPost() {
+		return originalPost;
 	}
 
-	public void setGoal(Goal goal) {
-		this.goal = goal;
+	public void setOriginalPost(Post originalPost) {
+		this.originalPost = originalPost;
 	}
 
-	public LocalDateTime getDateCreated() {
+	public String getReplyContent() {
+		return replyContent;
+	}
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
+
+	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(LocalDateTime dateCreated) {
+	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	public LocalDate getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(LocalDate dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 	// HASH & EQUALS
@@ -73,8 +93,10 @@ public class UserCurrentGoal {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
-		result = prime * result + ((goal == null) ? 0 : goal.hashCode());
+		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((originalPost == null) ? 0 : originalPost.hashCode());
+		result = prime * result + ((replyContent == null) ? 0 : replyContent.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -87,18 +109,28 @@ public class UserCurrentGoal {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserCurrentGoal other = (UserCurrentGoal) obj;
+		PostReply other = (PostReply) obj;
 		if (dateCreated == null) {
 			if (other.dateCreated != null)
 				return false;
 		} else if (!dateCreated.equals(other.dateCreated))
 			return false;
-		if (goal == null) {
-			if (other.goal != null)
+		if (dateUpdated == null) {
+			if (other.dateUpdated != null)
 				return false;
-		} else if (!goal.equals(other.goal))
+		} else if (!dateUpdated.equals(other.dateUpdated))
 			return false;
 		if (id != other.id)
+			return false;
+		if (originalPost == null) {
+			if (other.originalPost != null)
+				return false;
+		} else if (!originalPost.equals(other.originalPost))
+			return false;
+		if (replyContent == null) {
+			if (other.replyContent != null)
+				return false;
+		} else if (!replyContent.equals(other.replyContent))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -112,14 +144,18 @@ public class UserCurrentGoal {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UserCurrentGoal [id=");
+		builder.append("PostReply [id=");
 		builder.append(id);
 		builder.append(", user=");
 		builder.append(user);
-		builder.append(", goal=");
-		builder.append(goal);
+		builder.append(", originalPost=");
+		builder.append(originalPost);
+		builder.append(", replyContent=");
+		builder.append(replyContent);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
 		builder.append("]");
 		return builder.toString();
 	}
