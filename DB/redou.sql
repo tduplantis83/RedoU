@@ -26,11 +26,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` TEXT NOT NULL,
   `firstName` VARCHAR(250) NOT NULL,
   `lastName` VARCHAR(250) NOT NULL,
-  `email` VARCHAR(250) NOT NULL,
+  `email` VARCHAR(250) NULL,
   `enabled` TINYINT NOT NULL DEFAULT 1,
   `role` VARCHAR(20) NOT NULL,
-  `dateCreated` DATETIME NOT NULL,
-  `dateUpdated` DATETIME NOT NULL,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `body_measurement_metric` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `dateMeasured` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   `heightMM` INT NOT NULL,
   `weightKg` DECIMAL(5,2) NOT NULL,
   `waistMM` INT NOT NULL,
@@ -72,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `goal` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `goalName` VARCHAR(100) NOT NULL,
   `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -85,7 +87,9 @@ CREATE TABLE IF NOT EXISTS `user_current_goal` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `goal_id` INT NOT NULL,
-  `dateCreated` DATETIME NOT NULL,
+  `enabled` TINYINT NOT NULL DEFAULT 1,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_current_goal_idx` (`user_id` ASC),
   INDEX `fk_goal_id_current_goal_idx` (`goal_id` ASC),
@@ -103,6 +107,20 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `meal_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `meal_type` ;
+
+CREATE TABLE IF NOT EXISTS `meal_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `mealTypeName` VARCHAR(100) NOT NULL,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `daily_caloric_intake`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `daily_caloric_intake` ;
@@ -110,13 +128,22 @@ DROP TABLE IF EXISTS `daily_caloric_intake` ;
 CREATE TABLE IF NOT EXISTS `daily_caloric_intake` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `totalCaloriesEaten` INT NOT NULL,
+  `mealType_id` INT NOT NULL,
+  `caloriesThisMeal` INT NOT NULL,
+  `mealDescription` VARCHAR(250) NULL,
   `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_daily_caloric_intake_idx` (`user_id` ASC),
+  INDEX `fk_mealType_id_daily_caloric_intake_idx` (`mealType_id` ASC),
   CONSTRAINT `fk_user_id_daily_caloric_intake`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_mealType_id_daily_caloric_intake`
+    FOREIGN KEY (`mealType_id`)
+    REFERENCES `meal_type` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -131,7 +158,9 @@ CREATE TABLE IF NOT EXISTS `daily_exercise_caloric_deficit` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `totalCaloriesBurned` INT NOT NULL,
+  `activityDescription` VARCHAR(250) NULL,
   `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_daily_exercise_caloric_deficit_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_id_daily_exercise_caloric_deficit`
@@ -152,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `user_id` INT NOT NULL,
   `imageUrl` TEXT NOT NULL,
   `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_id_image_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_id_image`
@@ -192,6 +222,8 @@ DROP TABLE IF EXISTS `post_topic` ;
 CREATE TABLE IF NOT EXISTS `post_topic` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `topicName` VARCHAR(100) NOT NULL,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -204,8 +236,8 @@ DROP TABLE IF EXISTS `post` ;
 CREATE TABLE IF NOT EXISTS `post` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `postTopic_id` INT NULL,
-  `title` VARCHAR(50) NOT NULL,
+  `postTopic_id` INT NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
   `content` TEXT NOT NULL,
   `dateCreated` DATE NOT NULL,
   `dateUpdated` DATE NOT NULL,
@@ -280,7 +312,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (1, 2, '2020-01-15', 1854, 94.26, 1090, 400, 1220, 1075, 304, 1100, 630);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (1, 2, '2020-01-15', '2020-01-15', 1854, 94.26, 1090, 400, 1220, 1075, 304, 1100, 630);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (2, 3, '2020-01-18', '2020-01-18', 1549, 74.66, 1140, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -290,9 +323,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `goal` (`id`, `goalName`, `dateCreated`) VALUES (1, 'Weight Loss', '2020-01-16');
-INSERT INTO `goal` (`id`, `goalName`, `dateCreated`) VALUES (2, 'Muscle Building', '2020-01-16');
-INSERT INTO `goal` (`id`, `goalName`, `dateCreated`) VALUES (3, 'General Fitness Maintanence', '2020-01-16');
+INSERT INTO `goal` (`id`, `goalName`, `dateCreated`, `dateUpdated`) VALUES (1, 'Weight Loss', '2020-01-16', '2020-01-16');
+INSERT INTO `goal` (`id`, `goalName`, `dateCreated`, `dateUpdated`) VALUES (2, 'Muscle Building', '2020-01-16', '2020-01-16');
+INSERT INTO `goal` (`id`, `goalName`, `dateCreated`, `dateUpdated`) VALUES (3, 'General Fitness Maintanence', '2020-01-16', '2020-01-16');
 
 COMMIT;
 
@@ -302,8 +335,22 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `dateCreated`) VALUES (1, 2, 1, '2020-01-16');
-INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `dateCreated`) VALUES (2, 3, 1, '2020-01-16');
+INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `enabled`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, 1, '2020-01-16', '2020-01-16');
+INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `enabled`, `dateCreated`, `dateUpdated`) VALUES (2, 3, 1, 1, '2020-01-16', '2020-01-16');
+INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `enabled`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 2, 0, '2020-01-18', '2020-01-18');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `meal_type`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (1, 'Breakfast', '2020-01-18', '2020-01-18');
+INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (2, 'Lunch', '2020-01-18', '2020-01-18');
+INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (3, 'Dinner', '2020-01-18', '2020-01-18');
+INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (4, 'Snack', '2020-01-18', '2020-01-18');
 
 COMMIT;
 
@@ -313,7 +360,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `totalCaloriesEaten`, `dateCreated`) VALUES (1, 2, 500, '2020-01-16');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 3, 500, 'Small bowl of tatertot breakfast casserole', '2020-01-16', '2020-01-18');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 4, 100, 'Blueberries and baked apple chips', '2020-01-17', '2020-01-17');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 3, 500, 'Small bowl of tatertot breakfast casserole', '2020-01-17', '2020-01-17');
 
 COMMIT;
 
@@ -323,7 +372,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `dateCreated`) VALUES (1, 2, 1943, '2020-01-16');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1928, 'Basal Metabolic Rate', '2020-01-16', '2020-01-18');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 1928, 'Basal Metabolic Rate', '2020-01-17', '2020-01-17');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 1928, 'Basal Metabolic Rate', '2020-01-18', '2020-01-18');
 
 COMMIT;
 
@@ -333,8 +384,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`) VALUES (1, 2, 'https://i.imgur.com/puVjtA9.jpg', '2020-01-15');
-INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`) VALUES (2, 2, 'https://i.imgur.com/zSACF2B.jpg', '2020-01-15');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 'https://i.imgur.com/puVjtA9.jpg', '2020-01-15', '2020-01-15');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 'https://i.imgur.com/zSACF2B.jpg', '2020-01-15', '2020-01-15');
 
 COMMIT;
 
@@ -363,12 +414,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `post_topic` (`id`, `topicName`) VALUES (1, 'Diet');
-INSERT INTO `post_topic` (`id`, `topicName`) VALUES (2, 'Exercise');
-INSERT INTO `post_topic` (`id`, `topicName`) VALUES (3, 'Surgery');
-INSERT INTO `post_topic` (`id`, `topicName`) VALUES (4, 'Recipes');
-INSERT INTO `post_topic` (`id`, `topicName`) VALUES (5, 'Medical Conditions');
-INSERT INTO `post_topic` (`id`, `topicName`) VALUES (6, 'Tips & Tricks');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (1, 'Diet', '2020-01-18', '2020-01-18');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (2, 'Exercise', '2020-01-18', '2020-01-18');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (3, 'Surgery', '2020-01-18', '2020-01-18');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (4, 'Recipes', '2020-01-18', '2020-01-18');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (5, 'Medical Conditions', '2020-01-18', '2020-01-18');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (6, 'Tips & Tricks', '2020-01-18', '2020-01-18');
 
 COMMIT;
 
