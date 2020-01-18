@@ -21,6 +21,8 @@ public class Goal {
 
 	private LocalDate dateCreated;
 
+	private LocalDate dateUpdated;
+
 	@OneToMany(mappedBy = "goal")
 	private List<UserCurrentGoal> userCurrentGoals;
 
@@ -54,6 +56,14 @@ public class Goal {
 		this.dateCreated = dateCreated;
 	}
 
+	public LocalDate getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(LocalDate dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
 	public List<UserCurrentGoal> getUserCurrentGoals() {
 		return userCurrentGoals;
 	}
@@ -62,11 +72,13 @@ public class Goal {
 		this.userCurrentGoals = userCurrentGoals;
 	}
 
+	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
+		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + ((goalName == null) ? 0 : goalName.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((userCurrentGoals == null) ? 0 : userCurrentGoals.hashCode());
@@ -86,6 +98,11 @@ public class Goal {
 			if (other.dateCreated != null)
 				return false;
 		} else if (!dateCreated.equals(other.dateCreated))
+			return false;
+		if (dateUpdated == null) {
+			if (other.dateUpdated != null)
+				return false;
+		} else if (!dateUpdated.equals(other.dateUpdated))
 			return false;
 		if (goalName == null) {
 			if (other.goalName != null)
@@ -112,6 +129,8 @@ public class Goal {
 		builder.append(goalName);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
 		builder.append("]");
 		return builder.toString();
 	}

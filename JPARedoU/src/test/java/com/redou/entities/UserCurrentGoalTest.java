@@ -45,6 +45,7 @@ class UserCurrentGoalTest {
 		void test1() {
 			assertEquals("travisd", ucg.getUser().getUsername());			
 			assertEquals("Weight Loss", ucg.getGoal().getGoalName());			
+			assertTrue(ucg.getEnabled());			
 		}
 
 }

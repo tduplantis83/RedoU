@@ -25,6 +25,8 @@ public class Image {
 
 	private LocalDate dateCreated;
 
+	private LocalDate dateUpdated;
+
 	// CONSTRUCTOR
 	public Image() {
 
@@ -59,6 +61,14 @@ public class Image {
 		return dateCreated;
 	}
 
+	public LocalDate getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(LocalDate dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
 	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -69,6 +79,7 @@ public class Image {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
+		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
@@ -88,6 +99,11 @@ public class Image {
 			if (other.dateCreated != null)
 				return false;
 		} else if (!dateCreated.equals(other.dateCreated))
+			return false;
+		if (dateUpdated == null) {
+			if (other.dateUpdated != null)
+				return false;
+		} else if (!dateUpdated.equals(other.dateUpdated))
 			return false;
 		if (id != other.id)
 			return false;
@@ -116,6 +132,8 @@ public class Image {
 		builder.append(imageUrl);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
 		builder.append("]");
 		return builder.toString();
 	}

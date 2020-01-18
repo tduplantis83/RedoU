@@ -1,5 +1,6 @@
 package com.redou.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,6 +20,10 @@ public class PostTopic {
 	private int id;
 
 	private String topicName;
+
+	private LocalDate dateCreated;
+
+	private LocalDate dateUpdated;
 
 	@OneToMany(mappedBy = "postTopic")
 	private List<Post> posts;
@@ -53,11 +58,29 @@ public class PostTopic {
 		this.posts = posts;
 	}
 
+	public LocalDate getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDate dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public LocalDate getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(LocalDate dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
 	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
+		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((posts == null) ? 0 : posts.hashCode());
 		result = prime * result + ((topicName == null) ? 0 : topicName.hashCode());
@@ -73,6 +96,16 @@ public class PostTopic {
 		if (getClass() != obj.getClass())
 			return false;
 		PostTopic other = (PostTopic) obj;
+		if (dateCreated == null) {
+			if (other.dateCreated != null)
+				return false;
+		} else if (!dateCreated.equals(other.dateCreated))
+			return false;
+		if (dateUpdated == null) {
+			if (other.dateUpdated != null)
+				return false;
+		} else if (!dateUpdated.equals(other.dateUpdated))
+			return false;
 		if (id != other.id)
 			return false;
 		if (posts == null) {
@@ -96,6 +129,10 @@ public class PostTopic {
 		builder.append(id);
 		builder.append(", topicName=");
 		builder.append(topicName);
+		builder.append(", dateCreated=");
+		builder.append(dateCreated);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
 		builder.append("]");
 		return builder.toString();
 	}

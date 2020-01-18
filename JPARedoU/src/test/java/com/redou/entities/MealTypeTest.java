@@ -13,12 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DailyCaloricIntakeTest {
-
+class MealTypeTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private DailyCaloricIntake dci;
+	private MealType mt;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,31 +32,25 @@ class DailyCaloricIntakeTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		dci = em.find(DailyCaloricIntake.class, 1);
+		mt = em.find(MealType.class, 3);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		dci = null;
+		mt = null;
 	}
 
 	@Test
-	@DisplayName("Get Daily Caloric Intake Details Test")
+	@DisplayName("Get Meal Type Details Test")
 	void test1() {
-		assertEquals(500, dci.getCaloriesThisMeal());
-		assertEquals("Small bowl of tatertot breakfast casserole", dci.getMealDescription());
-	}
-
-	@Test
-	@DisplayName("Get Daily Caloric Intake User Test")
-	void test2() {
-		assertEquals("travisd", dci.getUser().getUsername());
+		assertEquals("Dinner", mt.getMealTypeName());
 	}
 	
 	@Test
-	@DisplayName("Get Daily Caloric Intake to Meal Type Test")
-	void test3() {
-		assertEquals("Dinner", dci.getMealType().getMealTypeName());
+	@DisplayName("Get Meal Type to Daily Caloric Intake Test")
+	void test2() {
+		assertEquals(500, mt.getDailyCaloricIntakesMealTypes().get(0).getCaloriesThisMeal());
 	}
+
 }
