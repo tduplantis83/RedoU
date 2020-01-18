@@ -19,9 +19,17 @@ public class DailyCaloricIntake {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@ManyToOne
+	@JoinColumn(name = "mealType_id")
+	private MealType mealType;
+
 	private LocalDate dateCreated;
 
-	private int totalCaloriesEaten;
+	private LocalDate dateUpdated;
+
+	private int caloriesThisMeal;
+
+	private String mealDescription;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -41,6 +49,14 @@ public class DailyCaloricIntake {
 		this.id = id;
 	}
 
+	public MealType getMealType() {
+		return mealType;
+	}
+
+	public void setMealType(MealType mealType) {
+		this.mealType = mealType;
+	}
+
 	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
@@ -49,12 +65,20 @@ public class DailyCaloricIntake {
 		this.dateCreated = dateCreated;
 	}
 
-	public int getTotalCaloriesEaten() {
-		return totalCaloriesEaten;
+	public LocalDate getDateUpdated() {
+		return dateUpdated;
 	}
 
-	public void setTotalCaloriesEaten(int totalCaloriesEaten) {
-		this.totalCaloriesEaten = totalCaloriesEaten;
+	public void setDateUpdated(LocalDate dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
+	public int getCaloriesThisMeal() {
+		return caloriesThisMeal;
+	}
+
+	public void setCaloriesThisMeal(int caloriesThisMeal) {
+		this.caloriesThisMeal = caloriesThisMeal;
 	}
 
 	public User getUser() {
@@ -65,14 +89,25 @@ public class DailyCaloricIntake {
 		this.user = user;
 	}
 
+	public String getMealDescription() {
+		return mealDescription;
+	}
+
+	public void setMealDescription(String mealDescription) {
+		this.mealDescription = mealDescription;
+	}
+
 	// HASH & EQUALS
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + caloriesThisMeal;
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
+		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + id;
-		result = prime * result + totalCaloriesEaten;
+		result = prime * result + ((mealDescription == null) ? 0 : mealDescription.hashCode());
+		result = prime * result + ((mealType == null) ? 0 : mealType.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -86,14 +121,29 @@ public class DailyCaloricIntake {
 		if (getClass() != obj.getClass())
 			return false;
 		DailyCaloricIntake other = (DailyCaloricIntake) obj;
+		if (caloriesThisMeal != other.caloriesThisMeal)
+			return false;
 		if (dateCreated == null) {
 			if (other.dateCreated != null)
 				return false;
 		} else if (!dateCreated.equals(other.dateCreated))
 			return false;
+		if (dateUpdated == null) {
+			if (other.dateUpdated != null)
+				return false;
+		} else if (!dateUpdated.equals(other.dateUpdated))
+			return false;
 		if (id != other.id)
 			return false;
-		if (totalCaloriesEaten != other.totalCaloriesEaten)
+		if (mealDescription == null) {
+			if (other.mealDescription != null)
+				return false;
+		} else if (!mealDescription.equals(other.mealDescription))
+			return false;
+		if (mealType == null) {
+			if (other.mealType != null)
+				return false;
+		} else if (!mealType.equals(other.mealType))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -109,10 +159,16 @@ public class DailyCaloricIntake {
 		StringBuilder builder = new StringBuilder();
 		builder.append("DailyCaloricIntake [id=");
 		builder.append(id);
+		builder.append(", mealType=");
+		builder.append(mealType);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
-		builder.append(", totalCaloriesEaten=");
-		builder.append(totalCaloriesEaten);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
+		builder.append(", caloriesThisMeal=");
+		builder.append(caloriesThisMeal);
+		builder.append(", mealDescription=");
+		builder.append(mealDescription);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append("]");

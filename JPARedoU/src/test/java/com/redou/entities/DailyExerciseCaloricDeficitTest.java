@@ -44,7 +44,8 @@ class DailyExerciseCaloricDeficitTest {
 	@Test
 	@DisplayName("Get Daily Exercise Caloric Deficit Details Test")
 	void test1() {
-		assertEquals(1943, decd.getTotalCaloriesBurned());
+		assertEquals(1928, decd.getTotalCaloriesBurned());
+		assertEquals("Basal Metabolic Rate", decd.getActivityDescription());
 	}
 	
 	@Test

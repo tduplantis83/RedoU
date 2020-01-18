@@ -16,6 +16,7 @@
 <class> com.redou.entities.DailyExerciseCaloricDeficit</class>
 <class> com.redou.entities.Goal</class>
 <class> com.redou.entities.Image</class>
+<class> com.redou.entities.MealType</class>
 <class> com.redou.entities.Post</class>
 <class> com.redou.entities.PostReply</class>
 <class> com.redou.entities.PostTopic</class>

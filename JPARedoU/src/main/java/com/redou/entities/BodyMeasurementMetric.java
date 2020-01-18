@@ -25,6 +25,8 @@ public class BodyMeasurementMetric {
 
 	private LocalDate dateMeasured;
 
+	private LocalDate dateUpdated;
+
 	private int heightMM;
 
 	private double weightKg;
@@ -145,6 +147,14 @@ public class BodyMeasurementMetric {
 		this.thighMM = thighMM;
 	}
 
+	public LocalDate getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(LocalDate dateUpdated) {
+		this.dateUpdated = dateUpdated;
+	}
+
 	// HASH & EQUALS
 	@Override
 	public int hashCode() {
@@ -153,6 +163,7 @@ public class BodyMeasurementMetric {
 		result = prime * result + ((bicepMM == null) ? 0 : bicepMM.hashCode());
 		result = prime * result + ((chestMM == null) ? 0 : chestMM.hashCode());
 		result = prime * result + ((dateMeasured == null) ? 0 : dateMeasured.hashCode());
+		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + heightMM;
 		result = prime * result + ((hipsMM == null) ? 0 : hipsMM.hashCode());
 		result = prime * result + id;
@@ -190,6 +201,11 @@ public class BodyMeasurementMetric {
 			if (other.dateMeasured != null)
 				return false;
 		} else if (!dateMeasured.equals(other.dateMeasured))
+			return false;
+		if (dateUpdated == null) {
+			if (other.dateUpdated != null)
+				return false;
+		} else if (!dateUpdated.equals(other.dateUpdated))
 			return false;
 		if (heightMM != other.heightMM)
 			return false;
@@ -237,6 +253,8 @@ public class BodyMeasurementMetric {
 		builder.append(user);
 		builder.append(", dateMeasured=");
 		builder.append(dateMeasured);
+		builder.append(", dateUpdated=");
+		builder.append(dateUpdated);
 		builder.append(", heightMM=");
 		builder.append(heightMM);
 		builder.append(", weightKg=");

@@ -1,6 +1,6 @@
 package com.redou.entities;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -31,9 +31,9 @@ public class User {
 
 	private String role;
 
-	private LocalDateTime dateCreated;
+	private LocalDate dateCreated;
 
-	private LocalDateTime dateUpdated;
+	private LocalDate dateUpdated;
 
 	@OneToMany(mappedBy = "user")
 	private List<UserCurrentGoal> userCurrentGoals;
@@ -129,19 +129,19 @@ public class User {
 		this.role = role;
 	}
 
-	public LocalDateTime getDateCreated() {
+	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(LocalDateTime dateCreated) {
+	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public LocalDateTime getDateUpdated() {
+	public LocalDate getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(LocalDateTime dateUpdated) {
+	public void setDateUpdated(LocalDate dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 

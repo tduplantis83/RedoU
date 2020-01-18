@@ -50,15 +50,15 @@ class UserTest {
 		assertEquals("tduplantis83@gmail.com", user.getEmail());
 		assertTrue(user.isEnabled());
 		assertEquals("user", user.getRole());
-		assertEquals("2020-01-16T00:00", user.getDateCreated().toString());
-		assertEquals("2020-01-16T00:00", user.getDateUpdated().toString());
+		assertEquals("2020-01-16", user.getDateCreated().toString());
+		assertEquals("2020-01-16", user.getDateUpdated().toString());
 		
 	}
 
 	@Test
 	@DisplayName("Get User to Goal Test")
 	void test2() {
-		assertEquals(1, user.getUserCurrentGoals().size());
+		assertEquals(2, user.getUserCurrentGoals().size());
 		assertEquals(1, user.getUserCurrentGoals().get(0).getGoal().getId());
 		assertEquals("Weight Loss", user.getUserCurrentGoals().get(0).getGoal().getGoalName());
 		
@@ -67,16 +67,18 @@ class UserTest {
 	@Test
 	@DisplayName("Get User to Daily Caloric Intake Test")
 	void test3() {
-		assertEquals(1, user.getUserDailyCaloricIntakes().size());
-		assertEquals(500, user.getUserDailyCaloricIntakes().get(0).getTotalCaloriesEaten());
+		assertEquals(3, user.getUserDailyCaloricIntakes().size());
+		assertEquals(500, user.getUserDailyCaloricIntakes().get(0).getCaloriesThisMeal());
+		assertEquals("Dinner", user.getUserDailyCaloricIntakes().get(0).getMealType().getMealTypeName());
 		
 	}
 
 	@Test
 	@DisplayName("Get User to Daily Exercise Caloric Deficit Test")
 	void test4() {
-		assertEquals(1, user.getUserDailyExerciseCaloricDeficits().size());
-		assertEquals(1943, user.getUserDailyExerciseCaloricDeficits().get(0).getTotalCaloriesBurned());
+		assertEquals(3, user.getUserDailyExerciseCaloricDeficits().size());
+		assertEquals(1928, user.getUserDailyExerciseCaloricDeficits().get(0).getTotalCaloriesBurned());
+		assertEquals("Basal Metabolic Rate", user.getUserDailyExerciseCaloricDeficits().get(0).getActivityDescription());
 		
 	}
 	
