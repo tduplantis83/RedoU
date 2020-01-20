@@ -46,6 +46,8 @@ class UserTest {
 	void test1() {
 		assertEquals("travisd", user.getUsername());
 		assertEquals("Travis", user.getFirstName());
+		assertEquals("1983-07-01", user.getBirthday().toString());
+		assertEquals("M", user.getSex());
 		assertEquals("Duplantis", user.getLastName());
 		assertEquals("tduplantis83@gmail.com", user.getEmail());
 		assertTrue(user.isEnabled());
@@ -67,7 +69,7 @@ class UserTest {
 	@Test
 	@DisplayName("Get User to Daily Caloric Intake Test")
 	void test3() {
-		assertEquals(3, user.getUserDailyCaloricIntakes().size());
+		assertEquals(4, user.getUserDailyCaloricIntakes().size());
 		assertEquals(500, user.getUserDailyCaloricIntakes().get(0).getCaloriesThisMeal());
 		assertEquals("Dinner", user.getUserDailyCaloricIntakes().get(0).getMealType().getMealTypeName());
 		
@@ -76,7 +78,7 @@ class UserTest {
 	@Test
 	@DisplayName("Get User to Daily Exercise Caloric Deficit Test")
 	void test4() {
-		assertEquals(3, user.getUserDailyExerciseCaloricDeficits().size());
+		assertEquals(4, user.getUserDailyExerciseCaloricDeficits().size());
 		assertEquals(1928, user.getUserDailyExerciseCaloricDeficits().get(0).getTotalCaloriesBurned());
 		assertEquals("Basal Metabolic Rate", user.getUserDailyExerciseCaloricDeficits().get(0).getActivityDescription());
 		
@@ -94,7 +96,7 @@ class UserTest {
 	@Test
 	@DisplayName("Get User to Body Measurement Metric Test")
 	void test6() {
-		assertEquals(1, user.getUserBodyMeasurementMetrics().size());
+		assertEquals(2, user.getUserBodyMeasurementMetrics().size());
 		assertEquals(1854, user.getUserBodyMeasurementMetrics().get(0).getHeightMM());
 		assertEquals(94.26, user.getUserBodyMeasurementMetrics().get(0).getWeightKg());
 		assertEquals(1090, user.getUserBodyMeasurementMetrics().get(0).getWaistMM());
