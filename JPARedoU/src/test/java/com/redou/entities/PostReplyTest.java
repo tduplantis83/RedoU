@@ -58,7 +58,7 @@ class PostReplyTest {
 	@Test
 	@DisplayName("Get Post Reply to Reply User Test")
 	void test3() {
-		assertEquals("travisd", pr.getUser().getUsername());
+		assertEquals("travisd", pr.getReplyUser().getUsername());
 	}
 
 }

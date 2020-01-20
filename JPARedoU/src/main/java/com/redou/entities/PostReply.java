@@ -21,7 +21,7 @@ public class PostReply {
 
 	@ManyToOne
 	@JoinColumn(name = "reply_user_id")
-	private User user;
+	private User replyUser;
 
 	@ManyToOne
 	@JoinColumn(name = "originalPost_id")
@@ -47,12 +47,12 @@ public class PostReply {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public User getReplyUser() {
+		return replyUser;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setReplyUser(User replyUser) {
+		this.replyUser = replyUser;
 	}
 
 	public Post getOriginalPost() {
@@ -97,7 +97,7 @@ public class PostReply {
 		result = prime * result + id;
 		result = prime * result + ((originalPost == null) ? 0 : originalPost.hashCode());
 		result = prime * result + ((replyContent == null) ? 0 : replyContent.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((replyUser == null) ? 0 : replyUser.hashCode());
 		return result;
 	}
 
@@ -132,10 +132,10 @@ public class PostReply {
 				return false;
 		} else if (!replyContent.equals(other.replyContent))
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (replyUser == null) {
+			if (other.replyUser != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!replyUser.equals(other.replyUser))
 			return false;
 		return true;
 	}
@@ -146,8 +146,8 @@ public class PostReply {
 		StringBuilder builder = new StringBuilder();
 		builder.append("PostReply [id=");
 		builder.append(id);
-		builder.append(", user=");
-		builder.append(user);
+		builder.append(", replyUser=");
+		builder.append(replyUser);
 		builder.append(", originalPost=");
 		builder.append(originalPost);
 		builder.append(", replyContent=");
