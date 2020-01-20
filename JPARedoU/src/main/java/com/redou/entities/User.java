@@ -52,7 +52,7 @@ public class User {
 	private List<Image> userImages;
 
 	@OneToMany(mappedBy = "user")
-	private List<Avatar> userAvatars;
+	private List<UserAvatar> userAvatars;
 
 	@OneToMany(mappedBy = "user")
 	private List<BodyMeasurementMetric> userBodyMeasurementMetrics;
@@ -198,11 +198,11 @@ public class User {
 		this.userImages = userImages;
 	}
 
-	public List<Avatar> getUserAvatars() {
+	public List<UserAvatar> getUserAvatars() {
 		return userAvatars;
 	}
 
-	public void setUserAvatars(List<Avatar> userAvatars) {
+	public void setUserAvatars(List<UserAvatar> userAvatars) {
 		this.userAvatars = userAvatars;
 	}
 
@@ -393,8 +393,6 @@ public class User {
 		builder.append(dateCreated);
 		builder.append(", dateUpdated=");
 		builder.append(dateUpdated);
-		builder.append(", userCurrentGoals=");
-		builder.append(userCurrentGoals);
 		builder.append("]");
 		return builder.toString();
 	}

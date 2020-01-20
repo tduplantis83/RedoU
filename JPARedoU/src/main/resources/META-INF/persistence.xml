@@ -21,6 +21,7 @@
 <class> com.redou.entities.PostReply</class>
 <class> com.redou.entities.PostTopic</class>
 <class> com.redou.entities.User</class>
+<class> com.redou.entities.UserAvatar</class>
 <class> com.redou.entities.UserCurrentGoal</class>
 
 

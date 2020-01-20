@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `user_current_goal` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `goal_id` INT NOT NULL,
-  `enabled` TINYINT NOT NULL DEFAULT 1,
+  `enabled` TINYINT NOT NULL DEFAULT 0,
   `dateCreated` DATE NOT NULL,
   `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`),
@@ -201,18 +201,13 @@ DROP TABLE IF EXISTS `avatar` ;
 
 CREATE TABLE IF NOT EXISTS `avatar` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `avatarUrl` TEXT NOT NULL,
+  `avatarGroup` INT NOT NULL,
+  `sex` VARCHAR(1) NOT NULL,
   `bodyType` VARCHAR(100) NOT NULL,
+  `avatarUrl` TEXT NOT NULL,
   `dateCreated` DATE NOT NULL,
   `dateUpdated` DATE NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_user_id_avatar_idx` (`user_id` ASC),
-  CONSTRAINT `fk_user_id_avatar`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -286,6 +281,34 @@ CREATE TABLE IF NOT EXISTS `post_reply` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `user_avatar`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `user_avatar` ;
+
+CREATE TABLE IF NOT EXISTS `user_avatar` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `avatar_id` INT NOT NULL,
+  `current` TINYINT NOT NULL DEFAULT 0,
+  `dateCreated` DATE NOT NULL,
+  `dateUpdated` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_id_user_current_avatar_idx` (`user_id` ASC),
+  INDEX `fk_avatar_id_user_current_avatar_idx` (`avatar_id` ASC),
+  CONSTRAINT `fk_user_id_user_current_avatar`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_avatar_id_user_current_avatar`
+    FOREIGN KEY (`avatar_id`)
+    REFERENCES `avatar` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 SET SQL_MODE = '';
 DROP USER IF EXISTS redouadmin@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -340,7 +363,6 @@ START TRANSACTION;
 USE `redou`;
 INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `enabled`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, 1, '2020-01-16', '2020-01-16');
 INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `enabled`, `dateCreated`, `dateUpdated`) VALUES (2, 3, 1, 1, '2020-01-16', '2020-01-16');
-INSERT INTO `user_current_goal` (`id`, `user_id`, `goal_id`, `enabled`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 2, 0, '2020-01-18', '2020-01-18');
 
 COMMIT;
 
@@ -400,16 +422,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 'https://i.imgur.com/uJaRmvQ.jpg', 'Thin', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 'https://i.imgur.com/MeZUyU7.jpg', 'Average', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 'https://i.imgur.com/HM7aIAS.jpg', 'Fat', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 'https://i.imgur.com/mLpfYbC.jpg', 'Athletic', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (5, 2, 'https://i.imgur.com/U74DJg6.jpg', 'Muscular', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (6, 3, 'https://i.imgur.com/6XHNaUq.jpg', 'Thin', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (7, 3, 'https://i.imgur.com/uXyVqic.jpg', 'Average', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (8, 3, 'https://i.imgur.com/P0LEumI.jpg', 'Fat', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (9, 3, 'https://i.imgur.com/hwcAc1R.jpg', 'Athletic', '2020-01-17', '2020-01-17');
-INSERT INTO `avatar` (`id`, `user_id`, `avatarUrl`, `bodyType`, `dateCreated`, `dateUpdated`) VALUES (10, 3, 'https://i.imgur.com/e9q4Cgh.jpg', 'Muscular', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (1, 1, 'M', 'Thin', 'https://i.imgur.com/uJaRmvQ.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (2, 1, 'M', 'Average', 'https://i.imgur.com/MeZUyU7.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (3, 1, 'M', 'Fat', 'https://i.imgur.com/HM7aIAS.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (4, 1, 'M', 'Athletic', 'https://i.imgur.com/mLpfYbC.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (5, 1, 'M', 'Muscular', 'https://i.imgur.com/U74DJg6.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (6, 2, 'F', 'Thin', 'https://i.imgur.com/6XHNaUq.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (7, 2, 'F', 'Average', 'https://i.imgur.com/uXyVqic.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (8, 2, 'F', 'Fat', 'https://i.imgur.com/P0LEumI.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (9, 2, 'F', 'Athletic', 'https://i.imgur.com/hwcAc1R.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (10, 2, 'F', 'Muscular', 'https://i.imgur.com/e9q4Cgh.jpg', '2020-01-17', '2020-01-17');
 
 COMMIT;
 
@@ -445,6 +467,25 @@ COMMIT;
 START TRANSACTION;
 USE `redou`;
 INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `replyContent`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, 'There are several different types of intermittent fasting including: 16 hours fasting with 8 hours eating, One Meal A Day (OMAD). The general idea is to get your blood sugar down and prevent insulin spikes. In reality you can modify it so that it works best for you, but you should go for 16 hour fasts at a minimum. A lot of new research shows that this is the best way for humans to lose weight. It\'s actually thought that this is how our evolutionary ancestors ate (they didn\'t eat 3 meals a day, but instead ate when they were able to get food.', '2020-01-17', '2020-01-17');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `user_avatar`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `redou`;
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 2, 1, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 3, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 4, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (5, 2, 5, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (6, 3, 6, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (7, 3, 7, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (8, 3, 8, 1, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (9, 3, 9, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (10, 3, 10, 0, '2020-01-20', '2020-01-20');
 
 COMMIT;
 

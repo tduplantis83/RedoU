@@ -60,7 +60,7 @@ class UserTest {
 	@Test
 	@DisplayName("Get User to Goal Test")
 	void test2() {
-		assertEquals(2, user.getUserCurrentGoals().size());
+		assertEquals(1, user.getUserCurrentGoals().size());
 		assertEquals(1, user.getUserCurrentGoals().get(0).getGoal().getId());
 		assertEquals("Weight Loss", user.getUserCurrentGoals().get(0).getGoal().getGoalName());
 		
@@ -129,11 +129,10 @@ class UserTest {
 	}
 	
 	@Test
-	@DisplayName("Get User to Avatar Test")
+	@DisplayName("Get User to User Avatar Test")
 	void test10() {
 		assertEquals(5, user.getUserAvatars().size());
-		assertEquals("https://i.imgur.com/uJaRmvQ.jpg", user.getUserAvatars().get(0).getAvatarUrl());
-		assertEquals("Thin", user.getUserAvatars().get(0).getBodyType());
+		assertFalse(user.getUserAvatars().get(0).getCurrent());
 	}
 	
 	
