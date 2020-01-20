@@ -9,12 +9,12 @@ import com.redou.entities.User;
 public interface UserRepo extends JpaRepository<User, Integer> {
 	public User findById(int id);
 
-	public User findByUsername(String username);
+	public User findByUsernameIgnoreCase(String username);
 
-	public List<User> findByEmailLike(String email);
+	public List<User> findByEmailIgnoreCaseLike(String email);
 
 	public List<User> findByEnabled(boolean enabled);
 
-	public List<User> findByRole(String role);
+	public List<User> findByRoleIgnoreCase(String role);
 
 }

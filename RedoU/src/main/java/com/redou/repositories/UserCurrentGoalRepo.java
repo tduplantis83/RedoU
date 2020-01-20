@@ -11,6 +11,6 @@ public interface UserCurrentGoalRepo extends JpaRepository<UserCurrentGoal, Inte
 
 	public List<UserCurrentGoal> findByUser_Id(int userId);
 
-	public List<UserCurrentGoal> findByUser_Username(String username);
+	public List<UserCurrentGoal> findByUser_UsernameIgnoreCase(String username);
 
 }

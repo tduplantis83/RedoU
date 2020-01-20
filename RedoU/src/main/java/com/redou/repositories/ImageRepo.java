@@ -11,6 +11,6 @@ public interface ImageRepo extends JpaRepository<Image, Integer> {
 
 	public List<Image> findByUser_Id(int userId);
 
-	public List<Image> findByUser_Username(String username);
+	public List<Image> findByUser_UsernameIgnoreCase(String username);
 
 }

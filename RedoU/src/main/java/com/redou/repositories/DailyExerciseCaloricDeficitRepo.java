@@ -9,8 +9,8 @@ import com.redou.entities.DailyExerciseCaloricDeficit;
 public interface DailyExerciseCaloricDeficitRepo extends JpaRepository<DailyExerciseCaloricDeficit, Integer> {
 	public DailyExerciseCaloricDeficit findById(int id);
 
-	public List<DailyExerciseCaloricDeficit> findbyUser_Id(int userId);
+	public List<DailyExerciseCaloricDeficit> findByUser_Id(int userId);
 
-	public List<DailyExerciseCaloricDeficit> findbyUser_Username(String username);
+	public List<DailyExerciseCaloricDeficit> findByUser_UsernameIgnoreCase(String username);
 
 }

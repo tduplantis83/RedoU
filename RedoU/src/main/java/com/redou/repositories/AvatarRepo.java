@@ -11,8 +11,8 @@ public interface AvatarRepo extends JpaRepository<Avatar, Integer> {
 
 	public List<Avatar> findByUser_Id(int userId);
 
-	public List<Avatar> findByUser_Username(String username);
+	public List<Avatar> findByUser_UsernameIgnoreCase(String username);
 
-	public Avatar findByUser_IdAndBodyType(int userId, String bodyType);
+	public Avatar findByUser_IdAndBodyTypeIgnoreCase(int userId, String bodyType);
 
 }
