@@ -7,6 +7,6 @@ import com.redou.entities.PostTopic;
 public interface PostTopicRepo extends JpaRepository<PostTopic, Integer> {
 	public PostTopic findById(int id);
 
-	public PostTopic findByTopicName(String topicName);
+	public PostTopic findByTopicNameIgnoreCase(String topicName);
 
 }

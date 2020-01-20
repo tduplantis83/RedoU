@@ -12,6 +12,6 @@ public interface BodyMeasurementMetricRepo extends JpaRepository<BodyMeasurement
 
 	public List<BodyMeasurementMetric> findByUser_Id(int userId);
 
-	public List<BodyMeasurementMetric> findByUser_Username(String username);
+	public List<BodyMeasurementMetric> findByUser_UsernameIgnoreCase(String username);
 
 }
