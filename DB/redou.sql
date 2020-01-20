@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` TEXT NOT NULL,
   `firstName` VARCHAR(250) NOT NULL,
   `lastName` VARCHAR(250) NOT NULL,
+  `birthday` DATE NOT NULL,
+  `sex` VARCHAR(1) NOT NULL,
   `email` VARCHAR(250) NULL,
   `enabled` TINYINT NOT NULL DEFAULT 1,
   `role` VARCHAR(20) NOT NULL,
@@ -300,9 +302,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (1, 'admin', 'YWRtaW4=', 'Web', 'Administrator', 'admin@redou.com', 1, 'admin', '2020-01-16', '2020-01-16');
-INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (2, 'travisd', 'dGVzdA==', 'Travis', 'Duplantis', 'tduplantis83@gmail.com', 1, 'user', '2020-01-16', '2020-01-16');
-INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (3, 'emilyd', 'dGVzdA==', 'Emily', 'Duplantis', 'eduplantis85@gmail.com', 1, 'user', '2020-01-16', '2020-01-16');
+INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (1, 'admin', 'YWRtaW4=', 'Web', 'Administrator', '1983-01-01', 'M', 'admin@redou.com', 1, 'admin', '2020-01-16', '2020-01-16');
+INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (2, 'travisd', 'dGVzdA==', 'Travis', 'Duplantis', '1983-07-01', 'M', 'tduplantis83@gmail.com', 1, 'user', '2020-01-16', '2020-01-16');
+INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (3, 'emilyd', 'dGVzdA==', 'Emily', 'Duplantis', '1985-03-27', 'F', 'eduplantis85@gmail.com', 1, 'user', '2020-01-16', '2020-01-16');
 
 COMMIT;
 
@@ -314,6 +316,7 @@ START TRANSACTION;
 USE `redou`;
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (1, 2, '2020-01-15', '2020-01-15', 1854, 94.26, 1090, 400, 1220, 1075, 304, 1100, 630);
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (2, 3, '2020-01-18', '2020-01-18', 1549, 74.66, 1140, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (3, 2, '2020-01-20', '2020-01-20', 1854, 87.63, 1030, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -363,6 +366,7 @@ USE `redou`;
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 3, 500, 'Small bowl of tatertot breakfast casserole', '2020-01-16', '2020-01-18');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 4, 100, 'Blueberries and baked apple chips', '2020-01-17', '2020-01-17');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 3, 500, 'Small bowl of tatertot breakfast casserole', '2020-01-17', '2020-01-17');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 3, 600, 'Corn Dogs', '2020-01-19', '2020-01-20');
 
 COMMIT;
 
@@ -375,6 +379,7 @@ USE `redou`;
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1928, 'Basal Metabolic Rate', '2020-01-16', '2020-01-18');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 1928, 'Basal Metabolic Rate', '2020-01-17', '2020-01-17');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 1928, 'Basal Metabolic Rate', '2020-01-18', '2020-01-18');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 1888, 'Basal Metabolic Rate', '2020-01-19', '2020-01-20');
 
 COMMIT;
 
