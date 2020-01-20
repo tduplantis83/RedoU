@@ -15,8 +15,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    NgbModule.forRoot()
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
