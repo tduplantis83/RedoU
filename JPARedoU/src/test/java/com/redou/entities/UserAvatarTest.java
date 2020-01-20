@@ -13,11 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class AvatarTest {
+class UserAvatarTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Avatar av;
+	private UserAvatar ua;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,34 +32,26 @@ class AvatarTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		av = em.find(Avatar.class, 2);
+		ua = em.find(UserAvatar.class, 2);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		av = null;
+		ua = null;
 	}
 
 	@Test
-	@DisplayName("Get Avatar Details Test")
+	@DisplayName("Get User Avatar Details Test")
 	void test1() {
-		assertEquals("https://i.imgur.com/MeZUyU7.jpg", av.getAvatarUrl());
-		assertEquals("Average", av.getBodyType());
+		assertEquals("Average", ua.getAvatar().getBodyType());
+		
 	}
 
 	@Test
-	@DisplayName("Get Avatar to User Avatar Test")
+	@DisplayName("Get User Avatar to User Test")
 	void test2() {
-		assertEquals(1, av.getUserAvatars().size());
-		assertTrue(av.getUserAvatars().get(0).getCurrent());
+		assertEquals("travisd", ua.getUser().getUsername());
+		
 	}
-	
-	@Test
-	@DisplayName("Get Avatar to User Test")
-	void test3() {
-		assertEquals("travisd", av.getUserAvatars().get(0).getUser().getUsername());
-	}
-	
-
 }

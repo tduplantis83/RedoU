@@ -1,13 +1,13 @@
 package com.redou.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Avatar {
@@ -17,17 +17,21 @@ public class Avatar {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+	private int avatarGroup;
+
+	private String sex;
+
+	private String bodyType;
+
+	private String avatarUrl;
 
 	private LocalDate dateCreated;
 
 	private LocalDate dateUpdated;
 
-	private String avatarUrl;
-
-	private String bodyType;
+	@OneToMany(mappedBy = "avatar")
+	private List<UserAvatar> userAvatars;
+	
 
 	// CONSTRUCTOR
 	public Avatar() {
@@ -43,12 +47,36 @@ public class Avatar {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public int getAvatarGroup() {
+		return avatarGroup;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setAvatarGroup(int avatarGroup) {
+		this.avatarGroup = avatarGroup;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getBodyType() {
+		return bodyType;
+	}
+
+	public void setBodyType(String bodyType) {
+		this.bodyType = bodyType;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	public LocalDate getDateCreated() {
@@ -67,20 +95,12 @@ public class Avatar {
 		this.dateUpdated = dateUpdated;
 	}
 
-	public String getAvatarUrl() {
-		return avatarUrl;
+	public List<UserAvatar> getUserAvatars() {
+		return userAvatars;
 	}
 
-	public void setAvatarUrl(String avatarUrl) {
-		this.avatarUrl = avatarUrl;
-	}
-
-	public String getBodyType() {
-		return bodyType;
-	}
-
-	public void setBodyType(String bodyType) {
-		this.bodyType = bodyType;
+	public void setUserCurrentAvatars(List<UserAvatar> userAvatars) {
+		this.userAvatars = userAvatars;
 	}
 
 	// HASH & EQUALS
@@ -88,12 +108,14 @@ public class Avatar {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + avatarGroup;
 		result = prime * result + ((avatarUrl == null) ? 0 : avatarUrl.hashCode());
 		result = prime * result + ((bodyType == null) ? 0 : bodyType.hashCode());
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		result = prime * result + ((userAvatars == null) ? 0 : userAvatars.hashCode());
 		return result;
 	}
 
@@ -106,6 +128,8 @@ public class Avatar {
 		if (getClass() != obj.getClass())
 			return false;
 		Avatar other = (Avatar) obj;
+		if (avatarGroup != other.avatarGroup)
+			return false;
 		if (avatarUrl == null) {
 			if (other.avatarUrl != null)
 				return false;
@@ -128,10 +152,15 @@ public class Avatar {
 			return false;
 		if (id != other.id)
 			return false;
-		if (user == null) {
-			if (other.user != null)
+		if (sex == null) {
+			if (other.sex != null)
 				return false;
-		} else if (!user.equals(other.user))
+		} else if (!sex.equals(other.sex))
+			return false;
+		if (userAvatars == null) {
+			if (other.userAvatars != null)
+				return false;
+		} else if (!userAvatars.equals(other.userAvatars))
 			return false;
 		return true;
 	}
@@ -142,16 +171,18 @@ public class Avatar {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Avatar [id=");
 		builder.append(id);
-		builder.append(", user=");
-		builder.append(user);
+		builder.append(", avatarGroup=");
+		builder.append(avatarGroup);
+		builder.append(", sex=");
+		builder.append(sex);
+		builder.append(", bodyType=");
+		builder.append(bodyType);
+		builder.append(", avatarUrl=");
+		builder.append(avatarUrl);
 		builder.append(", dateCreated=");
 		builder.append(dateCreated);
 		builder.append(", dateUpdated=");
 		builder.append(dateUpdated);
-		builder.append(", avatarUrl=");
-		builder.append(avatarUrl);
-		builder.append(", bodyType=");
-		builder.append(bodyType);
 		builder.append("]");
 		return builder.toString();
 	}
