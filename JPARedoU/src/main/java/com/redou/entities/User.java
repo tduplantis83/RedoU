@@ -25,6 +25,10 @@ public class User {
 
 	private String lastName;
 
+	private LocalDate birthday;
+
+	private String sex;
+
 	private String email;
 
 	private boolean enabled;
@@ -103,6 +107,22 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public String getEmail() {
@@ -215,6 +235,7 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
@@ -224,6 +245,7 @@ public class User {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
 		result = prime * result + ((userAvatars == null) ? 0 : userAvatars.hashCode());
 		result = prime * result + ((userBodyMeasurementMetrics == null) ? 0 : userBodyMeasurementMetrics.hashCode());
 		result = prime * result + ((userCurrentGoals == null) ? 0 : userCurrentGoals.hashCode());
@@ -246,6 +268,11 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (birthday == null) {
+			if (other.birthday != null)
+				return false;
+		} else if (!birthday.equals(other.birthday))
+			return false;
 		if (dateCreated == null) {
 			if (other.dateCreated != null)
 				return false;
@@ -284,6 +311,11 @@ public class User {
 			if (other.role != null)
 				return false;
 		} else if (!role.equals(other.role))
+			return false;
+		if (sex == null) {
+			if (other.sex != null)
+				return false;
+		} else if (!sex.equals(other.sex))
 			return false;
 		if (userAvatars == null) {
 			if (other.userAvatars != null)
@@ -347,6 +379,10 @@ public class User {
 		builder.append(firstName);
 		builder.append(", lastName=");
 		builder.append(lastName);
+		builder.append(", birthday=");
+		builder.append(birthday);
+		builder.append(", sex=");
+		builder.append(sex);
 		builder.append(", email=");
 		builder.append(email);
 		builder.append(", enabled=");
@@ -357,6 +393,8 @@ public class User {
 		builder.append(dateCreated);
 		builder.append(", dateUpdated=");
 		builder.append(dateUpdated);
+		builder.append(", userCurrentGoals=");
+		builder.append(userCurrentGoals);
 		builder.append("]");
 		return builder.toString();
 	}
