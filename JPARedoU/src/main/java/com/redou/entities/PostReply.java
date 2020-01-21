@@ -25,7 +25,7 @@ public class PostReply {
 	private User replyUser;
 
 	@ManyToOne
-	@JoinColumn(name = "originalPost_id")
+	@JoinColumn(name = "originalpost_id")
 	private Post originalPost;
 
 	@Column(name="replycontent")
