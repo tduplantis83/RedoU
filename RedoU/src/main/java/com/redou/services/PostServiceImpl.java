@@ -37,12 +37,12 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public List<Post> getPostByTitle(String title) {
-		return repo.findByTitleLikeIgnoreCase("%" + title + "%");
+		return repo.findByTitleIgnoreCaseContaining("%" + title + "%");
 	}
 
 	@Override
 	public List<Post> getPostByContent(String content) {
-		return repo.findByContentLikeIgnoreCase("%" + content + "%");
+		return repo.findByContentIgnoreCaseContaining("%" + content + "%");
 	}
 
 	@Override

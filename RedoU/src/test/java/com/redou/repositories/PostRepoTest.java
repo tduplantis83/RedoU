@@ -49,16 +49,16 @@ class PostRepoTest {
 	}
 	
 	@Test
-	@DisplayName("test findByTitleLikeIgnoreCase")
+	@DisplayName("test findByTitleIgnoreCaseContaining")
 	void test5() {
-		List<Post> posts = repo.findByTitleLikeIgnoreCase("interMITTENT FastING");
+		List<Post> posts = repo.findByTitleIgnoreCaseContaining("MITTENT FaST");
 		assertEquals("Emily", posts.get(0).getUser().getFirstName());
 	}
 	
 	@Test
-	@DisplayName("test findByContentLikeIgnoreCase")
+	@DisplayName("test findByContentIgnoreCaseContaining")
 	void test6() {
-		List<Post> posts = repo.findByContentLikeIgnoreCase("I'm CURIOUS how intermittent fasting works. Can anyone give me some details about it and the different methods?");
+		List<Post> posts = repo.findByContentIgnoreCaseContaining("cURIous");
 		assertEquals("Emily", posts.get(0).getUser().getFirstName());
 	}
 	

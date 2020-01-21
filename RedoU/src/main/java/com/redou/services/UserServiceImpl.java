@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<User>  getUserByUsername(String username) {
-		return repo.findByUsernameLikeIgnoreCase("%" + username + "%");
+		return repo.findByUsernameIgnoreCaseContaining("%" + username + "%");
 	}
 
 	@Override
 	public List<User> getUserByEmail(String email) {
-		return repo.findByEmailLikeIgnoreCase("%" + email + "%");
+		return repo.findByEmailIgnoreCaseContaining("%" + email + "%");
 	}
 
 	@Override

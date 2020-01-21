@@ -21,7 +21,7 @@ public class DailyCaloricIntake {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "mealType_id")
+	@JoinColumn(name = "mealtype_id")
 	private MealType mealType;
 
 	@Column(name="datecreated")

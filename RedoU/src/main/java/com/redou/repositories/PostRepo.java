@@ -15,8 +15,8 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
 
 	public List<Post> findByPostTopic_TopicNameIgnoreCase(String postTopic);
 
-	public List<Post> findByTitleLikeIgnoreCase(String title);
+	public List<Post> findByTitleIgnoreCaseContaining(String title);
 
-	public List<Post> findByContentLikeIgnoreCase(String content);
+	public List<Post> findByContentIgnoreCaseContaining(String content);
 
 }
