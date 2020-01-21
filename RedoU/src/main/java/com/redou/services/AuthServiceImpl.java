@@ -14,6 +14,9 @@ public class AuthServiceImpl implements AuthService{
 
 	@Autowired
 	private UserRepo uRepo;
+	
+	@Autowired
+	private UserService userSvc;
 
 	@Autowired
 	private PasswordEncoder encoder;
@@ -26,9 +29,8 @@ public class AuthServiceImpl implements AuthService{
 		user.setPassword(encrypted);
 		user.setEnabled(true);
 		user.setRole("user");
-		uRepo.saveAndFlush(user);
 		
-		return user;
+		return userSvc.createUser(user);
 	}
 
 	@Override

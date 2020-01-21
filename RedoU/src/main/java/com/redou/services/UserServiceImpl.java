@@ -19,10 +19,15 @@ public class UserServiceImpl implements UserService{
 	public User getUserById(int id) {
 		return repo.findById(id);
 	}
+	
+	@Override
+	public User getUserByUsernameExact(String username) {
+		return repo.findByUsernameIgnoreCase(username);
+	}
 
 	@Override
-	public User getUserByUsername(String username) {
-		return repo.findByUsernameIgnoreCase(username);
+	public List<User>  getUserByUsername(String username) {
+		return repo.findByUsernameIgnoreCaseLike("%" + username + "%");
 	}
 
 	@Override
@@ -79,5 +84,6 @@ public class UserServiceImpl implements UserService{
 			return false;
 		}
 	}
+
 
 }
