@@ -12,4 +12,10 @@ public interface PostReplyService {
 	public List<PostReply> getPostReplyByReplyUsername(String username);
 
 	public PostReply getPostReplyByOriginalPostId(int originalPostId);
+	
+	public PostReply createPostReply(PostReply reply);
+
+	public PostReply updatePostReply(PostReply reply);
+	
+	public boolean deletePostReply(int id);
 }

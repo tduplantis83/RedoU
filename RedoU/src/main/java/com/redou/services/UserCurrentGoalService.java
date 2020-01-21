@@ -10,4 +10,10 @@ public interface UserCurrentGoalService {
 	public List<UserCurrentGoal> getUserCurrentGoalByUserId(int userId);
 
 	public List<UserCurrentGoal> getUserCurrentGoalByUsername(String username);
+	
+	public UserCurrentGoal createUserCurrentGoal(UserCurrentGoal goal);
+
+	public UserCurrentGoal updateUserCurrentGoal(UserCurrentGoal goal);
+	
+	public boolean deleteUserCurrentGoal(int id);
 }
