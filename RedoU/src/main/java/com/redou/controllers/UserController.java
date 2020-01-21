@@ -33,6 +33,7 @@ public class UserController {
 	
 	@GetMapping("users/id/{id}")
 	public User getUserById(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
+		System.err.println("**********In controller method with User Id: " + id);
 		User user = userSvc.getUserById(id);
 		if (user == null) {
 			resp.setStatus(404);

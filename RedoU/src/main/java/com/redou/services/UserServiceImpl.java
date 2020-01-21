@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User getUserById(int id) {
+		System.err.println("**********In service impl method with User Id: " + id);
 		return repo.findById(id);
 	}
 	
@@ -27,12 +28,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<User>  getUserByUsername(String username) {
-		return repo.findByUsernameIgnoreCaseLike("%" + username + "%");
+		return repo.findByUsernameLikeIgnoreCase("%" + username + "%");
 	}
 
 	@Override
 	public List<User> getUserByEmail(String email) {
-		return repo.findByEmailIgnoreCaseLike("%" + email + "%");
+		return repo.findByEmailLikeIgnoreCase("%" + email + "%");
 	}
 
 	@Override
