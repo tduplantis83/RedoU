@@ -11,34 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.redou.entities.UserCurrentGoal;
-
+import com.redou.entities.UserAvatar;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class UserCurrentGoalRepoTest {
+class UserAvatarRepoTest {
 	
 	@Autowired
-	private UserCurrentGoalRepo repo;
+	private UserAvatarRepo repo;
 
 	@Test
 	@DisplayName("test FindByID")
 	void test1() {
-		UserCurrentGoal goal = repo.findById(2);
-		assertEquals("Weight Loss", goal.getGoal().getGoalName());
-	}
-	
-	@Test
-	@DisplayName("test findByUser_Id")
-	void test2() {
-		List<UserCurrentGoal> goals = repo.findByUser_Id(2);
-		assertEquals("Weight Loss", goals.get(0).getGoal().getGoalName());
+		UserAvatar avatar = repo.findById(2);
+		assertEquals("Average", avatar.getAvatar().getBodyType());
 	}
 
 	@Test
-	@DisplayName("test findByUser_UsernameIgnoreCase")
-	void test3() {
-		List<UserCurrentGoal> goals = repo.findByUser_UsernameIgnoreCase("travisD");
-		assertEquals("Weight Loss", goals.get(0).getGoal().getGoalName());
+	@DisplayName("test findByUser_Id")
+	void test2() {
+		List<UserAvatar> avatars = repo.findByUser_Id(2);
+		assertEquals(5, avatars.size());
+		assertEquals("Average", avatars.get(1).getAvatar().getBodyType());
 	}
 }
