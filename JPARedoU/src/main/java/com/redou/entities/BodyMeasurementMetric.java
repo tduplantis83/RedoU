@@ -2,6 +2,7 @@ package com.redou.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,26 +24,37 @@ public class BodyMeasurementMetric {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@Column(name="datemeasured")
 	private LocalDate dateMeasured;
 
+	@Column(name="dateupdated")
 	private LocalDate dateUpdated;
 
+	@Column(name="heightmm")
 	private int heightMM;
 
+	@Column(name="weightkg")
 	private double weightKg;
 
+	@Column(name="waistmm")
 	private int waistMM;
 
+	@Column(name="neckmm")
 	private Integer neckMM;
 
+	@Column(name="shouldersmm")
 	private Integer shouldersMM;
 
+	@Column(name="chestmm")
 	private Integer chestMM;
 
+	@Column(name="bicepmm")
 	private Integer bicepMM;
 
+	@Column(name="hipsmm")
 	private Integer hipsMM;
 
+	@Column(name="thighmm")
 	private Integer thighMM;
 
 	// CONSTRUCTOR

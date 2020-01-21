@@ -2,6 +2,7 @@ package com.redou.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,12 +24,16 @@ public class DailyCaloricIntake {
 	@JoinColumn(name = "mealType_id")
 	private MealType mealType;
 
+	@Column(name="datecreated")
 	private LocalDate dateCreated;
 
+	@Column(name="dateupdated")
 	private LocalDate dateUpdated;
 
+	@Column(name="caloriesthismeal")
 	private int caloriesThisMeal;
 
+	@Column(name="mealdescription")
 	private String mealDescription;
 
 	@ManyToOne

@@ -2,6 +2,7 @@ package com.redou.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,8 +30,10 @@ public class UserCurrentGoal {
 
 	private Boolean enabled;
 
+	@Column(name="datecreated")
 	private LocalDate dateCreated;
 
+	@Column(name="dateupdated")
 	private LocalDate dateUpdated;
 
 	// CONSTRUCTOR

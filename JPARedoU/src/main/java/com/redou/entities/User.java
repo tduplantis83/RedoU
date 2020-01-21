@@ -3,6 +3,7 @@ package com.redou.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,8 +22,10 @@ public class User {
 
 	private String password;
 
+	@Column(name="firstname")
 	private String firstName;
 
+	@Column(name="lastname")
 	private String lastName;
 
 	private LocalDate birthday;
@@ -35,8 +38,10 @@ public class User {
 
 	private String role;
 
+	@Column(name="datecreated")
 	private LocalDate dateCreated;
 
+	@Column(name="dateupdated")
 	private LocalDate dateUpdated;
 
 	@OneToMany(mappedBy = "user")

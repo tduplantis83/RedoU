@@ -32,17 +32,17 @@ public class PostServiceImpl implements PostService{
 
 	@Override
 	public List<Post> getPostByPostTopic(String postTopic) {
-		return repo.findByPostTopicIgnoreCaseLike("%" + postTopic + "%");
+		return repo.findByPostTopic_TopicNameIgnoreCase(postTopic);
 	}
 
 	@Override
 	public List<Post> getPostByTitle(String title) {
-		return repo.findByTitleIgnoreCaseLike("%" + title + "%");
+		return repo.findByTitleLikeIgnoreCase("%" + title + "%");
 	}
 
 	@Override
 	public List<Post> getPostByContent(String content) {
-		return repo.findByContentIgnoreCaseLike("%" + content + "%");
+		return repo.findByContentLikeIgnoreCase("%" + content + "%");
 	}
 
 	@Override

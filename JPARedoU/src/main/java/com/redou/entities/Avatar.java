@@ -3,6 +3,7 @@ package com.redou.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,16 +18,21 @@ public class Avatar {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(name="avatargroup")
 	private int avatarGroup;
 
 	private String sex;
 
+	@Column(name="bodytype")
 	private String bodyType;
 
+	@Column(name="avatarurl")
 	private String avatarUrl;
 
+	@Column(name="datecreated")
 	private LocalDate dateCreated;
 
+	@Column(name="dateupdated")
 	private LocalDate dateUpdated;
 
 	@OneToMany(mappedBy = "avatar")
