@@ -35,17 +35,17 @@ class UserRepoTest {
 	}
 	
 	@Test
-	@DisplayName("test findByUsernameLikeIgnoreCase")
+	@DisplayName("test findByUsernameIgnoreCaseContaining")
 	void test3() {
-		List<User> users = repo.findByUsernameLikeIgnoreCase("TRAVISD");
+		List<User> users = repo.findByUsernameIgnoreCaseContaining("RAVIS");
 		assertEquals(1, users.size());
 		assertEquals("Travis", users.get(0).getFirstName());
 	}
 	
 	@Test
-	@DisplayName("test findByEmailLikeIgnoreCase")
+	@DisplayName("test findByEmailIgnoreCaseContaining")
 	void test4() {
-		List<User> users = repo.findByEmailLikeIgnoreCase("TDUPLANTIS83@GMAIL.COM");
+		List<User> users = repo.findByEmailIgnoreCaseContaining("LANTIS83@GMAI");
 		assertEquals(1, users.size());
 		assertEquals("Travis", users.get(0).getFirstName());
 	}
