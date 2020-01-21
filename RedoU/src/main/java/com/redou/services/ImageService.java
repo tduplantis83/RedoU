@@ -10,4 +10,10 @@ public interface ImageService {
 	public List<Image> getImageByUserId(int userId);
 
 	public List<Image> getImageByUsername(String username);
+	
+	public Image createImage(Image img);
+
+	public Image updateImage(Image img);
+	
+	public boolean deleteImage(int id);
 }

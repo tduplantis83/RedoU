@@ -10,5 +10,11 @@ public interface DailyExerciseCaloricDeficitService {
 	public List<DailyExerciseCaloricDeficit> getDailyExerciseCaloricDeficitByUserId(int userId);
 
 	public List<DailyExerciseCaloricDeficit> getDailyExerciseCaloricDeficitByUsername(String username);
+	
+	public DailyExerciseCaloricDeficit createDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit);
+
+	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit);
+	
+	public boolean deleteDailyExerciseCaloricDeficit(int id);
 
 }

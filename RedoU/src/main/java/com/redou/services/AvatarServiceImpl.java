@@ -10,8 +10,8 @@ import com.redou.entities.Avatar;
 import com.redou.repositories.AvatarRepo;
 
 @Service
-public class AvatarServiceImpl implements AvatarService{
-	
+public class AvatarServiceImpl implements AvatarService {
+
 	@Autowired
 	private AvatarRepo repo;
 
@@ -24,41 +24,38 @@ public class AvatarServiceImpl implements AvatarService{
 	public Avatar createAvatar(Avatar avatar) {
 		avatar.setDateCreated(LocalDate.now());
 		avatar.setDateUpdated(LocalDate.now());
-		
+
 		return repo.saveAndFlush(avatar);
 	}
 
 	@Override
 	public Avatar updateAvatar(Avatar avatar) {
 		Avatar toUpdate = repo.findById(avatar.getId());
-		
+
 		toUpdate.setAvatarGroup(avatar.getAvatarGroup());
 		toUpdate.setSex(avatar.getSex());
 		toUpdate.setBodyType(avatar.getBodyType());
 		toUpdate.setAvatarUrl(avatar.getAvatarUrl());
 		toUpdate.setDateUpdated(LocalDate.now());
-		
-		repo.saveAndFlush(toUpdate);
-		
-		return toUpdate;
+
+		return repo.saveAndFlush(toUpdate);
 	}
 
 	@Override
 	public boolean deleteAvatar(int id) {
-		
+
 		try {
 			Avatar toDelete = repo.findById(id);
-			
+
 			List<Avatar> groupToDelete = repo.findByAvatarGroup(toDelete.getAvatarGroup());
-			
+
 			for (Avatar avatar : groupToDelete) {
 				repo.delete(avatar);
 			}
 			return true;
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
-	
+
 }

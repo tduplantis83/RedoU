@@ -14,4 +14,10 @@ public interface UserService {
 	public List<User> getUserByEnabled(boolean enabled);
 
 	public List<User> getUserByRole(String role);
+	
+	public User createUser(User user);
+
+	public User updateUser(User user);
+	
+	public boolean deleteUser(int id);
 }

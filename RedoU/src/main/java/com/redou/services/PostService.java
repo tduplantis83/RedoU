@@ -16,4 +16,10 @@ public interface PostService {
 	public List<Post> getPostByTitle(String title);
 
 	public List<Post> getPostByContent(String content);
+	
+	public Post createPost(Post post);
+
+	public Post updatePost(Post post);
+	
+	public boolean deletePost(int id);
 }
