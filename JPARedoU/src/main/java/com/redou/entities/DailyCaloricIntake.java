@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "daily_caloric_intake")
 public class DailyCaloricIntake {
@@ -20,6 +23,7 @@ public class DailyCaloricIntake {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnoreProperties({"dailyCaloricIntakesMealTypes"})
 	@ManyToOne
 	@JoinColumn(name = "mealtype_id")
 	private MealType mealType;
@@ -36,6 +40,7 @@ public class DailyCaloricIntake {
 	@Column(name="mealdescription")
 	private String mealDescription;
 
+	@JsonIgnoreProperties({"userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits", "userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies"})
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

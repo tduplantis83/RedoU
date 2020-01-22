@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Image {
 
@@ -18,6 +20,7 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnoreProperties({"userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits", "userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies"})
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
