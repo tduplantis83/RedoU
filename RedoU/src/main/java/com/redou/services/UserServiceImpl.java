@@ -10,30 +10,29 @@ import com.redou.entities.User;
 import com.redou.repositories.UserRepo;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
 	private UserRepo repo;
 
 	@Override
 	public User getUserById(int id) {
-		System.err.println("**********In service impl method with User Id: " + id);
 		return repo.findById(id);
 	}
-	
+
 	@Override
 	public User getUserByUsernameExact(String username) {
 		return repo.findByUsernameIgnoreCase(username);
 	}
 
 	@Override
-	public List<User>  getUserByUsername(String username) {
-		return repo.findByUsernameIgnoreCaseContaining("%" + username + "%");
+	public List<User> getUserByUsernameContaining(String username) {
+		return repo.findByUsernameIgnoreCaseContaining(username);
 	}
 
 	@Override
-	public List<User> getUserByEmail(String email) {
-		return repo.findByEmailIgnoreCaseContaining("%" + email + "%");
+	public List<User> getUserByEmailContaining(String email) {
+		return repo.findByEmailIgnoreCaseContaining(email);
 	}
 
 	@Override
@@ -50,14 +49,14 @@ public class UserServiceImpl implements UserService{
 	public User createUser(User user) {
 		user.setDateCreated(LocalDate.now());
 		user.setDateUpdated(LocalDate.now());
-		
+
 		return repo.saveAndFlush(user);
 	}
 
 	@Override
 	public User updateUser(User user) {
 		User toUpdate = repo.findById(user.getId());
-		
+
 		toUpdate.setUsername(user.getUsername());
 		toUpdate.setPassword(user.getPassword());
 		toUpdate.setFirstName(user.getFirstName());
@@ -69,7 +68,7 @@ public class UserServiceImpl implements UserService{
 		toUpdate.setRole(user.getRole());
 		toUpdate.setDateCreated(user.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
-		
+
 		return repo.saveAndFlush(toUpdate);
 	}
 
@@ -79,12 +78,11 @@ public class UserServiceImpl implements UserService{
 			User toDelete = repo.findById(id);
 
 			repo.delete(toDelete);
-			
+
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
 	}
-
 
 }

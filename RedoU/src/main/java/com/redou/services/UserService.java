@@ -8,10 +8,10 @@ public interface UserService {
 	public User getUserById(int id);
 	
 	public User getUserByUsernameExact(String username);
+	
+	public List<User> getUserByUsernameContaining(String username);
 
-	public List<User> getUserByUsername(String username);
-
-	public List<User> getUserByEmail(String email);
+	public List<User> getUserByEmailContaining(String email);
 
 	public List<User> getUserByEnabled(boolean enabled);
 
