@@ -33,7 +33,6 @@ public class UserController {
 	
 	@GetMapping("users/id/{id}")
 	public User getUserById(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
-		System.err.println("**********In controller method with User Id: " + id);
 		User user = userSvc.getUserById(id);
 		if (user == null) {
 			resp.setStatus(404);
@@ -43,9 +42,20 @@ public class UserController {
 		return user;
 	}
 	
+	@GetMapping("users/username/exact/{username}")
+	public User getUserByUsernameExact(@PathVariable String username, HttpServletRequest req, HttpServletResponse resp) {
+		User user = userSvc.getUserByUsernameExact(username);
+		if (user == null) {
+			resp.setStatus(404);
+		} else {
+			resp.setStatus(200);
+		}
+		return user;
+	}
+	
 	@GetMapping("users/username/{username}")
-	public List<User> getUserByUsername(@PathVariable String username, HttpServletRequest req, HttpServletResponse resp) {
-		List<User> users = userSvc.getUserByUsername(username);
+	public List<User> getUserByUsernameContaining(@PathVariable String username, HttpServletRequest req, HttpServletResponse resp) {
+		List<User> users = userSvc.getUserByUsernameContaining(username);
 		if (users.size() == 0) {
 			resp.setStatus(404);
 		} else {
@@ -56,7 +66,7 @@ public class UserController {
 	
 	@GetMapping("users/email/{email}")
 	public List<User> getUserByEmail(@PathVariable String email, HttpServletRequest req, HttpServletResponse resp) {
-		List<User> users = userSvc.getUserByEmail(email);
+		List<User> users = userSvc.getUserByEmailContaining(email);
 		if (users.size() == 0) {
 			resp.setStatus(404);
 		} else {
