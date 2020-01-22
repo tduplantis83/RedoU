@@ -19,7 +19,7 @@ public interface UserService {
 	
 	public User createUser(User user);
 
-	public User updateUser(User user);
+	public User updateUser(User user, int id);
 	
 	public boolean deleteUser(int id);
 }

@@ -65,7 +65,7 @@ public class UserController {
 	}
 	
 	@GetMapping("users/email/{email}")
-	public List<User> getUserByEmail(@PathVariable String email, HttpServletRequest req, HttpServletResponse resp) {
+	public List<User> getUserByEmailContaining(@PathVariable String email, HttpServletRequest req, HttpServletResponse resp) {
 		List<User> users = userSvc.getUserByEmailContaining(email);
 		if (users.size() == 0) {
 			resp.setStatus(404);
@@ -119,12 +119,14 @@ public class UserController {
 		return user;
 	}
 	
-	@PutMapping("api/users/update")
-	public User updateUser(@RequestBody User user, HttpServletRequest req,
+	@PutMapping("api/users/update/{id}")
+	public User updateUser(@RequestBody User user, @PathVariable int id, HttpServletRequest req,
 			HttpServletResponse resp) {
 		try {
+			System.out.println("****** IN CONTROLLER UPDATE USER ******");
+			System.out.println("****** USER: " + user + " ******");
 			// try to update the provided user
-			user = userSvc.updateUser(user);
+			user = authSvc.updateUser(user, id);
 			if(user==null) {
 				resp.setStatus(404);
 			}
@@ -145,12 +147,12 @@ public class UserController {
 	}
 	
 	@PutMapping("api/users/disable")
-	public User disableUser(@RequestBody User user, HttpServletRequest req,
+	public User disableUser(@RequestBody User user, @PathVariable int id, HttpServletRequest req,
 			HttpServletResponse resp) {
 		try {
 			// try to update the provided user
 			user.setEnabled(false);
-			user = userSvc.updateUser(user);
+			user = userSvc.updateUser(user, id);
 			if(user==null) {
 				resp.setStatus(404);
 			}
