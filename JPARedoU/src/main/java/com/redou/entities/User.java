@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class User {
 
@@ -44,27 +46,35 @@ public class User {
 	@Column(name="dateupdated")
 	private LocalDate dateUpdated;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<UserCurrentGoal> userCurrentGoals;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<DailyCaloricIntake> userDailyCaloricIntakes;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<Image> userImages;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<UserAvatar> userAvatars;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<BodyMeasurementMetric> userBodyMeasurementMetrics;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<Post> userPosts;
 
+	@JsonIgnoreProperties({"replyUser"})
 	@OneToMany(mappedBy = "replyUser")
 	private List<PostReply> userPostReplies;
 
