@@ -19,18 +19,17 @@ import com.redou.entities.User;
 import com.redou.services.AuthService;
 import com.redou.services.UserService;
 
-
 @RestController
 //@RequestMapping(path = "api")
 @CrossOrigin({ "*", "http://localhost:4444" })
 public class UserController {
-	
+
 	@Autowired
 	private UserService userSvc;
 
 	@Autowired
 	private AuthService authSvc;
-	
+
 	@GetMapping("users/id/{id}")
 	public User getUserById(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
 		User user = userSvc.getUserById(id);
@@ -41,9 +40,10 @@ public class UserController {
 		}
 		return user;
 	}
-	
+
 	@GetMapping("users/username/exact/{username}")
-	public User getUserByUsernameExact(@PathVariable String username, HttpServletRequest req, HttpServletResponse resp) {
+	public User getUserByUsernameExact(@PathVariable String username, HttpServletRequest req,
+			HttpServletResponse resp) {
 		User user = userSvc.getUserByUsernameExact(username);
 		if (user == null) {
 			resp.setStatus(404);
@@ -52,9 +52,10 @@ public class UserController {
 		}
 		return user;
 	}
-	
+
 	@GetMapping("users/username/{username}")
-	public List<User> getUserByUsernameContaining(@PathVariable String username, HttpServletRequest req, HttpServletResponse resp) {
+	public List<User> getUserByUsernameContaining(@PathVariable String username, HttpServletRequest req,
+			HttpServletResponse resp) {
 		List<User> users = userSvc.getUserByUsernameContaining(username);
 		if (users.size() == 0) {
 			resp.setStatus(404);
@@ -63,9 +64,10 @@ public class UserController {
 		}
 		return users;
 	}
-	
+
 	@GetMapping("users/email/{email}")
-	public List<User> getUserByEmailContaining(@PathVariable String email, HttpServletRequest req, HttpServletResponse resp) {
+	public List<User> getUserByEmailContaining(@PathVariable String email, HttpServletRequest req,
+			HttpServletResponse resp) {
 		List<User> users = userSvc.getUserByEmailContaining(email);
 		if (users.size() == 0) {
 			resp.setStatus(404);
@@ -74,9 +76,10 @@ public class UserController {
 		}
 		return users;
 	}
-	
+
 	@GetMapping("api/users/enabled/{enabled}")
-	public List<User> getUserByEnabled(@PathVariable boolean enabled, HttpServletRequest req, HttpServletResponse resp) {
+	public List<User> getUserByEnabled(@PathVariable boolean enabled, HttpServletRequest req,
+			HttpServletResponse resp) {
 		List<User> users = userSvc.getUserByEnabled(enabled);
 		if (users.size() == 0) {
 			resp.setStatus(404);
@@ -85,7 +88,7 @@ public class UserController {
 		}
 		return users;
 	}
-	
+
 	@GetMapping("api/users/role/{role}")
 	public List<User> getUserByRole(@PathVariable String role, HttpServletRequest req, HttpServletResponse resp) {
 		List<User> users = userSvc.getUserByRole(role);
@@ -96,7 +99,18 @@ public class UserController {
 		}
 		return users;
 	}
-	
+
+	@GetMapping("api/users/all")
+	public List<User> getAllUsers(HttpServletRequest req, HttpServletResponse resp) {
+		List<User> users = userSvc.getAllUsers();
+		if (users.size() == 0) {
+			resp.setStatus(404);
+		} else {
+			resp.setStatus(200);
+		}
+		return users;
+	}
+
 	@PostMapping("users/create")
 	public User createUser(@RequestBody User user, HttpServletRequest req, HttpServletResponse resp) {
 		try {
@@ -118,7 +132,7 @@ public class UserController {
 
 		return user;
 	}
-	
+
 	@PutMapping("api/users/update/{id}")
 	public User updateUser(@RequestBody User user, @PathVariable int id, HttpServletRequest req,
 			HttpServletResponse resp) {
@@ -127,10 +141,9 @@ public class UserController {
 			System.out.println("****** USER: " + user + " ******");
 			// try to update the provided user
 			user = authSvc.updateUser(user, id);
-			if(user==null) {
+			if (user == null) {
 				resp.setStatus(404);
-			}
-			else {
+			} else {
 				// if successful, send 200
 				resp.setStatus(200);
 			}
@@ -145,18 +158,17 @@ public class UserController {
 		return user;
 
 	}
-	
-	@PutMapping("api/users/disable")
-	public User disableUser(@RequestBody User user, @PathVariable int id, HttpServletRequest req,
-			HttpServletResponse resp) {
+
+	@PutMapping("api/users/disable/{id}")
+	public User disableUser(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
+		User user = userSvc.getUserById(id);
 		try {
 			// try to update the provided user
 			user.setEnabled(false);
-			user = userSvc.updateUser(user, id);
-			if(user==null) {
+			user = authSvc.updateUser(user, id);
+			if (user == null) {
 				resp.setStatus(404);
-			}
-			else {
+			} else {
 				// if successful, send 200
 				resp.setStatus(200);
 			}
@@ -171,10 +183,35 @@ public class UserController {
 		return user;
 
 	}
-	
+
+	@PutMapping("api/users/enable/{id}")
+	public User enableUser(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
+		User user = userSvc.getUserById(id);
+		try {
+			// try to update the provided user
+			user.setEnabled(true);
+			user = authSvc.updateUser(user, id);
+			if (user == null) {
+				resp.setStatus(404);
+			} else {
+				// if successful, send 200
+				resp.setStatus(200);
+			}
+		} catch (Exception e) {
+			// if update fails, return 404 error
+			e.printStackTrace();
+			resp.setStatus(400);
+			// set the returning post to null
+			user = null;
+		}
+
+		return user;
+
+	}
+
 	@DeleteMapping("api/users/delete/{id}")
 	public void deleteUser(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
-		
+
 		try {
 			if (userSvc.deleteUser(id)) {
 				// if successful, send 204 - no content to send back
@@ -192,9 +229,3 @@ public class UserController {
 	}
 
 }
-
-
-
-
-
-

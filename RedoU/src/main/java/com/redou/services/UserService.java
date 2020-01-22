@@ -17,6 +17,8 @@ public interface UserService {
 
 	public List<User> getUserByRole(String role);
 	
+	public List<User> getAllUsers();
+	
 	public User createUser(User user);
 
 	public User updateUser(User user, int id);

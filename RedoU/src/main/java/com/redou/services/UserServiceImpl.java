@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
 	public List<User> getUserByRole(String role) {
 		return repo.findByRoleIgnoreCase(role);
 	}
+	
+	@Override
+	public List<User> getAllUsers() {
+		return repo.findAll();
+	}
 
 	@Override
 	public User createUser(User user) {
@@ -55,8 +60,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateUser(User user, int id) {
-		System.out.println("****** IN USER SVC IMPL UPDATE USER ******");
-		System.out.println("****** USER before find/update: " + user + " ******");
 		
 		User toUpdate = repo.findById(id);
 
@@ -72,8 +75,6 @@ public class UserServiceImpl implements UserService {
 		toUpdate.setDateCreated(user.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
 		
-		System.out.println("****** USER after find/update, before save&flush: " + toUpdate + " ******");
-
 		return repo.saveAndFlush(toUpdate);
 	}
 
