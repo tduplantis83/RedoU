@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "user_current_goal")
 public class UserCurrentGoal {
@@ -20,10 +23,12 @@ public class UserCurrentGoal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnoreProperties({"userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits", "userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies"})
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@JsonIgnoreProperties({"userCurrentGoals"})
 	@ManyToOne
 	@JoinColumn(name = "goal_id")
 	private Goal goal;

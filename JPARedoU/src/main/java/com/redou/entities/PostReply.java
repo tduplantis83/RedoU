@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "post_reply")
 public class PostReply {
@@ -20,10 +22,12 @@ public class PostReply {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnoreProperties({"userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits", "userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies"})
 	@ManyToOne
 	@JoinColumn(name = "reply_user_id")
 	private User replyUser;
 
+	@JsonIgnoreProperties({"originalPostReplies"})
 	@ManyToOne
 	@JoinColumn(name = "originalpost_id")
 	private Post originalPost;
