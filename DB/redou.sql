@@ -325,9 +325,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (1, 'admin', 'YWRtaW4=', 'Web', 'Administrator', '1983-01-01', 'M', 'admin@redou.com', 1, 'admin', '2020-01-16', '2020-01-16');
-INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (2, 'travisd', 'dGVzdA==', 'Travis', 'Duplantis', '1983-07-01', 'M', 'tduplantis83@gmail.com', 1, 'user', '2020-01-16', '2020-01-16');
-INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (3, 'emilyd', 'dGVzdA==', 'Emily', 'Duplantis', '1985-03-27', 'F', 'eduplantis85@gmail.com', 1, 'user', '2020-01-16', '2020-01-16');
+INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (1, 'admin', '$2a$10$twiPO/2B4aV26SaHefJUbu8jlUEF9JvxDL1qqN9Bh4EK1yVgnHVYS', 'RedoU', 'Administrator', '1983-01-01', 'M', 'admin@redou.com', 1, 'admin', '2020-01-16', '2020-01-22');
+INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (2, 'travisd', '$2a$10$3PsHWAFTOzhDDqGED0ypPepRZbW7ikKgeYwsY3wqIbWcnjgSarZ0K', 'Travis', 'Duplantis', '1983-07-01', 'M', 'tduplantis83@gmail.com', 1, 'user', '2020-01-16', '2020-01-22');
+INSERT INTO `user` (`id`, `username`, `password`, `firstName`, `lastName`, `birthday`, `sex`, `email`, `enabled`, `role`, `dateCreated`, `dateUpdated`) VALUES (3, 'emilyd', '$2a$10$3PsHWAFTOzhDDqGED0ypPepRZbW7ikKgeYwsY3wqIbWcnjgSarZ0K', 'Emily', 'Duplantis', '1985-03-27', 'F', 'eduplantis85@gmail.com', 1, 'user', '2020-01-16', '2020-01-22');
 
 COMMIT;
 

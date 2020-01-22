@@ -10,4 +10,6 @@ public interface AuthService {
 	public boolean isUserEmailUnique(String email);
 
 	public boolean isUserUnique(String username, String email);
+	
+	public User updateUser(User user, int id);
 }

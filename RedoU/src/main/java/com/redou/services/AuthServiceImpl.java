@@ -81,5 +81,17 @@ public class AuthServiceImpl implements AuthService{
 		return isUnique;
 	}
 
+	@Override
+	public User updateUser(User user, int id) {
+		System.out.println("****** IN AUTH SVC IMPL UPDATE USER ******");
+		System.out.println("****** USER before update password: " + user + " ******");
+		
+		String encrypted = encoder.encode(user.getPassword());
+		user.setPassword(encrypted);
+		
+		System.out.println("****** USER after update password: " + user + " ******");
+		return userSvc.updateUser(user, id);
+	}
+
 }
 

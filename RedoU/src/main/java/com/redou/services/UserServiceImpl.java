@@ -54,8 +54,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(User user) {
-		User toUpdate = repo.findById(user.getId());
+	public User updateUser(User user, int id) {
+		System.out.println("****** IN USER SVC IMPL UPDATE USER ******");
+		System.out.println("****** USER before find/update: " + user + " ******");
+		
+		User toUpdate = repo.findById(id);
 
 		toUpdate.setUsername(user.getUsername());
 		toUpdate.setPassword(user.getPassword());
@@ -68,6 +71,8 @@ public class UserServiceImpl implements UserService {
 		toUpdate.setRole(user.getRole());
 		toUpdate.setDateCreated(user.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
+		
+		System.out.println("****** USER after find/update, before save&flush: " + toUpdate + " ******");
 
 		return repo.saveAndFlush(toUpdate);
 	}
