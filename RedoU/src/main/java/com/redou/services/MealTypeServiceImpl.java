@@ -40,7 +40,7 @@ public class MealTypeServiceImpl implements MealTypeService{
 
 	@Override
 	public MealType updateMealType(MealType mealType, int id) {
-		MealType toUpdate = repo.findById(mealType.getId());
+		MealType toUpdate = repo.findById(id);
 		
 		toUpdate.setMealTypeName(mealType.getMealTypeName());
 		toUpdate.setDateUpdated(LocalDate.now());
