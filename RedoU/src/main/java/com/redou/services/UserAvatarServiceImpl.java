@@ -87,13 +87,13 @@ public class UserAvatarServiceImpl implements UserAvatarService{
 		for(int i = 0; i < currentAvatars.size(); i++) {
 			if(currentAvatars.get(i).getAvatar().getBodyType().equalsIgnoreCase(bodyType)) {
 				currentAvatars.get(i).setCurrent(true);
-				currentAvatars.get(i).setDateCreated(LocalDate.now());
+				currentAvatars.get(i).setDateUpdated(LocalDate.now());
 				newCurrent = currentAvatars.get(i);
 				repo.saveAndFlush(currentAvatars.get(i));
 			}
 			else {
 				currentAvatars.get(i).setCurrent(false);
-				currentAvatars.get(i).setDateCreated(LocalDate.now());
+				currentAvatars.get(i).setDateUpdated(LocalDate.now());
 				repo.saveAndFlush(currentAvatars.get(i));
 			}
 		}

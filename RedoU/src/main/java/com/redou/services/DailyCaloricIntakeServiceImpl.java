@@ -46,6 +46,7 @@ public class DailyCaloricIntakeServiceImpl implements DailyCaloricIntakeService 
 		toUpdate.setMealType(intake.getMealType());
 		toUpdate.setCaloriesThisMeal(intake.getCaloriesThisMeal());
 		toUpdate.setMealDescription(intake.getMealDescription());
+		//allow update of dateCreated incase wrong date was used when recored was created
 		toUpdate.setDateCreated(intake.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
 

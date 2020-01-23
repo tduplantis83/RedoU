@@ -30,7 +30,12 @@ public class AuthServiceImpl implements AuthService{
 		user.setEnabled(true);
 		user.setRole("user");
 		
-		return userSvc.createUser(user);
+		if(isUserUsernameUnique(user.getUsername())) {
+			return userSvc.createUser(user);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
