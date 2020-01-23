@@ -422,6 +422,8 @@ START TRANSACTION;
 USE `redou`;
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 'https://i.imgur.com/puVjtA9.jpg', '2020-01-15', '2020-01-15');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 'https://i.imgur.com/zSACF2B.jpg', '2020-01-15', '2020-01-15');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 'https://i.imgur.com/5tSrGNG.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 'https://i.imgur.com/V9rUJEe.jpg', '2020-01-22', '2020-01-22');
 
 COMMIT;
 
