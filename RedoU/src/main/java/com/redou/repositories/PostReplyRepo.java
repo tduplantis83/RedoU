@@ -13,10 +13,9 @@ public interface PostReplyRepo extends JpaRepository<PostReply, Integer> {
 
 	public List<PostReply> findByReplyUser_UsernameIgnoreCase(String username);
 
-	public PostReply findByOriginalPost_Id(int originalPostId);
+	public List<PostReply>  findByOriginalPost_Id(int originalPostId);
 
-	public PostReply findByOriginalPost_User_Id(int originalPostUserId);
+	public List<PostReply>  findByOriginalPost_User_Id(int originalPostUserId);
 	
-	public PostReply findByOriginalPost_User_UsernameIgnoreCase(String username);
-	
+	public List<PostReply>  findByOriginalPost_User_UsernameIgnoreCase(String username);
 }

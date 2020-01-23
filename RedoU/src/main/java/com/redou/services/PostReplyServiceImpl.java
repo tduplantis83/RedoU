@@ -31,17 +31,17 @@ public class PostReplyServiceImpl implements PostReplyService{
 	}
 
 	@Override
-	public PostReply getPostReplyByOriginalPostId(int originalPostId) {
+	public List<PostReply> getPostReplyByOriginalPostId(int originalPostId) {
 		return repo.findByOriginalPost_Id(originalPostId);
 	}
 	
 	@Override
-	public PostReply getPostReplyByOriginalPostUserId(int originalPostUserId) {
+	public List<PostReply> getPostReplyByOriginalPostUserId(int originalPostUserId) {
 		return repo.findByOriginalPost_User_Id(originalPostUserId);
 	}
 
 	@Override
-	public PostReply getPostReplyByOriginalPostUsername(String username) {
+	public List<PostReply> getPostReplyByOriginalPostUsername(String username) {
 		return repo.findByOriginalPost_User_UsernameIgnoreCase(username);
 	}
 
@@ -49,6 +49,16 @@ public class PostReplyServiceImpl implements PostReplyService{
 	public PostReply createPostReply(PostReply reply) {
 		reply.setDateCreated(LocalDate.now());
 		reply.setDateUpdated(LocalDate.now());
+		
+		return repo.saveAndFlush(reply);
+	}
+	
+	@Override
+	public PostReply createPostReplyToReply(PostReply reply, int id) {
+		reply.setDateCreated(LocalDate.now());
+		reply.setDateUpdated(LocalDate.now());
+		reply.setReplyToReply(repo.findById(id));
+		reply.setOriginalPost(repo.findById(id).getOriginalPost());
 		
 		return repo.saveAndFlush(reply);
 	}
@@ -77,6 +87,8 @@ public class PostReplyServiceImpl implements PostReplyService{
 			return false;
 		}
 	}
+
+	
 
 	
 	
