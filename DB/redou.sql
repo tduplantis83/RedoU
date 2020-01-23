@@ -443,6 +443,16 @@ INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `date
 INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (8, 2, 'F', 'Fat', 'https://i.imgur.com/P0LEumI.jpg', '2020-01-17', '2020-01-17');
 INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (9, 2, 'F', 'Athletic', 'https://i.imgur.com/hwcAc1R.jpg', '2020-01-17', '2020-01-17');
 INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (10, 2, 'F', 'Muscular', 'https://i.imgur.com/e9q4Cgh.jpg', '2020-01-17', '2020-01-17');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (11, 3, 'M', 'Thin', 'https://i.imgur.com/924NgVA.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (12, 3, 'M', 'Average', 'https://i.imgur.com/RVbXOPm.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (13, 3, 'M', 'Fat', 'https://i.imgur.com/SB7Is6U.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (14, 3, 'M', 'Athletic', 'https://i.imgur.com/eWJ31IE.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (15, 3, 'M', 'Muscular', 'https://i.imgur.com/3dvjEp5.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (16, 4, 'M', 'Thin', 'https://i.imgur.com/88Xh2ys.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (17, 4, 'M', 'Average', 'https://i.imgur.com/KC3R5bH.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (18, 4, 'M', 'Fat', 'https://i.imgur.com/FzEJwcu.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (19, 4, 'M', 'Athletic', 'https://i.imgur.com/R8mmba1.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `avatar` (`id`, `avatarGroup`, `sex`, `bodyType`, `avatarUrl`, `dateCreated`, `dateUpdated`) VALUES (20, 4, 'M', 'Muscular', 'https://i.imgur.com/9FnnFPu.jpg', '2020-01-22', '2020-01-22');
 
 COMMIT;
 
