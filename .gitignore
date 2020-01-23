@@ -6,4 +6,4 @@ target
 .gradle
 .classpath
 /.metadata/
-Avatars
+/Avatars/*
