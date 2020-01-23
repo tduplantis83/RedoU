@@ -60,5 +60,12 @@ class PostReplyTest {
 	void test3() {
 		assertEquals("travisd", pr.getReplyUser().getUsername());
 	}
+	
+	@Test
+	@DisplayName("Get Post Reply to Post Reply Test")
+	void test4() {
+		assertEquals(1, pr.getRepliesToPostReply().size());
+		assertEquals("Which intermittent fasting method is the best for losing weight quickly, and why?", pr.getRepliesToPostReply().get(0).getReplyContent());
+	}
 
 }

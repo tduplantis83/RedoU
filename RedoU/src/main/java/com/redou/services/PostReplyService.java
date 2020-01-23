@@ -11,13 +11,15 @@ public interface PostReplyService {
 
 	public List<PostReply> getPostReplyByReplyUsername(String username);
 
-	public PostReply getPostReplyByOriginalPostId(int originalPostId);
+	public List<PostReply> getPostReplyByOriginalPostId(int originalPostId);
 	
-	public PostReply getPostReplyByOriginalPostUserId(int originalPostUserId);
+	public List<PostReply> getPostReplyByOriginalPostUserId(int originalPostUserId);
 	
-	public PostReply getPostReplyByOriginalPostUsername(String username);
+	public List<PostReply> getPostReplyByOriginalPostUsername(String username);
 	
 	public PostReply createPostReply(PostReply reply);
+
+	public PostReply createPostReplyToReply(PostReply reply, int id);
 
 	public PostReply updatePostReply(PostReply reply, int id);
 	

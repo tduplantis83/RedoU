@@ -45,8 +45,8 @@ class PostReplyRepoTest {
 	@Test
 	@DisplayName("test findByOriginalPost_Id")
 	void test4() {
-		PostReply reply = repo.findByOriginalPost_Id(1);
-		assertEquals("Travis", reply.getReplyUser().getFirstName());
+		List<PostReply> reply = repo.findByOriginalPost_Id(1);
+		assertEquals("Travis", reply.get(0).getReplyUser().getFirstName());
 	}
 	
 }
