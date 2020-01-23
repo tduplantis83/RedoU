@@ -13,13 +13,13 @@ public interface PostService {
 
 	public List<Post> getPostByPostTopic(String postTopic);
 
-	public List<Post> getPostByTitle(String title);
+	public List<Post> getPostByTitleLike(String title);
 
-	public List<Post> getPostByContent(String content);
+	public List<Post> getPostByContentLike(String content);
 	
 	public Post createPost(Post post);
 
-	public Post updatePost(Post post);
+	public Post updatePost(Post post, int id);
 	
 	public boolean deletePost(int id);
 }

@@ -34,6 +34,16 @@ public class PostReplyServiceImpl implements PostReplyService{
 	public PostReply getPostReplyByOriginalPostId(int originalPostId) {
 		return repo.findByOriginalPost_Id(originalPostId);
 	}
+	
+	@Override
+	public PostReply getPostReplyByOriginalPostUserId(int originalPostUserId) {
+		return repo.findByOriginalPost_User_Id(originalPostUserId);
+	}
+
+	@Override
+	public PostReply getPostReplyByOriginalPostUsername(String username) {
+		return repo.findByOriginalPost_User_UsernameIgnoreCase(username);
+	}
 
 	@Override
 	public PostReply createPostReply(PostReply reply) {
@@ -44,8 +54,8 @@ public class PostReplyServiceImpl implements PostReplyService{
 	}
 
 	@Override
-	public PostReply updatePostReply(PostReply reply) {
-		PostReply toUpdate = repo.findById(reply.getId());
+	public PostReply updatePostReply(PostReply reply, int id) {
+		PostReply toUpdate = repo.findById(id);
 		
 		toUpdate.setReplyUser(reply.getReplyUser());
 		toUpdate.setOriginalPost(reply.getOriginalPost());
@@ -68,6 +78,8 @@ public class PostReplyServiceImpl implements PostReplyService{
 			return false;
 		}
 	}
+
+	
 	
 	
 

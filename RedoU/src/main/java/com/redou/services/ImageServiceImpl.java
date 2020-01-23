@@ -39,8 +39,8 @@ public class ImageServiceImpl implements ImageService{
 	}
 
 	@Override
-	public Image updateImage(Image img) {
-		Image toUpdate = repo.findById(img.getId());
+	public Image updateImage(Image img, int id) {
+		Image toUpdate = repo.findById(id);
 		
 		toUpdate.setUser(img.getUser());
 		toUpdate.setImageUrl(img.getImageUrl());

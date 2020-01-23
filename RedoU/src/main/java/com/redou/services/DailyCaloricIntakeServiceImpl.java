@@ -39,8 +39,8 @@ public class DailyCaloricIntakeServiceImpl implements DailyCaloricIntakeService 
 	}
 
 	@Override
-	public DailyCaloricIntake updateDailyCaloricIntake(DailyCaloricIntake intake) {
-		DailyCaloricIntake toUpdate = repo.findById(intake.getId());
+	public DailyCaloricIntake updateDailyCaloricIntake(DailyCaloricIntake intake, int id) {
+		DailyCaloricIntake toUpdate = repo.findById(id);
 		
 		toUpdate.setUser(intake.getUser());
 		toUpdate.setMealType(intake.getMealType());

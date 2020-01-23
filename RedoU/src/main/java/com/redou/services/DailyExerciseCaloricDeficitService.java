@@ -13,7 +13,7 @@ public interface DailyExerciseCaloricDeficitService {
 	
 	public DailyExerciseCaloricDeficit createDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit);
 
-	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit);
+	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit, int id);
 	
 	public boolean deleteDailyExerciseCaloricDeficit(int id);
 

@@ -13,7 +13,7 @@ public interface ImageService {
 	
 	public Image createImage(Image img);
 
-	public Image updateImage(Image img);
+	public Image updateImage(Image img, int id);
 	
 	public boolean deleteImage(int id);
 }

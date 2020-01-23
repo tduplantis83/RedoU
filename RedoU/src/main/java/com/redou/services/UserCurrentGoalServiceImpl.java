@@ -39,8 +39,8 @@ public class UserCurrentGoalServiceImpl implements UserCurrentGoalService{
 	}
 
 	@Override
-	public UserCurrentGoal updateUserCurrentGoal(UserCurrentGoal goal) {
-		UserCurrentGoal toUpdate = repo.findById(goal.getId());
+	public UserCurrentGoal updateUserCurrentGoal(UserCurrentGoal goal, int id) {
+		UserCurrentGoal toUpdate = repo.findById(id);
 		
 		toUpdate.setUser(goal.getUser());
 		toUpdate.setGoal(goal.getGoal());

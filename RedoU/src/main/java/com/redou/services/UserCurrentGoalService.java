@@ -13,7 +13,7 @@ public interface UserCurrentGoalService {
 	
 	public UserCurrentGoal createUserCurrentGoal(UserCurrentGoal goal);
 
-	public UserCurrentGoal updateUserCurrentGoal(UserCurrentGoal goal);
+	public UserCurrentGoal updateUserCurrentGoal(UserCurrentGoal goal, int id);
 	
 	public boolean deleteUserCurrentGoal(int id);
 }

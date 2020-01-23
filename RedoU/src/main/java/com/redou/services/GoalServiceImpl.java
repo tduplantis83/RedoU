@@ -1,6 +1,7 @@
 package com.redou.services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class GoalServiceImpl implements GoalService{
 	public Goal getGoalByGoalName(String goalName) {
 		return repo.findByGoalNameIgnoreCase(goalName);
 	}
+	
+	@Override
+	public List<Goal> getAllGoals() {
+		return repo.findAll();
+	}
 
 	@Override
 	public Goal createGoal(Goal goal) {
@@ -33,8 +39,8 @@ public class GoalServiceImpl implements GoalService{
 	}
 
 	@Override
-	public Goal updateGoal(Goal goal) {
-		Goal toUpdate = repo.findById(goal.getId());
+	public Goal updateGoal(Goal goal, int id) {
+		Goal toUpdate = repo.findById(id);
 		
 		toUpdate.setGoalName(goal.getGoalName());
 		toUpdate.setDateCreated(goal.getDateCreated());
@@ -55,5 +61,7 @@ public class GoalServiceImpl implements GoalService{
 			return false;
 		}
 	}
+
+	
 
 }
