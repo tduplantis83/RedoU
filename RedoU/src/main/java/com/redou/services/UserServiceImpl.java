@@ -72,7 +72,6 @@ public class UserServiceImpl implements UserService {
 		toUpdate.setEmail(user.getEmail());
 		toUpdate.setEnabled(user.isEnabled());
 		toUpdate.setRole(user.getRole());
-		toUpdate.setDateCreated(user.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

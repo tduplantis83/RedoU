@@ -60,7 +60,6 @@ public class PostReplyServiceImpl implements PostReplyService{
 		toUpdate.setReplyUser(reply.getReplyUser());
 		toUpdate.setOriginalPost(reply.getOriginalPost());
 		toUpdate.setReplyContent(reply.getReplyContent());
-		toUpdate.setDateCreated(reply.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

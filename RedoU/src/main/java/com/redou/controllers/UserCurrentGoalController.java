@@ -71,7 +71,7 @@ public class UserCurrentGoalController {
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());
 			ucg.setUser(u);
-			ucgSvc.createUserCurrentGoal(ucg);
+			ucg = ucgSvc.createUserCurrentGoal(ucg);
 			// if successful, send 201
 			resp.setStatus(201);
 			// get the link to the created post
@@ -97,7 +97,7 @@ public class UserCurrentGoalController {
 			// try to update the provided user
 			User u = userSvc.getUserByUsernameExact(principal.getName());
 			ucg.setUser(u);
-			ucgSvc.updateUserCurrentGoal(ucg, id);
+			ucg = ucgSvc.updateUserCurrentGoal(ucg, id);
 			if (ucg == null) {
 				resp.setStatus(404);
 			} else {

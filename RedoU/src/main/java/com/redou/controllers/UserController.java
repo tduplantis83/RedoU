@@ -115,13 +115,24 @@ public class UserController {
 	public User createUser(@RequestBody User user, HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			user = authSvc.register(user);
-			// if successful, send 201
-			resp.setStatus(201);
-			// get the link to the created post
-			// return that in the Location header
-			StringBuffer url = req.getRequestURL();
-			url.append("/").append(user.getId());
-			resp.addHeader("Location", url.toString());
+			
+			if(user != null) {
+				// if successful, send 201
+				resp.setStatus(201);
+				// get the link to the created post
+				// return that in the Location header
+				StringBuffer url = req.getRequestURL();
+				url.append("/").append(user.getId());
+				resp.addHeader("Location", url.toString());
+			}
+			else {
+				resp.setStatus(200);
+				// return a Location header with 
+				// registration error
+				StringBuffer url = req.getRequestURL();
+				url.append("/").append("registrationerror");
+				resp.addHeader("Location", url.toString());
+			}
 		} catch (Exception e) {
 			// if creation fails, return 400 error
 			e.printStackTrace();

@@ -45,7 +45,6 @@ public class UserCurrentGoalServiceImpl implements UserCurrentGoalService{
 		toUpdate.setUser(goal.getUser());
 		toUpdate.setGoal(goal.getGoal());
 		toUpdate.setEnabled(goal.getEnabled());
-		toUpdate.setDateCreated(goal.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

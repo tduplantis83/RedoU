@@ -44,7 +44,6 @@ public class ImageServiceImpl implements ImageService{
 		
 		toUpdate.setUser(img.getUser());
 		toUpdate.setImageUrl(img.getImageUrl());
-		toUpdate.setDateCreated(img.getDateCreated());
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);
