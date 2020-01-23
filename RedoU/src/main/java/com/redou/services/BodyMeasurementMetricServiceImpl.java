@@ -29,6 +29,7 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 	public List<BodyMeasurementMetric> getBodyMeasurementMetricByUsername(String username) {
 		return repo.findByUser_UsernameIgnoreCase(username);
 	}
+	
 
 	@Override
 	public BodyMeasurementMetric createBodyMeasurementMetric(BodyMeasurementMetric measurement) {
@@ -39,8 +40,8 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 	}
 
 	@Override
-	public BodyMeasurementMetric updateBodyMeasurementMetric(BodyMeasurementMetric measurement) {
-		BodyMeasurementMetric toUpdate = repo.findById(measurement.getId());
+	public BodyMeasurementMetric updateBodyMeasurementMetric(BodyMeasurementMetric measurement, int id) {
+		BodyMeasurementMetric toUpdate = repo.findById(id);
 		
 		toUpdate.setUser(measurement.getUser());
 		toUpdate.setDateMeasured(measurement.getDateMeasured());
@@ -71,5 +72,9 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 			return false;
 		}
 	}
+
+
+
+	
 
 }

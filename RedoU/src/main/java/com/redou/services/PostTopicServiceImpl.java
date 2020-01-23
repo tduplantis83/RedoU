@@ -1,6 +1,7 @@
 package com.redou.services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class PostTopicServiceImpl implements PostTopicService{
 	public PostTopic getPostTopicByTopicName(String topicName) {
 		return repo.findByTopicNameIgnoreCase(topicName);
 	}
+	
+	@Override
+	public List<PostTopic> getAllPostTopics() {
+		return repo.findAll();
+	}
 
 	@Override
 	public PostTopic createPostTopic(PostTopic topic) {
@@ -33,7 +39,7 @@ public class PostTopicServiceImpl implements PostTopicService{
 	}
 
 	@Override
-	public PostTopic updatePostTopic(PostTopic topic) {
+	public PostTopic updatePostTopic(PostTopic topic, int id) {
 		PostTopic toUpdate = repo.findById(topic.getId());
 		
 		toUpdate.setTopicName(topic.getTopicName());
@@ -55,5 +61,7 @@ public class PostTopicServiceImpl implements PostTopicService{
 			return false;
 		}
 	}
+
+	
 
 }

@@ -13,7 +13,7 @@ public interface DailyCaloricIntakeService {
 	
 	public DailyCaloricIntake createDailyCaloricIntake(DailyCaloricIntake intake);
 
-	public DailyCaloricIntake updateDailyCaloricIntake(DailyCaloricIntake intake);
+	public DailyCaloricIntake updateDailyCaloricIntake(DailyCaloricIntake intake, int id);
 	
 	public boolean deleteDailyCaloricIntake(int id);
 }

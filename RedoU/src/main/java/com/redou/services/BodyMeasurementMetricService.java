@@ -13,7 +13,7 @@ public interface BodyMeasurementMetricService {
 	
 	public BodyMeasurementMetric createBodyMeasurementMetric(BodyMeasurementMetric measurement);
 
-	public BodyMeasurementMetric updateBodyMeasurementMetric(BodyMeasurementMetric measurement);
+	public BodyMeasurementMetric updateBodyMeasurementMetric(BodyMeasurementMetric measurement, int id);
 	
 	public boolean deleteBodyMeasurementMetric(int id);
 }

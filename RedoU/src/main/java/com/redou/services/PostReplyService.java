@@ -13,9 +13,13 @@ public interface PostReplyService {
 
 	public PostReply getPostReplyByOriginalPostId(int originalPostId);
 	
+	public PostReply getPostReplyByOriginalPostUserId(int originalPostUserId);
+	
+	public PostReply getPostReplyByOriginalPostUsername(String username);
+	
 	public PostReply createPostReply(PostReply reply);
 
-	public PostReply updatePostReply(PostReply reply);
+	public PostReply updatePostReply(PostReply reply, int id);
 	
 	public boolean deletePostReply(int id);
 }

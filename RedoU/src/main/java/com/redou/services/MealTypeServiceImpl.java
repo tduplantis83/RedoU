@@ -1,6 +1,7 @@
 package com.redou.services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,11 @@ public class MealTypeServiceImpl implements MealTypeService{
 	public MealType getMealTypeByMealTypeName(String mealTypeName) {
 		return repo.findByMealTypeNameIgnoreCase(mealTypeName);
 	}
+	
+	@Override
+	public List<MealType> getAllMealTypes() {
+		return repo.findAll();
+	}
 
 	@Override
 	public MealType createMealType(MealType mealType) {
@@ -33,7 +39,7 @@ public class MealTypeServiceImpl implements MealTypeService{
 	}
 
 	@Override
-	public MealType updateMealType(MealType mealType) {
+	public MealType updateMealType(MealType mealType, int id) {
 		MealType toUpdate = repo.findById(mealType.getId());
 		
 		toUpdate.setMealTypeName(mealType.getMealTypeName());
@@ -55,5 +61,7 @@ public class MealTypeServiceImpl implements MealTypeService{
 			return false;
 		}
 	}
+
+	
 
 }

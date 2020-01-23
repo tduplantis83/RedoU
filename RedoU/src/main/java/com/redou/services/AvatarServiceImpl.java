@@ -19,6 +19,21 @@ public class AvatarServiceImpl implements AvatarService {
 	public Avatar getAvatarById(int id) {
 		return repo.findById(id);
 	}
+	
+	@Override
+	public List<Avatar> getAllAvatar() {
+		return repo.findAll();
+	}
+	
+	@Override
+	public List<Avatar> getAvatarBySex(String sex) {
+		return repo.findBySex(sex);
+	}
+
+	@Override
+	public List<Avatar> getAvatarByBodyType(String bodyType) {
+		return repo.findByBodyType(bodyType);
+	}
 
 	@Override
 	public Avatar createAvatar(Avatar avatar) {
@@ -29,8 +44,8 @@ public class AvatarServiceImpl implements AvatarService {
 	}
 
 	@Override
-	public Avatar updateAvatar(Avatar avatar) {
-		Avatar toUpdate = repo.findById(avatar.getId());
+	public Avatar updateAvatar(Avatar avatar, int id) {
+		Avatar toUpdate = repo.findById(id);
 
 		toUpdate.setAvatarGroup(avatar.getAvatarGroup());
 		toUpdate.setSex(avatar.getSex());
@@ -57,5 +72,7 @@ public class AvatarServiceImpl implements AvatarService {
 			return false;
 		}
 	}
+
+	
 
 }

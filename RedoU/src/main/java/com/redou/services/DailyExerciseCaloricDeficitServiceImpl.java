@@ -39,8 +39,8 @@ public class DailyExerciseCaloricDeficitServiceImpl implements DailyExerciseCalo
 	}
 
 	@Override
-	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit) {
-		DailyExerciseCaloricDeficit toUpdate = repo.findById(deficit.getId());
+	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit, int id) {
+		DailyExerciseCaloricDeficit toUpdate = repo.findById(id);
 		
 		toUpdate.setUser(deficit.getUser());
 		toUpdate.setTotalCaloriesBurned(deficit.getTotalCaloriesBurned());

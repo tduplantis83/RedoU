@@ -36,13 +36,13 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public List<Post> getPostByTitle(String title) {
-		return repo.findByTitleIgnoreCaseContaining("%" + title + "%");
+	public List<Post> getPostByTitleLike(String title) {
+		return repo.findByTitleIgnoreCaseContaining(title);
 	}
 
 	@Override
-	public List<Post> getPostByContent(String content) {
-		return repo.findByContentIgnoreCaseContaining("%" + content + "%");
+	public List<Post> getPostByContentLike(String content) {
+		return repo.findByContentIgnoreCaseContaining(content);
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public Post updatePost(Post post) {
-		Post toUpdate = repo.findById(post.getId());
+	public Post updatePost(Post post, int id) {
+		Post toUpdate = repo.findById(id);
 		
 		toUpdate.setUser(post.getUser());
 		toUpdate.setPostTopic(post.getPostTopic());
