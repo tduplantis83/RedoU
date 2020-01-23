@@ -40,7 +40,7 @@ public class PostTopicServiceImpl implements PostTopicService{
 
 	@Override
 	public PostTopic updatePostTopic(PostTopic topic, int id) {
-		PostTopic toUpdate = repo.findById(topic.getId());
+		PostTopic toUpdate = repo.findById(id);
 		
 		toUpdate.setTopicName(topic.getTopicName());
 		toUpdate.setDateUpdated(LocalDate.now());
