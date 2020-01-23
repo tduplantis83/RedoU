@@ -507,6 +507,11 @@ INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated
 INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (8, 3, 8, 1, '2020-01-20', '2020-01-20');
 INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (9, 3, 9, 0, '2020-01-20', '2020-01-20');
 INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (10, 3, 10, 0, '2020-01-20', '2020-01-20');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (11, 1, 11, 0, '2020-01-22', '2020-01-22');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (12, 1, 12, 0, '2020-01-22', '2020-01-22');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (13, 1, 13, 0, '2020-01-22', '2020-01-22');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (14, 1, 14, 1, '2020-01-22', '2020-01-22');
+INSERT INTO `user_avatar` (`id`, `user_id`, `avatar_id`, `current`, `dateCreated`, `dateUpdated`) VALUES (15, 1, 15, 0, '2020-01-22', '2020-01-22');
 
 COMMIT;
 
