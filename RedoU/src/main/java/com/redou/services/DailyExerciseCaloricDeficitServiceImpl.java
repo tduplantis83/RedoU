@@ -46,7 +46,9 @@ public class DailyExerciseCaloricDeficitServiceImpl implements DailyExerciseCalo
 		toUpdate.setTotalCaloriesBurned(deficit.getTotalCaloriesBurned());
 		toUpdate.setActivityDescription(deficit.getActivityDescription());
 		//allow update of dateCreated incase the wrong date was entered when it was created
-		toUpdate.setDateCreated(deficit.getDateCreated());
+		if(deficit.getDateCreated() != null) {
+			toUpdate.setDateCreated(deficit.getDateCreated());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 
 		return repo.saveAndFlush(toUpdate);

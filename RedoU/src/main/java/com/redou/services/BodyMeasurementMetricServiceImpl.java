@@ -45,7 +45,9 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 		
 		toUpdate.setUser(measurement.getUser());
 		//allow update of dateCreated incase wrong date was used when recored was created
-		toUpdate.setDateMeasured(measurement.getDateMeasured());
+		if(measurement.getDateMeasured() != null) {
+			toUpdate.setDateMeasured(measurement.getDateMeasured());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 		toUpdate.setHeightMM(measurement.getHeightMM());
 		toUpdate.setWeightKg(measurement.getWeightKg());
