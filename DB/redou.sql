@@ -401,6 +401,8 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (7, 2, 4, 200, 'Hippeas', '2020-01-20', '2020-01-20');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (8, 2, 3, 1000, 'Quesadilla', '2020-01-21', '2020-01-21');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (9, 2, 3, 700, 'Baked Potato and Chili', '2020-01-22', '2020-01-22');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (10, 2, 3, 700, 'Baked Potato and Chili', '2020-01-23', '2020-01-23');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (11, 2, 4, 200, 'PB&J', '2020-01-23', '2020-01-23');
 
 COMMIT;
 
@@ -418,6 +420,8 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (6, 2, 1888, 'Basal Metabolic Rate', '2020-01-20', '2020-01-20');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (7, 2, 1888, 'Basal Metabolic Rate', '2020-01-21', '2020-01-21');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (8, 2, 1888, 'Basal Metabolic Rate', '2020-01-22', '2020-01-22');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (9, 2, 1888, 'Basal Metabolic Rate', '2020-01-23', '2020-01-23');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (10, 2, 1888, 'Basal Metabolic Rate', '2020-01-24', '2020-01-24');
 
 COMMIT;
 
@@ -506,6 +510,7 @@ START TRANSACTION;
 USE `redou`;
 INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, NULL, 'There are several different types of intermittent fasting including: 16 hours fasting with 8 hours eating, One Meal A Day (OMAD). The general idea is to get your blood sugar down and prevent insulin spikes. In reality you can modify it so that it works best for you, but you should go for 16 hour fasts at a minimum. A lot of new research shows that this is the best way for humans to lose weight. It\'s actually thought that this is how our evolutionary ancestors ate (they didn\'t eat 3 meals a day, but instead ate when they were able to get food.', '2020-01-17', '2020-01-17');
 INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `dateCreated`, `dateUpdated`) VALUES (2, 3, 1, 1, 'Which intermittent fasting method is the best for losing weight quickly, and why?', '2020-01-23', '2020-01-23');
+INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 1, 2, 'It\'s really a personal choice - I\'d go with whicever is easiest for you to stick to. The best diet is the one you can do long-term; it\'s a marathon, not a race.', '2020-01-24', '2020-01-24');
 
 COMMIT;
 
