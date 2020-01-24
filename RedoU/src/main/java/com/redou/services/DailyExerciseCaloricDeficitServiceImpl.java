@@ -44,9 +44,15 @@ public class DailyExerciseCaloricDeficitServiceImpl implements DailyExerciseCalo
 	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit, int id) {
 		DailyExerciseCaloricDeficit toUpdate = repo.findById(id);
 		
-		toUpdate.setUser(deficit.getUser());
-		toUpdate.setTotalCaloriesBurned(deficit.getTotalCaloriesBurned());
-		toUpdate.setActivityDescription(deficit.getActivityDescription());
+		if(deficit.getUser() != null) {
+			toUpdate.setUser(deficit.getUser());
+		}
+		if(deficit.getTotalCaloriesBurned() != 0) {
+			toUpdate.setTotalCaloriesBurned(deficit.getTotalCaloriesBurned());
+		}
+		if(deficit.getActivityDescription() != null) {
+			toUpdate.setActivityDescription(deficit.getActivityDescription());
+		}
 		//allow update of dateCreated incase the wrong date was entered when it was created
 		if(deficit.getDateCreated() != null) {
 			toUpdate.setDateCreated(deficit.getDateCreated());

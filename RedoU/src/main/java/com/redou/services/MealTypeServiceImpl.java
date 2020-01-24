@@ -42,7 +42,9 @@ public class MealTypeServiceImpl implements MealTypeService{
 	public MealType updateMealType(MealType mealType, int id) {
 		MealType toUpdate = repo.findById(id);
 		
-		toUpdate.setMealTypeName(mealType.getMealTypeName());
+		if(mealType.getMealTypeName() != null) {
+			toUpdate.setMealTypeName(mealType.getMealTypeName());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

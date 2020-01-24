@@ -148,11 +148,8 @@ public class PostReplyController {
 
 	@PutMapping("api/postreply/update/{id}")
 	public PostReply updatePostReply(@RequestBody PostReply reply, @PathVariable int id, HttpServletRequest req,
-			HttpServletResponse resp, Principal principal) {
+			HttpServletResponse resp) {
 		try {
-			// try to update the provided user
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			reply.setReplyUser(u);
 			reply = prSvc.updatePostReply(reply, id);
 			if (reply == null) {
 				resp.setStatus(404);

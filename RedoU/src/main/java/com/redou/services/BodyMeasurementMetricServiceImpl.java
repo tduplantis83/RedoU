@@ -45,21 +45,42 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 	public BodyMeasurementMetric updateBodyMeasurementMetric(BodyMeasurementMetric measurement, int id) {
 		BodyMeasurementMetric toUpdate = repo.findById(id);
 		
-		toUpdate.setUser(measurement.getUser());
+		if(measurement.getUser() != null) {
+			toUpdate.setUser(measurement.getUser());
+		}
 		//allow update of dateCreated incase wrong date was used when recored was created
 		if(measurement.getDateMeasured() != null) {
 			toUpdate.setDateMeasured(measurement.getDateMeasured());
 		}
+		//always change the dateUpdated
 		toUpdate.setDateUpdated(LocalDate.now());
-		toUpdate.setHeightMM(measurement.getHeightMM());
-		toUpdate.setWeightKg(measurement.getWeightKg());
-		toUpdate.setWaistMM(measurement.getWaistMM());
-		toUpdate.setNeckMM(measurement.getNeckMM());
-		toUpdate.setShouldersMM(measurement.getShouldersMM());
-		toUpdate.setChestMM(measurement.getChestMM());
-		toUpdate.setBicepMM(measurement.getBicepMM());
-		toUpdate.setHipsMM(measurement.getHipsMM());
-		toUpdate.setThighMM(measurement.getThighMM());
+		if(measurement.getHeightMM() != 0) {
+			toUpdate.setHeightMM(measurement.getHeightMM());
+		}
+		if(measurement.getWeightKg() > 0) {
+			toUpdate.setWeightKg(measurement.getWeightKg());
+		}
+		if(measurement.getWaistMM() != 0) {
+			toUpdate.setWaistMM(measurement.getWaistMM());
+		}
+		if(measurement.getNeckMM() != null) {
+			toUpdate.setNeckMM(measurement.getNeckMM());
+		}
+		if(measurement.getShouldersMM() != null) {
+			toUpdate.setShouldersMM(measurement.getShouldersMM());
+		}
+		if(measurement.getChestMM() != null) {
+			toUpdate.setChestMM(measurement.getChestMM());
+		}
+		if(measurement.getBicepMM() != null) {
+			toUpdate.setBicepMM(measurement.getBicepMM());
+		}
+		if(measurement.getHipsMM() != null) {
+			toUpdate.setHipsMM(measurement.getHipsMM());
+		}
+		if(measurement.getThighMM() != null) {
+			toUpdate.setThighMM(measurement.getThighMM());
+		}
 		
 		return repo.saveAndFlush(toUpdate);
 

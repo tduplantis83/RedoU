@@ -92,10 +92,8 @@ public class ImageController {
 
 	@PutMapping("image/update/{id}")
 	public Image updateImage(@RequestBody Image img, @PathVariable int id, HttpServletRequest req,
-			HttpServletResponse resp, Principal principal) {
+			HttpServletResponse resp) {
 		try {
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			img.setUser(u);
 			img = imgSvc.updateImage(img, id);
 			if (img == null) {
 				resp.setStatus(404);
