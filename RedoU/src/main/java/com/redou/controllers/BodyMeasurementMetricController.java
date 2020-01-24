@@ -17,92 +17,92 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.redou.entities.DailyCaloricIntake;
+import com.redou.entities.BodyMeasurementMetric;
 import com.redou.entities.User;
-import com.redou.services.DailyCaloricIntakeService;
+import com.redou.services.BodyMeasurementMetricService;
 import com.redou.services.UserService;
 
 @RestController
 @RequestMapping(path = "api/")
 @CrossOrigin({ "*", "http://localhost:4444" })
-public class DailyCaloricIntakeController {
+public class BodyMeasurementMetricController {
 
 	@Autowired
-	private DailyCaloricIntakeService dciSvc;
+	private BodyMeasurementMetricService bmmSvc;
 
 	@Autowired
 	private UserService userSvc;
 
-	@GetMapping("DailyCaloricIntake/id/{id}")
-	public DailyCaloricIntake getDailyCaloricIntakeById(@PathVariable int id, HttpServletRequest req,
+	@GetMapping("bodymeasurementmetric/id/{id}")
+	public BodyMeasurementMetric getBodyMeasurementMetricById(@PathVariable int id, HttpServletRequest req,
 			HttpServletResponse resp) {
-		DailyCaloricIntake intake = dciSvc.getDailyCaloricIntakeById(id);
-		if (intake == null) {
+		BodyMeasurementMetric measurement = bmmSvc.getBodyMeasurementMetricById(id);
+		if (measurement == null) {
 			resp.setStatus(404);
 		} else {
 			resp.setStatus(200);
 		}
-		return intake;
+		return measurement;
 	}
 
-	@GetMapping("DailyCaloricIntake/userid/{id}")
-	public List<DailyCaloricIntake> getDailyCaloricIntakeByUserId(@PathVariable int id,
+	@GetMapping("bodymeasurementmetric/userid/{id}")
+	public List<BodyMeasurementMetric> getBodyMeasurementMetricByUserId(@PathVariable int id,
 			HttpServletRequest req, HttpServletResponse resp) {
-		List<DailyCaloricIntake> intakes = dciSvc.getDailyCaloricIntakeByUserId(id);
-		if (intakes.size() == 0) {
+		List<BodyMeasurementMetric> measurements = bmmSvc.getBodyMeasurementMetricByUserId(id);
+		if (measurements.size() == 0) {
 			resp.setStatus(404);
 		} else {
 			resp.setStatus(200);
 		}
-		return intakes;
+		return measurements;
 	}
 
-	@GetMapping("DailyCaloricIntake/username/{username}")
-	public List<DailyCaloricIntake> getDailyCaloricIntakeByUsername(@PathVariable String username,
+	@GetMapping("bodymeasurementmetric/username/{username}")
+	public List<BodyMeasurementMetric> getBodyMeasurementMetricByUsername(@PathVariable String username,
 			HttpServletRequest req, HttpServletResponse resp) {
-		List<DailyCaloricIntake> intakes = dciSvc.getDailyCaloricIntakeByUsername(username);
-		if (intakes.size() == 0) {
+		List<BodyMeasurementMetric> measurements = bmmSvc.getBodyMeasurementMetricByUsername(username);
+		if (measurements.size() == 0) {
 			resp.setStatus(404);
 		} else {
 			resp.setStatus(200);
 		}
-		return intakes;
+		return measurements;
 	}
 
-	@PostMapping("DailyCaloricIntake/create")
-	public DailyCaloricIntake createDailyCaloricIntake(
-			@RequestBody DailyCaloricIntake intake, HttpServletRequest req, HttpServletResponse resp,
+	@PostMapping("bodymeasurementmetric/create")
+	public BodyMeasurementMetric createBodyMeasurementMetric(
+			@RequestBody BodyMeasurementMetric measurement, HttpServletRequest req, HttpServletResponse resp,
 			Principal principal) {
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());
-			intake.setUser(u);
-			intake = dciSvc.createDailyCaloricIntake(intake);
+			measurement.setUser(u);
+			measurement = bmmSvc.createBodyMeasurementMetric(measurement);
 			// if successful, send 201
 			resp.setStatus(201);
 			// get the link to the created post
 			// return that in the Location header
 			StringBuffer url = req.getRequestURL();
-			url.append("/").append(intake.getId());
+			url.append("/").append(measurement.getId());
 			resp.addHeader("Location", url.toString());
 		} catch (Exception e) {
 			// if creation fails, return 400 error
 			e.printStackTrace();
 			resp.setStatus(400);
 			// set the returning post to null
-			intake = null;
+			measurement = null;
 		}
 
-		return intake;
+		return measurement;
 	}
 
-	@PutMapping("DailyCaloricIntake/update/{id}")
-	public DailyCaloricIntake updateDailyCaloricIntake(@RequestBody DailyCaloricIntake intake, @PathVariable int id,
+	@PutMapping("bodymeasurementmetric/update/{id}")
+	public BodyMeasurementMetric updateBodyMeasurementMetric(@RequestBody BodyMeasurementMetric measurement, @PathVariable int id,
 			HttpServletRequest req, HttpServletResponse resp, Principal principal) {
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());
-			intake.setUser(u);
-			intake = dciSvc.updateDailyCaloricIntake(intake, id);
-			if (intake == null) {
+			measurement.setUser(u);
+			measurement = bmmSvc.updateBodyMeasurementMetric(measurement, id);
+			if (measurement == null) {
 				resp.setStatus(404);
 			} else {
 				// if successful, send 200
@@ -113,17 +113,17 @@ public class DailyCaloricIntakeController {
 			e.printStackTrace();
 			resp.setStatus(400);
 			// set the returning post to null
-			intake = null;
+			measurement = null;
 		}
 
-		return intake;
+		return measurement;
 
 	}
 
-	@DeleteMapping("DailyCaloricIntake/delete/{id}")
-	public void deleteDailyCaloricIntake(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
+	@DeleteMapping("bodymeasurementmetric/delete/{id}")
+	public void deleteBodyMeasurementMetric(@PathVariable int id, HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			if (dciSvc.deleteDailyCaloricIntake(id)) {
+			if (bmmSvc.deleteBodyMeasurementMetric(id)) {
 				// if successful, send 204 - no content to send back
 				resp.setStatus(204);
 			} else {

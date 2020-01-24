@@ -32,7 +32,9 @@ public class DailyCaloricIntakeServiceImpl implements DailyCaloricIntakeService 
 
 	@Override
 	public DailyCaloricIntake createDailyCaloricIntake(DailyCaloricIntake intake) {
-		intake.setDateCreated(LocalDate.now());
+		if(intake.getDateCreated() == null) {
+			intake.setDateCreated(LocalDate.now());
+		}
 		intake.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(intake);
