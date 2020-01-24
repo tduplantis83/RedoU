@@ -46,11 +46,19 @@ public class AvatarServiceImpl implements AvatarService {
 	@Override
 	public Avatar updateAvatar(Avatar avatar, int id) {
 		Avatar toUpdate = repo.findById(id);
-
-		toUpdate.setAvatarGroup(avatar.getAvatarGroup());
-		toUpdate.setSex(avatar.getSex());
-		toUpdate.setBodyType(avatar.getBodyType());
-		toUpdate.setAvatarUrl(avatar.getAvatarUrl());
+		
+		if(avatar.getAvatarGroup() != 0) {
+			toUpdate.setAvatarGroup(avatar.getAvatarGroup());
+		}
+		if(avatar.getSex() != null) {
+			toUpdate.setSex(avatar.getSex());
+		}
+		if(avatar.getBodyType() != null) {
+			toUpdate.setBodyType(avatar.getBodyType());
+		}
+		if(avatar.getAvatarUrl() != null) {
+			toUpdate.setAvatarUrl(avatar.getAvatarUrl());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 
 		return repo.saveAndFlush(toUpdate);

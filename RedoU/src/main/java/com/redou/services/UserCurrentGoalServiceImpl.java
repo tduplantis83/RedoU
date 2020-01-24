@@ -42,9 +42,15 @@ public class UserCurrentGoalServiceImpl implements UserCurrentGoalService{
 	public UserCurrentGoal updateUserCurrentGoal(UserCurrentGoal goal, int id) {
 		UserCurrentGoal toUpdate = repo.findById(id);
 		
-		toUpdate.setUser(goal.getUser());
-		toUpdate.setGoal(goal.getGoal());
-		toUpdate.setEnabled(goal.getEnabled());
+		if(goal.getUser() != null) {
+			toUpdate.setUser(goal.getUser());
+		}
+		if(goal.getGoal() != null) {
+			toUpdate.setGoal(goal.getGoal());
+		}
+		if(goal.getEnabled() != null) {
+			toUpdate.setEnabled(goal.getEnabled());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

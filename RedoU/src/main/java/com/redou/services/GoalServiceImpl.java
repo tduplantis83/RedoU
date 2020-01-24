@@ -42,7 +42,9 @@ public class GoalServiceImpl implements GoalService{
 	public Goal updateGoal(Goal goal, int id) {
 		Goal toUpdate = repo.findById(id);
 		
-		toUpdate.setGoalName(goal.getGoalName());
+		if(goal.getGoalName() != null) {
+			toUpdate.setGoalName(goal.getGoalName());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 
 		return repo.saveAndFlush(toUpdate);

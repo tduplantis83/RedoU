@@ -63,15 +63,34 @@ public class UserServiceImpl implements UserService {
 		
 		User toUpdate = repo.findById(id);
 
-		toUpdate.setUsername(user.getUsername());
-		toUpdate.setPassword(user.getPassword());
-		toUpdate.setFirstName(user.getFirstName());
-		toUpdate.setLastName(user.getLastName());
-		toUpdate.setBirthday(user.getBirthday());
-		toUpdate.setSex(user.getSex());
-		toUpdate.setEmail(user.getEmail());
+		if(user.getUsername() != null) {
+			toUpdate.setUsername(user.getUsername());
+		}
+		if(user.getPassword() != null) {
+			toUpdate.setPassword(user.getPassword());
+		}
+		if(user.getFirstName() != null) {
+			toUpdate.setFirstName(user.getFirstName());
+		}
+		if(user.getLastName() != null) {
+			toUpdate.setLastName(user.getLastName());
+		}
+		if(user.getBirthday() != null) {
+			toUpdate.setBirthday(user.getBirthday());
+		}
+		if(user.getSex() != null) {
+			toUpdate.setSex(user.getSex());
+		}
+		if(user.getUsername() != null) {
+			toUpdate.setEmail(user.getEmail());
+		}
+
 		toUpdate.setEnabled(user.isEnabled());
-		toUpdate.setRole(user.getRole());
+		
+		if(user.getRole() != null) {
+			toUpdate.setRole(user.getRole());
+		}
+
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

@@ -44,10 +44,18 @@ public class DailyCaloricIntakeServiceImpl implements DailyCaloricIntakeService 
 	public DailyCaloricIntake updateDailyCaloricIntake(DailyCaloricIntake intake, int id) {
 		DailyCaloricIntake toUpdate = repo.findById(id);
 		
-		toUpdate.setUser(intake.getUser());
-		toUpdate.setMealType(intake.getMealType());
-		toUpdate.setCaloriesThisMeal(intake.getCaloriesThisMeal());
-		toUpdate.setMealDescription(intake.getMealDescription());
+		if(intake.getUser() != null) {
+			toUpdate.setUser(intake.getUser());
+		}
+		if(intake.getMealType() != null) {
+			toUpdate.setMealType(intake.getMealType());
+		}
+		if(intake.getCaloriesThisMeal() != 0) {
+			toUpdate.setCaloriesThisMeal(intake.getCaloriesThisMeal());
+		}
+		if(intake.getMealDescription() != null) {
+			toUpdate.setMealDescription(intake.getMealDescription());
+		}
 		//allow update of dateCreated incase wrong date was used when recored was created
 		if(intake.getDateCreated() != null) {
 			toUpdate.setDateCreated(intake.getDateCreated());

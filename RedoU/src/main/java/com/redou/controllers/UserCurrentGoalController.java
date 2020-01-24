@@ -92,11 +92,8 @@ public class UserCurrentGoalController {
 	
 	@PutMapping("usercurrentgoal/update/{id}")
 	public UserCurrentGoal updateUserCurrentGoal(@RequestBody UserCurrentGoal ucg, @PathVariable int id, HttpServletRequest req,
-			HttpServletResponse resp, Principal principal) {
+			HttpServletResponse resp) {
 		try {
-			// try to update the provided user
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			ucg.setUser(u);
 			ucg = ucgSvc.updateUserCurrentGoal(ucg, id);
 			if (ucg == null) {
 				resp.setStatus(404);

@@ -97,10 +97,8 @@ public class DailyCaloricIntakeController {
 
 	@PutMapping("DailyCaloricIntake/update/{id}")
 	public DailyCaloricIntake updateDailyCaloricIntake(@RequestBody DailyCaloricIntake intake, @PathVariable int id,
-			HttpServletRequest req, HttpServletResponse resp, Principal principal) {
+			HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			intake.setUser(u);
 			intake = dciSvc.updateDailyCaloricIntake(intake, id);
 			if (intake == null) {
 				resp.setStatus(404);

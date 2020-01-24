@@ -124,11 +124,8 @@ public class PostController {
 
 	@PutMapping("api/post/update/{id}")
 	public Post updatePost(@RequestBody Post post, @PathVariable int id, HttpServletRequest req,
-			HttpServletResponse resp, Principal principal) {
+			HttpServletResponse resp) {
 		try {
-			// try to update the provided user
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			post.setUser(u);
 			post = postSvc.updatePost(post, id);
 			if (post == null) {
 				resp.setStatus(404);

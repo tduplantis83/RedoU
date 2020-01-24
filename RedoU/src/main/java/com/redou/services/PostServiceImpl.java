@@ -57,10 +57,18 @@ public class PostServiceImpl implements PostService{
 	public Post updatePost(Post post, int id) {
 		Post toUpdate = repo.findById(id);
 		
-		toUpdate.setUser(post.getUser());
-		toUpdate.setPostTopic(post.getPostTopic());
-		toUpdate.setTitle(post.getTitle());
-		toUpdate.setContent(post.getContent());
+		if(post.getUser() != null) {
+			toUpdate.setUser(post.getUser());
+		}
+		if(post.getPostTopic() != null) {
+			toUpdate.setPostTopic(post.getPostTopic());
+		}
+		if(post.getTitle() != null) {
+			toUpdate.setTitle(post.getTitle());
+		}
+		if(post.getContent() != null) {
+			toUpdate.setContent(post.getContent());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

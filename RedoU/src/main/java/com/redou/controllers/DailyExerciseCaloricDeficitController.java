@@ -97,10 +97,8 @@ public class DailyExerciseCaloricDeficitController {
 
 	@PutMapping("dailyexercisecaloricdeficit/update/{id}")
 	public DailyExerciseCaloricDeficit updateDailyExerciseCaloricDeficit(@RequestBody DailyExerciseCaloricDeficit deficit, @PathVariable int id,
-			HttpServletRequest req, HttpServletResponse resp, Principal principal) {
+			HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			deficit.setUser(u);
 			deficit = decdSvc.updateDailyExerciseCaloricDeficit(deficit, id);
 			if (deficit == null) {
 				resp.setStatus(404);

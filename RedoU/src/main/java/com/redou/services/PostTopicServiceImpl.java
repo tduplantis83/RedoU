@@ -42,7 +42,9 @@ public class PostTopicServiceImpl implements PostTopicService{
 	public PostTopic updatePostTopic(PostTopic topic, int id) {
 		PostTopic toUpdate = repo.findById(id);
 		
-		toUpdate.setTopicName(topic.getTopicName());
+		if(topic.getTopicName() != null) {
+			toUpdate.setTopicName(topic.getTopicName());
+		}
 		toUpdate.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(toUpdate);

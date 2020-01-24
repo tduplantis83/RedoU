@@ -97,10 +97,8 @@ public class BodyMeasurementMetricController {
 
 	@PutMapping("bodymeasurementmetric/update/{id}")
 	public BodyMeasurementMetric updateBodyMeasurementMetric(@RequestBody BodyMeasurementMetric measurement, @PathVariable int id,
-			HttpServletRequest req, HttpServletResponse resp, Principal principal) {
+			HttpServletRequest req, HttpServletResponse resp) {
 		try {
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			measurement.setUser(u);
 			measurement = bmmSvc.updateBodyMeasurementMetric(measurement, id);
 			if (measurement == null) {
 				resp.setStatus(404);
