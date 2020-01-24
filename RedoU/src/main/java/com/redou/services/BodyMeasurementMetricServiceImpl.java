@@ -33,7 +33,9 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 
 	@Override
 	public BodyMeasurementMetric createBodyMeasurementMetric(BodyMeasurementMetric measurement) {
-		measurement.setDateMeasured(LocalDate.now());
+		if(measurement.getDateMeasured() == null) {
+			measurement.setDateMeasured(LocalDate.now());
+		}
 		measurement.setDateUpdated(LocalDate.now());
 
 		return repo.saveAndFlush(measurement);

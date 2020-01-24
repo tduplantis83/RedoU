@@ -32,7 +32,9 @@ public class DailyExerciseCaloricDeficitServiceImpl implements DailyExerciseCalo
 
 	@Override
 	public DailyExerciseCaloricDeficit createDailyExerciseCaloricDeficit(DailyExerciseCaloricDeficit deficit) {
-		deficit.setDateCreated(LocalDate.now());
+		if(deficit.getDateCreated() == null) {
+			deficit.setDateCreated(LocalDate.now());
+		}
 		deficit.setDateUpdated(LocalDate.now());
 		
 		return repo.saveAndFlush(deficit);
