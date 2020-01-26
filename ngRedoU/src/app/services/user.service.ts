@@ -22,7 +22,7 @@ export class UserService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User>(this.baseUrl + "users/id/" + id).pipe(
+    return this.http.get<User>(this.baseUrl + "users/id/" + id, httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In UserSvc get by Id");

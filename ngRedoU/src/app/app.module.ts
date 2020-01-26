@@ -8,6 +8,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { SearchResultsComponent } from './components/search-results/search-resul
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

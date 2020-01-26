@@ -8,7 +8,7 @@ import { DailyCaloricIntake } from "./daily-caloric-intake";
 import { UserCurrentGoal } from "./user-current-goal";
 export class User {
   id: number;
-  userName: string;
+  username: string;
   password: string;
   firstName: string;
   lastName: string;
@@ -30,7 +30,7 @@ export class User {
 
   constructor(
     id?: number,
-    userName?: string,
+    username?: string,
     password?: string,
     firstName?: string,
     lastName?: string,
@@ -51,7 +51,7 @@ export class User {
     userPostReplies?: PostReply[]
   ) {
     this.id = id;
-    this.userName = userName;
+    this.username = username;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
