@@ -5,7 +5,6 @@ import { tap, catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { environment } from "src/environments/environment";
 import { DailyCaloricIntake } from '../models/daily-caloric-intake';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class DailyCaloricIntakeService {
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<DailyCaloricIntake>(this.baseUrl + "/api/DailyCaloricIntake/id/" + id).pipe(
+    return this.http.get<DailyCaloricIntake>(this.baseUrl + "api/DailyCaloricIntake/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In DailyCaloricIntakeSvc get by Id");
@@ -30,14 +29,14 @@ export class DailyCaloricIntakeService {
     );
   }
 
-  getDailyCaloricIntakeByUserId(user: User) {
+  getDailyCaloricIntakeByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<DailyCaloricIntake[]>(this.baseUrl + "/api/DailyCaloricIntake/userid/" + user.id).pipe(
+    return this.http.get<DailyCaloricIntake[]>(this.baseUrl + "api/DailyCaloricIntake/userid/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In DailyCaloricIntakeSvc get by UserId");
@@ -45,14 +44,14 @@ export class DailyCaloricIntakeService {
     );
   }
 
-  getDailyCaloricIntakeByUsername(user: User) {
+  getDailyCaloricIntakeByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<DailyCaloricIntake[]>(this.baseUrl + "/api/DailyCaloricIntake/username/" + user.userName).pipe(
+    return this.http.get<DailyCaloricIntake[]>(this.baseUrl + "api/DailyCaloricIntake/username/" + username).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In DailyCaloricIntakeSvc get by Username");
@@ -86,8 +85,8 @@ export class DailyCaloricIntakeService {
     };
     return this.http
       .put<DailyCaloricIntake>(
-        this.baseUrl + "api/DailyCaloricIntake/update/" + dailyCaloricIntake,
-        dailyCaloricIntake.id,
+        this.baseUrl + "api/DailyCaloricIntake/update/" +
+        dailyCaloricIntake.id, dailyCaloricIntake,
         httpOptions
       )
       .pipe(
@@ -98,7 +97,7 @@ export class DailyCaloricIntakeService {
       );
   }
 
-  deleteDailyCaloricIntake(dailyCaloricIntake: DailyCaloricIntake) {
+  deleteDailyCaloricIntake(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -106,7 +105,7 @@ export class DailyCaloricIntakeService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/DailyCaloricIntake/delete/" + dailyCaloricIntake.id, httpOptions)
+      .delete(this.baseUrl + "api/DailyCaloricIntake/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);

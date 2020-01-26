@@ -5,7 +5,6 @@ import { tap, catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { environment } from "src/environments/environment";
 import { BodyMeasurementMetric } from '../models/body-measurement-metric';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,7 @@ export class BodyMeasurementMetricService {
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<BodyMeasurementMetric>(this.baseUrl + "/api/bodymeasurementmetric/id/" + id).pipe(
+    return this.http.get<BodyMeasurementMetric>(this.baseUrl + "api/bodymeasurementmetric/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In BodyMeasurementSvc get by Id");
@@ -30,14 +29,14 @@ export class BodyMeasurementMetricService {
     );
   }
 
-  getBodyMeasurementByUserId(user: User) {
+  getBodyMeasurementByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<BodyMeasurementMetric[]>(this.baseUrl + "/api/bodymeasurementmetric/userid/" + user.id).pipe(
+    return this.http.get<BodyMeasurementMetric[]>(this.baseUrl + "api/bodymeasurementmetric/userid/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In BodyMeasurementSvc get by UserId");
@@ -45,14 +44,14 @@ export class BodyMeasurementMetricService {
     );
   }
 
-  getBodyMeasurementByUsername(user: User) {
+  getBodyMeasurementByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<BodyMeasurementMetric[]>(this.baseUrl + "/api/bodymeasurementmetric/username/" + user.userName).pipe(
+    return this.http.get<BodyMeasurementMetric[]>(this.baseUrl + "api/bodymeasurementmetric/username/" + username).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In BodyMeasurementSvc get by Username");
@@ -86,8 +85,8 @@ export class BodyMeasurementMetricService {
     };
     return this.http
       .put<BodyMeasurementMetric>(
-        this.baseUrl + "api/bodymeasurementmetric/update/" + bodymeasurement,
-        bodymeasurement.id,
+        this.baseUrl + "api/bodymeasurementmetric/update/" +
+        bodymeasurement.id, bodymeasurement,
         httpOptions
       )
       .pipe(
@@ -98,7 +97,7 @@ export class BodyMeasurementMetricService {
       );
   }
 
-  deleteBodyMeasurement(bodymeasurement: BodyMeasurementMetric) {
+  deleteBodyMeasurement(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -106,7 +105,7 @@ export class BodyMeasurementMetricService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/bodymeasurementmetric/delete/" + bodymeasurement.id, httpOptions)
+      .delete(this.baseUrl + "api/bodymeasurementmetric/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);

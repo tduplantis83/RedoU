@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { tap, catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { environment } from "src/environments/environment";
-import { User } from '../models/user';
 import { DailyExerciseCaloricDeficit } from '../models/daily-exercise-caloric-deficit';
 
 @Injectable({
@@ -22,7 +21,7 @@ export class DailyExerciseCaloricDeficitService {
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<DailyExerciseCaloricDeficit>(this.baseUrl + "/api/dailyexercisecaloricdeficit/id/" + id).pipe(
+    return this.http.get<DailyExerciseCaloricDeficit>(this.baseUrl + "api/dailyexercisecaloricdeficit/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In DailyExerciseCaloricDeficitSvc get by Id");
@@ -30,14 +29,14 @@ export class DailyExerciseCaloricDeficitService {
     );
   }
 
-  getDailyExerciseCaloricDeficitByUserId(user: User) {
+  getDailyExerciseCaloricDeficitByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<DailyExerciseCaloricDeficit[]>(this.baseUrl + "/api/dailyexercisecaloricdeficit/userid/" + user.id).pipe(
+    return this.http.get<DailyExerciseCaloricDeficit[]>(this.baseUrl + "api/dailyexercisecaloricdeficit/userid/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In DailyExerciseCaloricDeficitSvc get by UserId");
@@ -45,14 +44,14 @@ export class DailyExerciseCaloricDeficitService {
     );
   }
 
-  getDailyExerciseCaloricDeficitByUsername(user: User) {
+  getDailyExerciseCaloricDeficitByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<DailyExerciseCaloricDeficit[]>(this.baseUrl + "/api/dailyexercisecaloricdeficit/username/" + user.userName).pipe(
+    return this.http.get<DailyExerciseCaloricDeficit[]>(this.baseUrl + "api/dailyexercisecaloricdeficit/username/" + username).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In DailyExerciseCaloricDeficitSvc get by Username");
@@ -86,8 +85,8 @@ export class DailyExerciseCaloricDeficitService {
     };
     return this.http
       .put<DailyExerciseCaloricDeficit>(
-        this.baseUrl + "api/dailyexercisecaloricdeficit/update/" + dailyExerciseCaloricDeficit,
-        dailyExerciseCaloricDeficit.id,
+        this.baseUrl + "api/dailyexercisecaloricdeficit/update/" +
+        dailyExerciseCaloricDeficit.id, dailyExerciseCaloricDeficit,
         httpOptions
       )
       .pipe(
@@ -98,7 +97,7 @@ export class DailyExerciseCaloricDeficitService {
       );
   }
 
-  deleteDailyExerciseCaloricDeficit(dailyExerciseCaloricDeficit: DailyExerciseCaloricDeficit) {
+  deleteDailyExerciseCaloricDeficit(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -106,7 +105,7 @@ export class DailyExerciseCaloricDeficitService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/dailyexercisecaloricdeficit/delete/" + dailyExerciseCaloricDeficit.id, httpOptions)
+      .delete(this.baseUrl + "api/dailyexercisecaloricdeficit/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);

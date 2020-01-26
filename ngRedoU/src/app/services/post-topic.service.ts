@@ -1,65 +1,65 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { environment } from 'src/environments/environment';
-import { MealType } from '../models/meal-type';
+import { PostTopic } from '../models/post-topic';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MealTypeService {
+export class PostTopicService {
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private authSvc: AuthService) { }
+    constructor(private http: HttpClient, private authSvc: AuthService) { }
 
-  getMealTypeById(id: number) {
+  getPostTopicById(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<MealType>(this.baseUrl + "mealtype/id/" + id).pipe(
+    return this.http.get<PostTopic>(this.baseUrl + "posttopic/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In MealTypeSvc get by Id");
+        return throwError("In PostTopicSvc get by Id");
       })
     );
   }
 
-  getMealTypeByName(mealTypeName: string) {
+  getPostTopicByName(topicName: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<MealType>(this.baseUrl + "mealtype/mealtypename/" + mealTypeName).pipe(
+    return this.http.get<PostTopic>(this.baseUrl + "posttopic/topicname/" + topicName).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In MealTypeSvc get by Name");
+        return throwError("In PostTopicSvc get by Name");
       })
     );
   }
 
-  getAllMealTypes() {
+  getAllPostTopics() {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json"
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<MealType[]>(this.baseUrl + "mealtype/all").pipe(
+    return this.http.get<PostTopic[]>(this.baseUrl + "posttopic/all").pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In MealTypeSvc get All");
+        return throwError("In PostTopicSvc get All");
       })
     );
   }
 
-  createMealType(mealType: MealType) {
+  createPostTopic(postTopic: PostTopic) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -67,16 +67,16 @@ export class MealTypeService {
       })
     };
     return this.http
-      .post(this.baseUrl + "api/mealtype/create", mealType, httpOptions)
+      .post(this.baseUrl + "api/posttopic/create", postTopic, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In MealTypeSvc create MealType");
+          return throwError("In PostTopicSvc create PostTopic");
         })
       );
   }
 
-  updateMealType(mealType: MealType) {
+  updatePostTopic(postTopic: PostTopic) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -84,20 +84,20 @@ export class MealTypeService {
       })
     };
     return this.http
-      .put<MealType>(
-        this.baseUrl + "api/mealtype/update/" +
-        mealType.id, mealType,
+      .put<PostTopic>(
+        this.baseUrl + "api/posttopic/update/" +
+        postTopic.id, postTopic,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In MealTypeSvc update MealType");
+          return throwError("In PostTopicSvc update PostTopic");
         })
       );
   }
 
-  deleteMealType(id: number) {
+  deletePostTopic(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -105,11 +105,11 @@ export class MealTypeService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/mealtype/delete/" + id, httpOptions)
+      .delete(this.baseUrl + "api/posttopic/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In MealTypeSvc delete MealType");
+          return throwError("In PostTopicSvc delete PostTopic");
         })
       );
   }

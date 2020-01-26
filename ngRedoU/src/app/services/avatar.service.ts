@@ -21,7 +21,7 @@ export class AvatarService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Avatar>(this.baseUrl + "/avatar/id/" + id).pipe(
+    return this.http.get<Avatar>(this.baseUrl + "avatar/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In AvatarSvc get by Id");
@@ -36,7 +36,7 @@ export class AvatarService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Avatar[]>(this.baseUrl + "/avatar/all").pipe(
+    return this.http.get<Avatar[]>(this.baseUrl + "avatar/all").pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In AvatarSvc get All");
@@ -51,7 +51,7 @@ export class AvatarService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Avatar[]>(this.baseUrl + "/avatar/sex/" + sex).pipe(
+    return this.http.get<Avatar[]>(this.baseUrl + "avatar/sex/" + sex).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In AvatarSvc get by Sex");
@@ -67,7 +67,7 @@ export class AvatarService {
       })
     };
     return this.http
-      .get<Avatar[]>(this.baseUrl + "/avatar/bodytype/" + bodyType)
+      .get<Avatar[]>(this.baseUrl + "avatar/bodytype/" + bodyType)
       .pipe(
         catchError((err: any) => {
           console.log(err);
@@ -102,8 +102,8 @@ export class AvatarService {
     };
     return this.http
       .put<Avatar>(
-        this.baseUrl + "api/avatar/update/" + avatar,
-        avatar.id,
+        this.baseUrl + "api/avatar/update/" +
+        avatar.id, avatar,
         httpOptions
       )
       .pipe(
@@ -114,7 +114,7 @@ export class AvatarService {
       );
   }
 
-  deleteAvatar(avatar: Avatar) {
+  deleteAvatar(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -122,7 +122,7 @@ export class AvatarService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/avatar/delete/" + avatar.id, httpOptions)
+      .delete(this.baseUrl + "api/avatar/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
