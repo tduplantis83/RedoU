@@ -16,13 +16,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
+        this.user = null;
         this.ngOnInit();
       }
     });
   }
 
   ngOnInit() {
-    this.userSvc.getUserByUsernameEXACT('travisd').subscribe(
+    this.userSvc.getLoggedInUser().subscribe(
       data => {
         this.user = data;
       },

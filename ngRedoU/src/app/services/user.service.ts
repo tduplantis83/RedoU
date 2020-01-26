@@ -120,6 +120,21 @@ export class UserService {
     );
   }
 
+  getLoggedInUser() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
+      })
+    };
+    return this.http.get<User>(this.baseUrl + "api/users/getloggedinuser", httpOptions).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError("In UserSvc get Logged In User");
+      })
+    );
+  }
+
   createUser(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({

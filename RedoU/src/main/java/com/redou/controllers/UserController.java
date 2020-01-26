@@ -1,5 +1,6 @@
 package com.redou.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -109,6 +110,16 @@ public class UserController {
 			resp.setStatus(200);
 		}
 		return users;
+	}
+	
+	@GetMapping("api/users/getloggedinuser")
+	public User getLoggedInUser(HttpServletResponse res, Principal principal) {
+		User loggedInUser = userSvc.getUserByUsernameExact(principal.getName());
+		if (loggedInUser == null) {
+			res.setStatus(404);
+		} else
+			res.setStatus(200);
+		return loggedInUser;
 	}
 
 	@PostMapping("users/create")

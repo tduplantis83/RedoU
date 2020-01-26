@@ -10,6 +10,9 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { LoginComponent } from './components/login/login.component';
+
 
 
 @NgModule({
@@ -19,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     UserProfileComponent,
     PageNotFoundComponent,
     NavBarComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

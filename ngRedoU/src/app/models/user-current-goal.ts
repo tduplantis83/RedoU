@@ -1,6 +1,6 @@
 import { Goal } from "./goal";
 import { User } from "./user";
-import { timingSafeEqual } from "crypto";
+
 export class UserCurrentGoal {
   id: number;
   user: User;
