@@ -1,65 +1,66 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Image } from '../models/image';
+import { UserCurrentGoal } from '../models/user-current-goal';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
+export class UserCurrentGoalService {
+
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient, private authSvc: AuthService) { }
+    constructor(private http: HttpClient, private authSvc: AuthService) { }
 
-  getImageById(id: number) {
+  getUserCurrentGoalById(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Image>(this.baseUrl + "api/image/id/" + id).pipe(
+    return this.http.get<UserCurrentGoal>(this.baseUrl + "api/usercurrentgoal/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In ImageSvc get by Id");
+        return throwError("In UserCurrentGoalSvc get by Id");
       })
     );
   }
 
-  getImageByUserId(id: number) {
+  getUserCurrentGoalByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Image[]>(this.baseUrl + "api/image/userid/" + id).pipe(
+    return this.http.get<UserCurrentGoal[]>(this.baseUrl + "api/usercurrentgoal/userid/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In ImageSvc get by UserId");
+        return throwError("In UserCurrentGoalSvc get by UserId");
       })
     );
   }
 
-  getImageByUsername(username: string) {
+  getUserCurrentGoalByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Image[]>(this.baseUrl + "api/image/username/" + username).pipe(
+    return this.http.get<UserCurrentGoal[]>(this.baseUrl + "api/usercurrentgoal/username/" + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In ImageSvc get by Username");
+        return throwError("In UserCurrentGoalSvc get by Username");
       })
     );
   }
 
-  createImage(image: Image) {
+  createUserCurrentGoal(userCurrentGoal: UserCurrentGoal) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -67,16 +68,16 @@ export class ImageService {
       })
     };
     return this.http
-      .post(this.baseUrl + "api/image/create", image, httpOptions)
+      .post(this.baseUrl + "api/usercurrentgoal/create", userCurrentGoal, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In ImageSvc create Image");
+          return throwError("In UserCurrentGoalSvc create UserCurrentGoal");
         })
       );
   }
 
-  updateImage(image: Image) {
+  updateUserCurrentGoal(userCurrentGoal: UserCurrentGoal) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -84,20 +85,20 @@ export class ImageService {
       })
     };
     return this.http
-      .put<Image>(
-        this.baseUrl + "api/image/update/" +
-        image.id, image,
+      .put<UserCurrentGoal>(
+        this.baseUrl + "api/usercurrentgoal/update/" +
+        userCurrentGoal.id, userCurrentGoal,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In ImageSvc update Image");
+          return throwError("In UserCurrentGoalSvc update UserCurrentGoal");
         })
       );
   }
 
-  deleteImage(id: number) {
+  deleteUserCurrentGoal(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -105,11 +106,11 @@ export class ImageService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/image/delete/" + id, httpOptions)
+      .delete(this.baseUrl + "api/usercurrentgoal/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In ImageSvc delete Image");
+          return throwError("In UserCurrentGoalSvc delete UserCurrentGoal");
         })
       );
   }

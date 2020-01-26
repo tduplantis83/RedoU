@@ -1,65 +1,66 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Image } from '../models/image';
+import { UserAvatar } from '../models/user-avatar';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ImageService {
+export class UserAvatarService {
+
   private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient, private authSvc: AuthService) { }
 
-  getImageById(id: number) {
+  getUserAvatarById(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Image>(this.baseUrl + "api/image/id/" + id).pipe(
+    return this.http.get<UserAvatar>(this.baseUrl + "api/useravatar/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In ImageSvc get by Id");
+        return throwError("In UserAvatarSvc get by Id");
       })
     );
   }
 
-  getImageByUserId(id: number) {
+  getUserAvatarByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Image[]>(this.baseUrl + "api/image/userid/" + id).pipe(
+    return this.http.get<UserAvatar[]>(this.baseUrl + "api/useravatar/userid/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In ImageSvc get by UserId");
+        return throwError("In UserAvatarSvc get by UserId");
       })
     );
   }
 
-  getImageByUsername(username: string) {
+  getUserAvatarByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Image[]>(this.baseUrl + "api/image/username/" + username).pipe(
+    return this.http.get<UserAvatar[]>(this.baseUrl + "api/useravatar/username/" + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In ImageSvc get by Username");
+        return throwError("In UserAvatarSvc get by Username");
       })
     );
   }
 
-  createImage(image: Image) {
+  createUserAvatar(UserAvatar: UserAvatar, avatarGroupID: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -67,16 +68,16 @@ export class ImageService {
       })
     };
     return this.http
-      .post(this.baseUrl + "api/image/create", image, httpOptions)
+      .post(this.baseUrl + "api/useravatar/create/" + avatarGroupID, UserAvatar, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In ImageSvc create Image");
+          return throwError("In UserAvatarSvc create UserAvatar");
         })
       );
   }
 
-  updateImage(image: Image) {
+  updateUserAvatar(avatarGroupID: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -84,20 +85,20 @@ export class ImageService {
       })
     };
     return this.http
-      .put<Image>(
-        this.baseUrl + "api/image/update/" +
-        image.id, image,
+      .put<UserAvatar[]>(
+        this.baseUrl + "api/useravatar/update/" +
+        avatarGroupID,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In ImageSvc update Image");
+          return throwError("In UserAvatarSvc update UserAvatar");
         })
       );
   }
 
-  deleteImage(id: number) {
+  updateCURRENTUserAvatar(bodyType: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -105,13 +106,33 @@ export class ImageService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/image/delete/" + id, httpOptions)
+      .put<UserAvatar>(
+        this.baseUrl + "api/useravatar/updatecurrent/" +
+        bodyType,
+        httpOptions
+      )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In ImageSvc delete Image");
+          return throwError("In UserAvatarSvc update UserAvatar");
         })
       );
   }
 
+  deleteUserAvatar(userId: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: "Basic " + this.authSvc.getCredentials()
+      })
+    };
+    return this.http
+      .delete(this.baseUrl + "api/useravatar/delete/" + userId, httpOptions)
+      .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError("In UserAvatarSvc delete UserAvatar");
+        })
+      );
+  }
 }

@@ -21,7 +21,7 @@ export class GoalService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Goal>(this.baseUrl + "/goal/id/" + id).pipe(
+    return this.http.get<Goal>(this.baseUrl + "goal/id/" + id).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In GoalSvc get by Id");
@@ -36,7 +36,7 @@ export class GoalService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Goal>(this.baseUrl + "/goal/goalname/" + goalName).pipe(
+    return this.http.get<Goal>(this.baseUrl + "goal/goalname/" + goalName).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In GoalSvc get by Name");
@@ -51,7 +51,7 @@ export class GoalService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<Goal[]>(this.baseUrl + "/goal/all").pipe(
+    return this.http.get<Goal[]>(this.baseUrl + "goal/all").pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In GoalSvc get All");
@@ -85,8 +85,8 @@ export class GoalService {
     };
     return this.http
       .put<Goal>(
-        this.baseUrl + "api/goal/update/" + goal,
-        goal.id,
+        this.baseUrl + "api/goal/update/" +
+        goal.id, goal,
         httpOptions
       )
       .pipe(
@@ -97,7 +97,7 @@ export class GoalService {
       );
   }
 
-  deleteGoal(goal: Goal) {
+  deleteGoal(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export class GoalService {
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/goal/delete/" + goal.id, httpOptions)
+      .delete(this.baseUrl + "api/goal/delete/" + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);

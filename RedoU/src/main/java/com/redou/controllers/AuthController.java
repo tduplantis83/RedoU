@@ -25,7 +25,7 @@ public class AuthController {
 	@Autowired
 	private UserService userSvc;
 
-	@PostMapping("/register")
+	@PostMapping("register")
 	public User register(@RequestBody User user, HttpServletResponse res) {
 
 		if (!authSvc.isUserUnique(user.getUsername(), user.getEmail())) {
@@ -40,7 +40,7 @@ public class AuthController {
 		}
 	}
 
-	@GetMapping("/authenticate")
+	@GetMapping("authenticate")
 	public Principal authenticate(Principal principal, HttpServletResponse res) {
 		
 		User loggedInUser = userSvc.getUserByUsernameExact(principal.getName());
