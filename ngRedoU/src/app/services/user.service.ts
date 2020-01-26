@@ -22,7 +22,7 @@ export class UserService {
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User>(this.baseUrl + "users/id/" + id).pipe(
+    return this.http.get<User>(this.baseUrl + "users/id/" + id, httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In UserSvc get by Id");
@@ -116,6 +116,21 @@ export class UserService {
       catchError((err: any) => {
         console.log(err);
         return throwError("In UserSvc get All");
+      })
+    );
+  }
+
+  getLoggedInUser() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
+      })
+    };
+    return this.http.get<User>(this.baseUrl + "api/users/getloggedinuser", httpOptions).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError("In UserSvc get Logged In User");
       })
     );
   }
