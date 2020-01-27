@@ -3,6 +3,9 @@
 <div class="container-fluid">
   <h3 class="text-center text-primary">New User Registration</h3>
   <br />
+  <h6 class="text-center" *ngIf="error" style="color: red;">
+    * An account with that Username &/or Password already exists *
+  </h6>
   <form name="registerForm">
     <h5 class="text-center">Login Credentials:</h5>
     <div class="form-row">
