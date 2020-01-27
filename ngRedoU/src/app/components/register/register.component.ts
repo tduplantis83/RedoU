@@ -10,7 +10,6 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy  {
-  newUser: User = new User();
 
   constructor(private authSvc: AuthService, private router: Router, private usersvc: UserService) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
@@ -20,7 +19,9 @@ export class RegisterComponent implements OnInit, OnDestroy  {
         this.ngOnInit();
       }
     });
-   }
+  }
+
+  newUser: User;
   error = false;
   navigationSubscription;
 

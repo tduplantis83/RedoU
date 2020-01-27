@@ -44,6 +44,9 @@
                 <div class="row">
                   <div class="col">
                     Login
+                    <div *ngIf="error === true">
+                      <a class="text-center" style="color: red; font-size:12px;">*Username &/or Password Incorrect</a>
+                    </div>
                     <form
                       class="form"
                       role="form"
@@ -109,7 +112,7 @@
           <a class="nav-link" [routerLink]="['/users']">User Profile</a>
         </li>
         <li class="nav-item" *ngIf="loggedIn === true">
-          <a class="nav-link" (click)="logOut()" [routerLink]="['/login']"
+          <a class="nav-link" (click)="logOut()" [routerLink]="['/home']"
             >Logout</a>
         </li>
       </ul>
