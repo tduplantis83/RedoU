@@ -15,16 +15,24 @@ export class NavBarComponent implements OnInit, OnDestroy{
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
+        this.error = false;
+        this.userToLogIn = new User();
+        // this.userSelected = null;
+        this.userFullName = null;
+        this.loggedIn = false;
+        this.isAdmin = false;
         this.ngOnInit();
       }
     });
   }
 
-  userSelected: User = null;
+  userToLogIn: User = new User();
+  // userSelected: User = null;
   userFullName: string = null;
   loggedIn = false;
   navigationSubscription;
-  isAdmin;
+  error = false;
+  isAdmin = false;
 
   ngOnInit() {
     if (this.authSvc.checkLogin()) {
@@ -59,13 +67,27 @@ export class NavBarComponent implements OnInit, OnDestroy{
         if (data.role === 'admin') {
           this.isAdmin = true;
         }
-        this.userSelected = data;
-        this.userFullName = this.userSelected.firstName + ' ' + this.userSelected.lastName;
+        // this.userSelected = data;
+        this.userFullName = data.firstName + ' ' + data.lastName;
       },
       err => console.error('Get Logged In User Error in Nav-Bar Component.ts')
     );
 
-    this.userSelected = null;
+    // this.userSelected = null;
+  }
+
+  login() {
+    this.error = false;
+    this.authSvc.login(this.userToLogIn.username, this.userToLogIn.password).subscribe(
+      data => {
+        this.router.navigateByUrl('/users');
+      },
+      err => {
+        console.error(err);
+        this.error = true;
+        this.userToLogIn = null;
+      }
+    );
   }
 
 
