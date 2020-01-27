@@ -21,11 +21,12 @@ export class RegisterComponent implements OnInit, OnDestroy  {
     });
   }
 
-  newUser: User;
+  newUser: User = new User();
   error = false;
   navigationSubscription;
 
   ngOnInit() {
+    this.newUser = new User();
   }
 
   ngOnDestroy() {
