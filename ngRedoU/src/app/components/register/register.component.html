@@ -1,8 +1,10 @@
 <br />
 <br />
-<div class="container">
+<div class="container-fluid">
+  <h3 class="text-center text-primary">New User Registration</h3>
+  <br />
   <form name="registerForm">
-    <h5 class="text-center text-primary">Login Information:</h5>
+    <h5 class="text-center">Login Credentials:</h5>
     <div class="form-row">
       <div class="col-2"></div>
       <div class="col-4">
@@ -27,16 +29,16 @@
       </div>
       <div class="col-2"></div>
     </div>
-    <br>
+    <br />
     <div class="form-row">
       <div class="col-2"></div>
       <div class="col-8">
         <hr />
       </div>
       <div class="col-2"></div>
-  </div>
-  <br>
-    <h5 class="text-center text-primary">Personal Information:</h5>
+    </div>
+    <br />
+    <h5 class="text-center">Personal Information:</h5>
     <div class="form-row">
       <div class="col-2"></div>
       <div class="col-4">
@@ -73,7 +75,7 @@
           [(ngModel)]="newUser.email"
         />
       </div>
-      <div class="col-2">
+      <div class="col-4">
         <label for="birthday">Birthday</label>
         <input
           type="date"
@@ -83,10 +85,12 @@
           [(ngModel)]="newUser.birthday"
         />
       </div>
-      <div class="col-2">
-        <label for="Sex">Sex:</label>
-        <br />
-        <div class="form-check form-check-inline form-control-md">
+      <div class="col-2"></div>
+    </div>
+    <div class="form-row">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <div class="form-check form-check-inline">
           <input
             class="form-check-input"
             type="radio"
@@ -96,7 +100,7 @@
           />
           <label class="form-check-label" for="sex">Male</label>
         </div>
-        <div class="form-check form-check-inline form-control-md">
+        <div class="form-check form-check-inline">
           <input
             class="form-check-input"
             type="radio"
@@ -106,35 +110,34 @@
           />
           <label class="form-check-label" for="sex">Female</label>
         </div>
-        <div class="col-2"></div>
       </div>
+      <div class="col-6"></div>
     </div>
-    <br>
+    <br />
     <div class="form-row">
       <div class="col-2"></div>
       <div class="col-4">
         <button
-      type="submit"
-      class="btn btn-secondary"
-      style="float:left;"
-      [routerLink]="['/home']"
-    >
-      Cancel
-    </button>
+          type="submit"
+          class="btn btn-secondary"
+          style="float:left;"
+          [routerLink]="['/home']"
+        >
+          Cancel
+        </button>
       </div>
       <div class="col-4">
         <button
-      type="submit"
-      class="btn btn-primary"
-      style="float:right;"
-      (click)="register()"
-    >
-      Register
-    </button>
+          type="submit"
+          class="btn btn-primary"
+          style="float:right;"
+          (click)="register()"
+        >
+          Register
+        </button>
       </div>
       <div class="col-2"></div>
-      </div>
-
+    </div>
   </form>
 </div>
 <br />
