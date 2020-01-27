@@ -1,41 +1,142 @@
+<br />
+<br />
 <div class="container">
   <form name="registerForm">
-    <div class="form-group">
-      <h5 class="text-center text-primary">Login Information:</h5>
-      <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" name="username" [(ngModel)]="newUser.username">
+    <h5 class="text-center text-primary">Login Information:</h5>
+    <div class="form-row">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          [(ngModel)]="newUser.username"
+        />
+      </div>
+      <div class="col-4">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          [(ngModel)]="newUser.password"
+        />
+      </div>
+      <div class="col-2"></div>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="newUser.password">
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="newUser.email">
-    </div>
-    <hr>
-    <h5 class="text-center text-primary">Personal Information:</h5>
-    <div class="form-group">
-      <label for="firstName">First Name</label>
-      <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="newUser.firstName">
-    </div>
-    <div class="form-group">
-      <label for="lastName">Last Name</label>
-      <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="newUser.lastName">
-    </div>
-    <div class="form-group">
-      <label for="birthday">Birthday</label>
-      <input type="date" class="form-control" id="birthday" name="birthday" [(ngModel)]="newUser.birthday">
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="sex" value="M" [(ngModel)]="newUser.sex">
-      <label class="form-check-label" for="sex">Male</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="sex" value="F" [(ngModel)]="newUser.sex">
-      <label class="form-check-label" for="sex">Female</label>
-    </div>
-    <button type="submit" class="btn btn-primary" style="float: right" (click)="register()">Register</button>
-  </form>
+    <br>
+    <div class="form-row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <hr />
+      </div>
+      <div class="col-2"></div>
+  </div>
   <br>
+    <h5 class="text-center text-primary">Personal Information:</h5>
+    <div class="form-row">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          name="firstName"
+          [(ngModel)]="newUser.firstName"
+        />
+      </div>
+      <div class="col-4">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          name="lastName"
+          [(ngModel)]="newUser.lastName"
+        />
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <div class="form-row">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          [(ngModel)]="newUser.email"
+        />
+      </div>
+      <div class="col-2">
+        <label for="birthday">Birthday</label>
+        <input
+          type="date"
+          class="form-control"
+          id="birthday"
+          name="birthday"
+          [(ngModel)]="newUser.birthday"
+        />
+      </div>
+      <div class="col-2">
+        <label for="Sex">Sex:</label>
+        <br />
+        <div class="form-check form-check-inline form-control-md">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="sex"
+            value="M"
+            [(ngModel)]="newUser.sex"
+          />
+          <label class="form-check-label" for="sex">Male</label>
+        </div>
+        <div class="form-check form-check-inline form-control-md">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="sex"
+            value="F"
+            [(ngModel)]="newUser.sex"
+          />
+          <label class="form-check-label" for="sex">Female</label>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </div>
+    <br>
+    <div class="form-row">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <button
+      type="submit"
+      class="btn btn-secondary"
+      style="float:left;"
+      [routerLink]="['/home']"
+    >
+      Cancel
+    </button>
+      </div>
+      <div class="col-4">
+        <button
+      type="submit"
+      class="btn btn-primary"
+      style="float:right;"
+      (click)="register()"
+    >
+      Register
+    </button>
+      </div>
+      <div class="col-2"></div>
+      </div>
+
+  </form>
 </div>
+<br />
+<br />
+<br />
