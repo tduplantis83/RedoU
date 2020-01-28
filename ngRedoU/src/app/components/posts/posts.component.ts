@@ -23,6 +23,7 @@ export class PostsComponent implements OnInit, OnDestroy{
 
   navigationSubscription;
   allPosts: Post [] = [];
+  showReplies = false;
 
   ngOnInit() {
     this.postSvc.getAllPosts().subscribe(

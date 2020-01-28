@@ -1,7 +1,8 @@
 <div class="container-fluid">
-
   <div *ngIf="allPosts.length > 0">
-    <div *ngFor="let post of allPosts">
+    <h3 class="text-center">Forum Posts</h3>
+    <h6 class="text-center">Click Title to see any Post Replies</h6>
+    <div *ngFor="let post of allPosts | arraySort: 'dateCreated': true">
       <table class="table table-bordered table-hover table-striped">
         <thead class="thead-dark">
           <tr>
@@ -17,35 +18,38 @@
           <tr>
             <td>{{ post.user.username }}</td>
             <td>{{ post.postTopic.topicName }}</td>
-            <td>{{ post.title }}</td>
+            <td  (click)="showReplies=true">{{ post.title }}</td>
             <td>{{ post.content }}</td>
             <td>{{ post.dateCreated }}</td>
             <td>{{ post.dateUpdated }}</td>
           </tr>
         </tbody>
       </table>
-      <div *ngIf="post.originalPostReplies.length > 0">
-        <table *ngFor="let reply of post.originalPostReplies" class="table table-bordered table-hover table-striped">
+      <div *ngIf="post.originalPostReplies.length > 0 && showReplies === true">
+        <h3 class="text-center">Post Replies</h3>
+        <table class="table table-bordered table-hover table-striped">
           <thead class="thead-dark">
             <tr>
               <th>Reply By</th>
+              <th>Topic</th>
+              <th>Title</th>
               <th>Content</th>
               <th>Date Posted</th>
-              <th>Date Updated</th>
+              <th>Updated on</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr *ngFor="let reply of post.originalPostReplies | arraySort: 'dateCreated': false">
               <td>{{ reply.replyUser.username }}</td>
+              <td>{{ post.postTopic.topicName }}</td>
+              <td>{{ post.title }}</td>
               <td>{{ reply.replyContent }}</td>
               <td>{{ reply.dateCreated }}</td>
               <td>{{ reply.dateUpdated }}</td>
             </tr>
           </tbody>
         </table>
-
       </div>
     </div>
   </div>
-
 </div>
