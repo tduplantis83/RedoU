@@ -32,9 +32,6 @@
         <li class="nav-item" *ngIf="isAdmin">
           <a class="nav-link" [routerLink]="['/admin']">Admin</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/search']">Search</a>
-        </li>
 
         <li class="nav-item dropdown" *ngIf="loggedIn === false">
           <a class="nav-link" data-toggle="dropdown">Login</a>
@@ -107,6 +104,12 @@
               </div>
             </li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/search']">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/posts']">Forums</a>
         </li>
         <li class="nav-item" *ngIf="loggedIn === true && isAdmin === false">
           <a class="nav-link" [routerLink]="['/users']">User Profile</a>

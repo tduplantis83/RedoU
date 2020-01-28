@@ -1,3 +1,4 @@
+import { PostsComponent } from './components/posts/posts.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, runGuardsAndResolvers: 'always' },
   { path: 'users', component: UserProfileComponent, runGuardsAndResolvers: 'always' },
   { path: 'search', component: SearchResultsComponent, runGuardsAndResolvers: 'always'},
+  { path: 'posts', component: PostsComponent, runGuardsAndResolvers: 'always'},
   { path: '**', component: PageNotFoundComponent }
 ];
 

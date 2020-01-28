@@ -44,6 +44,11 @@ public class PostServiceImpl implements PostService{
 	public List<Post> getPostByContentLike(String content) {
 		return repo.findByContentIgnoreCaseContaining(content);
 	}
+	
+	@Override
+	public List<Post> getAllPosts() {
+		return repo.findAll();
+	}
 
 	@Override
 	public Post createPost(Post post) {
