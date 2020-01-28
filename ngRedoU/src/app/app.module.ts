@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { RegisterComponent } from './components/register/register.component';
 import { PostsComponent } from './components/posts/posts.component';
+import { ArraySortPipe } from './Pipes/array-sort.pipe';
 
 
 
@@ -25,7 +26,8 @@ import { PostsComponent } from './components/posts/posts.component';
     NavBarComponent,
     SearchResultsComponent,
     RegisterComponent,
-    PostsComponent
+    PostsComponent,
+    ArraySortPipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { PostsComponent } from './components/posts/posts.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, ArraySortPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
