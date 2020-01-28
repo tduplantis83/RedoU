@@ -98,6 +98,17 @@ public class PostController {
 		return posts;
 	}
 	
+	@GetMapping("post/all")
+	public List<Post> getAllPosts(HttpServletRequest req, HttpServletResponse resp) {
+		List<Post> posts = postSvc.getAllPosts();
+		if (posts.size() == 0) {
+			resp.setStatus(404);
+		} else {
+			resp.setStatus(200);
+		}
+		return posts;
+	}
+	
 	@PostMapping("api/post/create")
 	public Post createPost(@RequestBody Post post, HttpServletRequest req, HttpServletResponse resp, Principal principal) {
 		try {

@@ -1,0 +1,51 @@
+<div class="container-fluid">
+
+  <div *ngIf="allPosts.length > 0">
+    <div *ngFor="let post of allPosts">
+      <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Posted By</th>
+            <th>Topic</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date Posted</th>
+            <th>Updated on</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ post.user.username }}</td>
+            <td>{{ post.postTopic.topicName }}</td>
+            <td>{{ post.title }}</td>
+            <td>{{ post.content }}</td>
+            <td>{{ post.dateCreated }}</td>
+            <td>{{ post.dateUpdated }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="post.originalPostReplies.length > 0">
+        <table *ngFor="let reply of post.originalPostReplies" class="table table-bordered table-hover table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Reply By</th>
+              <th>Content</th>
+              <th>Date Posted</th>
+              <th>Date Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ reply.replyUser.username }}</td>
+              <td>{{ reply.replyContent }}</td>
+              <td>{{ reply.dateCreated }}</td>
+              <td>{{ reply.dateUpdated }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+</div>

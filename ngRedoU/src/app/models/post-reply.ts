@@ -8,7 +8,7 @@ export class PostReply {
   repliesToPostReply: PostReply[];
   replyContent: string;
   dateCreated: Date;
-  dateUpated: Date;
+  dateUpdated: Date;
 
   constructor(
     id?: number,
@@ -18,7 +18,7 @@ export class PostReply {
     repliesToPostReply?: PostReply[],
     replyContent?: string,
     dateCreated?: Date,
-    dateUpated?: Date
+    dateUpdated?: Date
   ) {
     this.id = id;
     this.replyUser = replyUser;
@@ -27,6 +27,6 @@ export class PostReply {
     this.repliesToPostReply = repliesToPostReply;
     this.replyContent = replyContent;
     this.dateCreated = dateCreated;
-    this.dateUpated = dateUpated;
+    this.dateUpdated = dateUpdated;
   }
 }

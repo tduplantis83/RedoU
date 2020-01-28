@@ -17,6 +17,8 @@ public interface PostService {
 
 	public List<Post> getPostByContentLike(String content);
 	
+	public List<Post> getAllPosts();
+	
 	public Post createPost(Post post);
 
 	public Post updatePost(Post post, int id);

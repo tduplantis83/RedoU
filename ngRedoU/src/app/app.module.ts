@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { RegisterComponent } from './components/register/register.component';
+import { PostsComponent } from './components/posts/posts.component';
 
 
 
@@ -23,7 +24,8 @@ import { RegisterComponent } from './components/register/register.component';
     PageNotFoundComponent,
     NavBarComponent,
     SearchResultsComponent,
-    RegisterComponent
+    RegisterComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
