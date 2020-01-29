@@ -26,6 +26,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   userCurrentGoal: Goal;
   currentAvatar: Avatar;
   navigationSubscription;
+  measurementSystem = 'US';
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -62,4 +63,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
 }
