@@ -407,6 +407,9 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (13, 2, 3, 200, 'Baked Potato', '2020-01-24', '2020-01-26');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (14, 2, 3, 900, 'Chipotle Vegan Burrito Bowl - Sofritas', '2020-01-25', '2020-01-26');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (15, 2, 4, 130, 'Nutrigrain Bar - Strawberry', '2020-01-25', '2020-01-26');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (16, 2, 3, 700, 'Spaghetti with Boca Meat Crumbles - 1 bowl (about 2 cups)', '2020-01-26', '2020-01-28');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (17, 2, 3, 700, 'Veggie Fried Rice - 1 bowl (about 2 cups)', '2020-01-27', '2020-01-28');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (18, 2, 4, 200, 'PB&J', '2020-01-27', '2020-01-28');
 
 COMMIT;
 
@@ -428,6 +431,8 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (10, 2, 1888, 'Basal Metabolic Rate', '2020-01-24', '2020-01-24');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (11, 2, 1888, 'Basal Metabolic Rate', '2020-01-25', '2020-01-26');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (12, 2, 1888, 'Basal Metabolic Rate', '2020-01-26', '2020-01-26');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (13, 2, 1888, 'Basal Metabolic Rate', '2020-01-27', '2020-01-28');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (14, 2, 1888, 'Basal Metabolic Rate', '2020-01-28', '2020-01-28');
 
 COMMIT;
 
