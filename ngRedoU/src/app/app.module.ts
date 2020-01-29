@@ -14,6 +14,8 @@ import { AuthService } from './services/auth.service';
 import { RegisterComponent } from './components/register/register.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { ArraySortPipe } from './Pipes/array-sort.pipe';
+import { MeasurementConverterPipe } from './Pipes/measurement-converter.pipe';
+
 
 
 
@@ -27,7 +29,8 @@ import { ArraySortPipe } from './Pipes/array-sort.pipe';
     SearchResultsComponent,
     RegisterComponent,
     PostsComponent,
-    ArraySortPipe
+    ArraySortPipe,
+    MeasurementConverterPipe
   ],
   imports: [
     BrowserModule,
