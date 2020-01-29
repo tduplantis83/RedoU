@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="user">
+<div class="container-fluid" *ngIf="user && user.role !== 'admin'">
   <h3 class="text-center">User Info:</h3>
   <table class="table table-bordered table-hover table-striped">
     <thead class="thead-dark">
@@ -25,17 +25,23 @@
     </tbody>
   </table>
   <br />
-  <div class="container">
+  <div class="container" *ngIf="user.userAvatars.length > 0">
     <h3 class="text-center">Current Avatar: {{ currentAvatar.bodyType }}</h3>
     <h5 class="text-center">(Based on most recent diet & exercise)</h5>
-    <img
-      [src]="currentAvatar.avatarUrl"
-      width="200"
-      alt="Current User Avatar"
-    />
+    <div class="row">
+      <div class="col-5"></div>
+      <div class="col-2">
+        <img
+          [src]="currentAvatar.avatarUrl"
+          class="img-fluid"
+          alt="Current User Avatar"
+        />
+      </div>
+      <div class="col-5"></div>
+    </div>
   </div>
   <br />
-  <div class="container">
+  <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0">
     <h3 class="text-center">Caloric Intake:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -62,7 +68,10 @@
     </table>
   </div>
   <br />
-  <div class="container">
+  <div
+    class="container"
+    *ngIf="user.userDailyExerciseCaloricDeficits.length > 0"
+  >
     <h3 class="text-center">Calories Burned:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -87,7 +96,7 @@
     </table>
   </div>
   <br />
-  <div class="container">
+  <div class="container" *ngIf="user.userImages.length > 0">
     <h3 class="text-center">Progress Images:</h3>
     <div class="col-md-12">
       <div class="row align-items-center">
@@ -96,7 +105,8 @@
           *ngFor="let img of user.userImages | arraySort: 'dateCreated':false"
         >
           <h6 class="text-center">{{ img.dateCreated | date: "shortDate" }}</h6>
-          <img id="progressImg"
+          <img
+            id="progressImg"
             [src]="img.imageUrl"
             alt="Progress Image: img.dateCreated"
             width="200"
@@ -105,19 +115,36 @@
       </div>
     </div>
   </div>
-  <br>
-  <div class="container">
+  <br />
+  <div class="container" *ngIf="user.userBodyMeasurementMetrics.length > 0">
     <h3 class="text-center">Body Measurements:</h3>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="system" id="system" value="US" [(ngModel)]="measurementSystem">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="system"
+        id="system"
+        value="US"
+        [(ngModel)]="measurementSystem"
+      />
       <label class="form-check-label" for="system">US</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="system" id="system" value="metric" [(ngModel)]="measurementSystem">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="system"
+        id="system"
+        value="metric"
+        [(ngModel)]="measurementSystem"
+      />
       <label class="form-check-label" for="system">Metric</label>
     </div>
     <!-- METRIC SELECTED -->
-    <table class="table table-bordered table-hover table-striped" *ngIf="measurementSystem === 'metric'">
+    <table
+      class="table table-bordered table-hover table-striped"
+      *ngIf="measurementSystem === 'metric'"
+    >
       <thead class="thead-dark">
         <tr>
           <th>Date Measured</th>
@@ -133,22 +160,36 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let m of user.userBodyMeasurementMetrics | arraySort: 'dateMeasured': true">
+        <tr
+          *ngFor="
+            let m of user.userBodyMeasurementMetrics
+              | arraySort: 'dateMeasured':true
+          "
+        >
           <td>{{ m.dateMeasured | date: "shortDate" }}</td>
           <td>{{ m.weightKg }}</td>
           <td>{{ m.waistMM }}</td>
           <td>{{ m.heightMM }}</td>
-          <td>{{ m.neckMM }}</td>
-          <td>{{ m.shouldersMM }}</td>
-          <td>{{ m.chestMM }}</td>
-          <td>{{ m.bicepMM }}</td>
-          <td>{{ m.hipMM }}</td>
-          <td>{{ m.thighMM }}</td>
+          <td *ngIf="m.neckMM">{{ m.neckMM }}</td>
+          <td *ngIf="!m.neckMM">-</td>
+          <td *ngIf="m.shouldersMM">{{ m.shouldersMM }}</td>
+          <td *ngIf="!m.shouldersMM">-</td>
+          <td *ngIf="m.chestMM">{{ m.chestMM }}</td>
+          <td *ngIf="!m.chestMM">-</td>
+          <td *ngIf="m.bicepMM">{{ m.bicepMM }}</td>
+          <td *ngIf="!m.bicepMM">-</td>
+          <td *ngIf="m.hipsMM">{{ m.hipsMM }}</td>
+          <td *ngIf="!m.hipsMM">-</td>
+          <td *ngIf="m.thighMM">{{ m.thighMM }}</td>
+          <td *ngIf="!m.thighMM">-</td>
         </tr>
       </tbody>
-      </table>
-      <!-- US SELECTED -->
-    <table class="table table-bordered table-hover table-striped" *ngIf="measurementSystem === 'US'">
+    </table>
+    <!-- US SELECTED -->
+    <table
+      class="table table-bordered table-hover table-striped"
+      *ngIf="measurementSystem === 'US'"
+    >
       <thead class="thead-dark">
         <tr>
           <th>Date Measured</th>
@@ -164,19 +205,55 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let m of user.userBodyMeasurementMetrics | arraySort: 'dateMeasured': true">
+        <tr
+          *ngFor="
+            let m of user.userBodyMeasurementMetrics
+              | arraySort: 'dateMeasured':true
+          "
+        >
           <td>{{ m.dateMeasured | date: "shortDate" }}</td>
-          <td>{{ m.weightKg | measurementConverter: 'kg':'lb' | number:'1.0-2' }}</td>
-          <td>{{ m.waistMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td>{{ m.heightMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td *ngIf="m.neckMM">{{ m.neckMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td *ngIf="m.shouldersMM">{{ m.shouldersMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td *ngIf="m.chestMM">{{ m.chestMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td *ngIf="m.bicepMM">{{ m.bicepMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td *ngIf="m.hipsMM">{{ m.hipsMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
-          <td *ngIf="m.thighMM">{{ m.thighMM | measurementConverter: 'mm':'in' | number:'1.0-2' }}</td>
+          <td>
+            {{ m.weightKg | measurementConverter: "kg":"lb" | number: "1.0-2" }}
+          </td>
+          <td>
+            {{ m.waistMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td>
+            {{ m.heightMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td *ngIf="m.neckMM">
+            {{ m.neckMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td *ngIf="!m.neckMM">-</td>
+          <td *ngIf="m.shouldersMM">
+            {{
+              m.shouldersMM | measurementConverter: "mm":"in" | number: "1.0-2"
+            }}
+          </td>
+          <td *ngIf="!m.shouldersMM">-</td>
+          <td *ngIf="m.chestMM">
+            {{ m.chestMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td *ngIf="!m.chestMM">-</td>
+          <td *ngIf="m.bicepMM">
+            {{ m.bicepMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td *ngIf="!m.bicepMM">-</td>
+          <td *ngIf="m.hipsMM">
+            {{ m.hipsMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td *ngIf="!m.hipsMM">-</td>
+          <td *ngIf="m.thighMM">
+            {{ m.thighMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
+          </td>
+          <td *ngIf="!m.thighMM">-</td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+<!-- ADMIN STUFF -->
+<div class="container-fluid" *ngIf="user && user.role === 'admin'">
+  <h1 class="text-center">Hello Admin</h1>
 </div>
