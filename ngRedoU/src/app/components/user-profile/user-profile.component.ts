@@ -40,7 +40,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
-    console.log(this.user);
   }
 
   getUserAvatar() {
@@ -67,6 +66,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       });
     });
+
+    //remove duplicate posts from array
+    for (let i = 0; i < this.postsWithNewReplies.length; i++) {
+      this.postsWithNewReplies.forEach(post => {
+        if (this.postsWithNewReplies[i].id === post.id) {
+          this.postsWithNewReplies.splice(i, 1);
+        }
+      });
+    }
+
   }
 
   ngOnDestroy() {

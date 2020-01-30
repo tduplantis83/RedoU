@@ -70,11 +70,11 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<BodyMeasurementMetric> userBodyMeasurementMetrics;
 
-	@JsonIgnoreProperties({"user"})
+	@JsonIgnoreProperties({"id", "password", "birthday", "sex", "email", "enabled", "role", "dateCreated", "dateUpdated"})
 	@OneToMany(mappedBy = "user")
 	private List<Post> userPosts;
 
-	@JsonIgnoreProperties({"replyUser"})
+	@JsonIgnoreProperties({"id", "password", "birthday", "sex", "email", "enabled", "role", "dateCreated", "dateUpdated"})
 	@OneToMany(mappedBy = "replyUser")
 	private List<PostReply> userPostReplies;
 
