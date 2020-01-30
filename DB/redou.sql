@@ -265,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `post_reply` (
   `originalPost_id` INT NOT NULL,
   `reply_to_reply_id` INT NULL,
   `replyContent` TEXT NOT NULL,
-  `new` TINYINT NOT NULL DEFAULT 1,
+  `unread` TINYINT NOT NULL DEFAULT 1,
   `dateCreated` DATE NOT NULL,
   `dateUpdated` DATE NOT NULL,
   PRIMARY KEY (`id`),
@@ -530,9 +530,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `new`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, NULL, 'There are several different types of intermittent fasting including: 16 hours fasting with 8 hours eating, One Meal A Day (OMAD). The general idea is to get your blood sugar down and prevent insulin spikes. In reality you can modify it so that it works best for you, but you should go for 16 hour fasts at a minimum. A lot of new research shows that this is the best way for humans to lose weight. It\'s actually thought that this is how our evolutionary ancestors ate (they didn\'t eat 3 meals a day, but instead ate when they were able to get food.', 1, '2020-01-17', '2020-01-17');
-INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `new`, `dateCreated`, `dateUpdated`) VALUES (2, 3, 1, 1, 'Which intermittent fasting method is the best for losing weight quickly, and why?', 1, '2020-01-23', '2020-01-23');
-INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `new`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 1, 2, 'It\'s really a personal choice - I\'d go with whicever is easiest for you to stick to. The best diet is the one you can do long-term; it\'s a marathon, not a race.', 1, '2020-01-24', '2020-01-24');
+INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `unread`, `dateCreated`, `dateUpdated`) VALUES (1, 2, 1, NULL, 'There are several different types of intermittent fasting including: 16 hours fasting with 8 hours eating, One Meal A Day (OMAD). The general idea is to get your blood sugar down and prevent insulin spikes. In reality you can modify it so that it works best for you, but you should go for 16 hour fasts at a minimum. A lot of new research shows that this is the best way for humans to lose weight. It\'s actually thought that this is how our evolutionary ancestors ate (they didn\'t eat 3 meals a day, but instead ate when they were able to get food.', 1, '2020-01-17', '2020-01-17');
+INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `unread`, `dateCreated`, `dateUpdated`) VALUES (2, 3, 1, 1, 'Which intermittent fasting method is the best for losing weight quickly, and why?', 1, '2020-01-23', '2020-01-23');
+INSERT INTO `post_reply` (`id`, `reply_user_id`, `originalPost_id`, `reply_to_reply_id`, `replyContent`, `unread`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 1, 2, 'It\'s really a personal choice - I\'d go with whicever is easiest for you to stick to. The best diet is the one you can do long-term; it\'s a marathon, not a race.', 1, '2020-01-24', '2020-01-24');
 
 COMMIT;
 

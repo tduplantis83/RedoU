@@ -1,23 +1,24 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { UserService } from "src/app/services/user.service";
-import { User } from "src/app/models/user";
-import { Avatar } from "src/app/models/avatar";
-import { Router, NavigationEnd } from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
+import { Avatar } from 'src/app/models/avatar';
+import { Router, NavigationEnd } from '@angular/router';
 import { Goal } from 'src/app/models/goal';
+import { Post } from 'src/app/models/post';
 
 @Component({
-  selector: "app-user-profile",
-  templateUrl: "./user-profile.component.html",
-  styleUrls: ["./user-profile.component.css"]
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(private userSvc: UserService, private router: Router) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
-        this.user = null;
-        this.currentAvatar = null;
         this.userCurrentGoal = null;
+        this.currentAvatar = null;
+        this.postsWithNewReplies = [];
       }
     });
   }
@@ -25,6 +26,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   user: User;
   userCurrentGoal: Goal;
   currentAvatar: Avatar;
+  postsWithNewReplies: Post [] = [];
   navigationSubscription;
   measurementSystem = 'US';
 
@@ -34,18 +36,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.user = data;
         this.getUserAvatar();
         this.getUserCurrentGoal();
+        this.getNewPostReplies();
       },
-      err => console.error("Get user by id error in User Component")
+      err => console.error('In User Component getLoggedInUser Error')
     );
-  }
-
-  ngOnDestroy() {
-    // avoid memory leaks here by cleaning up after ourselves. If we
-    // don't then we will continue to run our initialiseInvites()
-    // method on every navigationEnd event.
-    if (this.navigationSubscription) {
-      this.navigationSubscription.unsubscribe();
-    }
+    console.log(this.user);
   }
 
   getUserAvatar() {
@@ -62,6 +57,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.userCurrentGoal = ucg.goal;
       }
     });
+  }
+
+  getNewPostReplies() {
+    this.user.userPosts.forEach(p => {
+      p.originalPostReplies.forEach(pr => {
+        if (pr.unread === true) {
+          this.postsWithNewReplies.push(p);
+        }
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    // avoid memory leaks here by cleaning up after ourselves. If we
+    // don't then we will continue to run our initialiseInvites()
+    // method on every navigationEnd event.
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 
