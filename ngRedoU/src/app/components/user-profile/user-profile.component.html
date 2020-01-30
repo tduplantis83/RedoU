@@ -157,6 +157,7 @@
           <th>Bicep (mm)</th>
           <th>Hip (mm)</th>
           <th>Thigh (mm)</th>
+          <th>BMI</th>
         </tr>
       </thead>
       <tbody>
@@ -182,6 +183,7 @@
           <td *ngIf="!m.hipsMM">-</td>
           <td *ngIf="m.thighMM">{{ m.thighMM }}</td>
           <td *ngIf="!m.thighMM">-</td>
+          <td>{{ (m.weightKg / ((m.heightMM | measurementConverter: "mm":"m") * (m.heightMM | measurementConverter: "mm":"m"))) | number: "1.0-2" }} </td>
         </tr>
       </tbody>
     </table>
@@ -202,6 +204,7 @@
           <th>Bicep (in)</th>
           <th>Hip (in)</th>
           <th>Thigh (in)</th>
+          <th>BMI</th>
         </tr>
       </thead>
       <tbody>
@@ -247,6 +250,7 @@
             {{ m.thighMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
           </td>
           <td *ngIf="!m.thighMM">-</td>
+          <td>{{ ((703 * m.weightKg | measurementConverter: "kg":"lb") / ((m.heightMM | measurementConverter: "mm":"in") * (m.heightMM | measurementConverter: "mm":"in"))) | number: "1.0-2" }}</td>
         </tr>
       </tbody>
     </table>

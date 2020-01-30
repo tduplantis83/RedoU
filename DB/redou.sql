@@ -414,6 +414,8 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (19, 2, 3, 700, 'Spaghetti with Boca Meat Crumbles - 1 bowl (about 2 cups)', '2020-01-28', '2020-01-29');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (20, 2, 3, 200, 'Salad', '2020-01-28', '2020-01-29');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (21, 2, 2, 325, 'Buffalo Vegan Cauliflower Mac n Cheese', '2020-01-29', '2020-01-29');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (22, 2, 4, 125, 'Banana', '2020-01-29', '2020-01-29');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (23, 2, 3, 700, 'Breakfast Dinner - Hashbrowns & Eggs - 2 bowls', '2020-01-29', '2020-01-29');
 
 COMMIT;
 
@@ -438,6 +440,7 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (13, 2, 1888, 'Basal Metabolic Rate', '2020-01-27', '2020-01-28');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (14, 2, 1888, 'Basal Metabolic Rate', '2020-01-28', '2020-01-28');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (15, 2, 1888, 'Basal Metabolic Rate', '2020-01-29', '2020-01-29');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (16, 2, 1888, 'Basal Metabolic Rate', '2020-01-30', '2020-01-30');
 
 COMMIT;
 
@@ -451,6 +454,8 @@ INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) 
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 'https://i.imgur.com/zSACF2B.jpg', '2020-01-15', '2020-01-15');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (3, 2, 'https://i.imgur.com/5tSrGNG.jpg', '2020-01-22', '2020-01-22');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 'https://i.imgur.com/V9rUJEe.jpg', '2020-01-22', '2020-01-22');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (5, 2, 'https://i.imgur.com/k4mJmLQ.jpg', '2020-01-29', '2020-01-29');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (6, 2, 'https://i.imgur.com/mDquJgP.jpg', '2020-01-29', '2020-01-29');
 
 COMMIT;
 
