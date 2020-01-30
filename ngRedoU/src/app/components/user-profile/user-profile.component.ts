@@ -1,3 +1,4 @@
+import { PostReplyReplyService } from './../../services/post-reply.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
@@ -12,7 +13,7 @@ import { Post } from 'src/app/models/post';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  constructor(private userSvc: UserService, private router: Router) {
+  constructor(private userSvc: UserService, private router: Router, private postReplySvc: PostReplyReplyService) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
@@ -24,6 +25,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   user: User;
+  allUsers: User [] = [];
   userCurrentGoal: Goal;
   currentAvatar: Avatar;
   postsWithNewReplies: Post [] = [];
@@ -34,6 +36,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userSvc.getLoggedInUser().subscribe(
       data => {
         this.user = data;
+        if(this.user.role === 'admin') {
+          this.findAllUsers();
+        }
         this.getUserAvatar();
         this.getUserCurrentGoal();
         this.getNewPostReplies();
@@ -67,7 +72,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       });
     });
 
-    //remove duplicate posts from array
+    // remove duplicate posts from array
     for (let i = 0; i < this.postsWithNewReplies.length; i++) {
       this.postsWithNewReplies.forEach(post => {
         if (this.postsWithNewReplies[i].id === post.id) {
@@ -76,6 +81,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       });
     }
 
+  }
+
+  markReplyAsRead(replyID: number) {
+    this.postReplySvc.markPostReplyRead(replyID).subscribe(
+      data => {
+        this.getNewPostReplies();
+      },
+      err => console.error('In User Component markReplyAsRead Error')
+    );
+  }
+
+  findAllUsers() {
+    this.userSvc.getAllUsers().subscribe(
+      data => {
+        this.allUsers = data;
+      },
+      err => console.error('In User Component findAllUsers Error')
+    )
   }
 
   ngOnDestroy() {

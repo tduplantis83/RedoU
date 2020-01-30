@@ -17,14 +17,14 @@ export class PostReplyReplyService {
   getPostReplyById(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<PostReply>(this.baseUrl + "postreply/id/" + id).pipe(
+    return this.http.get<PostReply>(this.baseUrl + 'postreply/id/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In PostReplySvc get by Id");
+        return throwError('In PostReplySvc get by Id');
       })
     );
   }
@@ -32,14 +32,14 @@ export class PostReplyReplyService {
   getPostReplyByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<PostReply[]>(this.baseUrl + "postreply/userid/" + id).pipe(
+    return this.http.get<PostReply[]>(this.baseUrl + 'postreply/userid/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In PostReplySvc get by UserId");
+        return throwError('In PostReplySvc get by UserId');
       })
     );
   }
@@ -47,14 +47,14 @@ export class PostReplyReplyService {
   getPostReplyByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<PostReply[]>(this.baseUrl + "postreply/username/" + username).pipe(
+    return this.http.get<PostReply[]>(this.baseUrl + 'postreply/username/' + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In PostReplySvc get by Username");
+        return throwError('In PostReplySvc get by Username');
       })
     );
   }
@@ -62,14 +62,14 @@ export class PostReplyReplyService {
   getPostReplyByOriginalPostId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<PostReply[]>(this.baseUrl + "postreply/originalpostid/" + id).pipe(
+    return this.http.get<PostReply[]>(this.baseUrl + 'postreply/originalpostid/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In PostReplySvc get by OriginalPostID");
+        return throwError('In PostReplySvc get by OriginalPostID');
       })
     );
   }
@@ -77,14 +77,14 @@ export class PostReplyReplyService {
   getPostReplyByOriginalPostUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<PostReply[]>(this.baseUrl + "postreply/originalpostuserid/" + id).pipe(
+    return this.http.get<PostReply[]>(this.baseUrl + 'postreply/originalpostuserid/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In PostReplySvc get by OriginalPostUserID");
+        return throwError('In PostReplySvc get by OriginalPostUserID');
       })
     );
   }
@@ -92,14 +92,14 @@ export class PostReplyReplyService {
   getPostReplyByOriginalPostUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<PostReply[]>(this.baseUrl + "postreply/originalpostusername/" + username).pipe(
+    return this.http.get<PostReply[]>(this.baseUrl + 'postreply/originalpostusername/' + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In PostReplySvc get by OriginalPostUsername");
+        return throwError('In PostReplySvc get by OriginalPostUsername');
       })
     );
   }
@@ -107,16 +107,16 @@ export class PostReplyReplyService {
   createPostReply(postReply: PostReply) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .post(this.baseUrl + "api/postreply/create", postReply, httpOptions)
+      .post(this.baseUrl + 'api/postreply/create', postReply, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In PostRelySvc create PostReply");
+          return throwError('In PostRelySvc create PostReply');
         })
       );
   }
@@ -124,37 +124,59 @@ export class PostReplyReplyService {
   createPostReplyTOPostReply(postReply: PostReply, originalPostReplyID: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .post(this.baseUrl + "api/postreply/createReplyToReply/" + originalPostReplyID, postReply, httpOptions)
+      .post(this.baseUrl + 'api/postreply/createReplyToReply/' + originalPostReplyID, postReply, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In PostRelySvc create PostReply");
+          return throwError('In PostRelySvc create PostReply');
         })
       );
   }
 
-  updatePostReply(postReply: PostReply) {
+  markPostReplyRead(postReplyID: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
       .put<PostReply>(
-        this.baseUrl + "api/postreply/update/" +
+        this.baseUrl + 'api/postreply/setread/' +
+        postReplyID,
+        httpOptions
+      )
+      .pipe(
+        catchError((err: any) => {
+          console.log(err);
+          return throwError('In PostRelySvc mark Post Reply as Read');
+        })
+      );
+  }
+
+
+  updatePostReply(postReply: PostReply) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
+      })
+    };
+    return this.http
+      .put<PostReply>(
+        this.baseUrl + 'api/postreply/update/' +
         postReply.id, postReply,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In PostRelySvc update PostReply");
+          return throwError('In PostRelySvc update PostReply');
         })
       );
   }
@@ -162,16 +184,16 @@ export class PostReplyReplyService {
   deletePostReply(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/postreply/delete/" + id, httpOptions)
+      .delete(this.baseUrl + 'api/postreply/delete/' + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In PostRelySvc delete PostReply");
+          return throwError('In PostRelySvc delete PostReply');
         })
       );
   }
