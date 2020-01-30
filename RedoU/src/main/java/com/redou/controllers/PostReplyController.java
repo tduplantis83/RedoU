@@ -103,6 +103,7 @@ public class PostReplyController {
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());
 			reply.setReplyUser(u);
+			reply.setUnread(true);
 			reply = prSvc.createPostReply(reply);
 			// if successful, send 201
 			resp.setStatus(201);
@@ -127,6 +128,7 @@ public class PostReplyController {
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());
 			reply.setReplyUser(u);
+			reply.setUnread(true);
 			reply = prSvc.createPostReplyToReply(reply, id);
 			// if successful, send 201
 			resp.setStatus(201);
@@ -144,6 +146,30 @@ public class PostReplyController {
 		}
 		
 		return reply;
+	}
+	
+	@PutMapping("api/postreply/setread/{id}")
+	public PostReply setPostReplyasRead(@PathVariable int id, HttpServletRequest req,
+			HttpServletResponse resp) {
+		PostReply reply = new PostReply();
+		try {
+			reply = prSvc.setPostReplyasRead(id);
+			if (reply == null) {
+				resp.setStatus(404);
+			} else {
+				// if successful, send 200
+				resp.setStatus(200);
+			}
+		} catch (Exception e) {
+			// if update fails, return 404 error
+			e.printStackTrace();
+			resp.setStatus(400);
+			// set the returning post to null
+			reply = null;
+		}
+
+		return reply;
+
 	}
 
 	@PutMapping("api/postreply/update/{id}")

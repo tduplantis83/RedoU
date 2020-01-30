@@ -117,8 +117,10 @@ public class UserController {
 		User loggedInUser = userSvc.getUserByUsernameExact(principal.getName());
 		if (loggedInUser == null) {
 			res.setStatus(404);
-		} else
+		} 
+		else {
 			res.setStatus(200);
+		}
 		return loggedInUser;
 	}
 

@@ -62,6 +62,16 @@ public class PostReplyServiceImpl implements PostReplyService{
 		
 		return repo.saveAndFlush(reply);
 	}
+	
+	@Override
+	public PostReply setPostReplyasRead(int id) {
+		PostReply toUpdate = repo.findById(id);
+		
+		toUpdate.setUnread(false);
+		
+		
+		return toUpdate;
+	}
 
 	@Override
 	public PostReply updatePostReply(PostReply reply, int id) {
@@ -93,6 +103,8 @@ public class PostReplyServiceImpl implements PostReplyService{
 			return false;
 		}
 	}
+
+	
 
 	
 

@@ -256,12 +256,61 @@
     </table>
   </div>
   <br>
-  <div class="container">
+  <div class="container" *ngIf="postsWithNewReplies.length > 0">
     <h3 class="text-center">Your Posts with New Replies:</h3>
-
-
-  </div>
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Posted By</th>
+          <th>Topic</th>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Date Posted</th>
+          <th>Reply By</th>
+          <th>Reply Content</th>
+          <th>Mark as Read</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let post of postsWithNewReplies | arraySort: 'dateCreated':true">
+        <tr *ngFor="let reply of post.originalPostReplies | arraySort: 'dateCreated': false">
+          <td>{{ post.user.username }}</td>
+          <td>{{ post.postTopic.topicName }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.content }}</td>
+          <td>{{ post.dateCreated }}</td>
+          <td>{{ reply.replyUser.username }}</td>
+          <td>{{ reply.replyContent }}</td>
+          <td><button class="btn btn-warning">Mark Read</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div *ngIf="post.originalPostReplies.unread === true">
+      <h3 class="text-center">Post Replies</h3>
+      <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Reply By</th>
+            <th>Topic</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date Posted</th>
+            <th>Mark as Read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reply of post.originalPostReplies | arraySort: 'dateCreated': false">
+            <td>{{ reply.replyUser.username }}</td>
+            <td>{{ post.postTopic.topicName }}</td>
+            <td>{{ post.title }}</td>
+            <td>{{ reply.replyContent }}</td>
+            <td>{{ reply.dateCreated }}</td>
+            <td><button class="btn btn-warning">Mark Read</button>></td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
 </div>
+  </div>
 
 <!-- ADMIN STUFF -->
 <div class="container-fluid" *ngIf="user && user.role === 'admin'">

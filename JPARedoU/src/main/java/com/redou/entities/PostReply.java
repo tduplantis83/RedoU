@@ -25,6 +25,8 @@ public class PostReply {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	private boolean unread;
 
 	@JsonIgnoreProperties({ "userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits",
 			"userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies" })
@@ -67,6 +69,14 @@ public class PostReply {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean isUnread() {
+		return unread;
+	}
+
+	public void setUnread(boolean unread) {
+		this.unread = unread;
 	}
 
 	public User getReplyUser() {
@@ -190,18 +200,22 @@ public class PostReply {
 		return true;
 	}
 
-	// TO STRING
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("PostReply [id=");
 		builder.append(id);
+		builder.append(", unread=");
+		builder.append(unread);
 		builder.append(", replyUser=");
 		builder.append(replyUser);
 		builder.append(", originalPost=");
 		builder.append(originalPost);
 		builder.append(", replyToReply=");
 		builder.append(replyToReply);
+		builder.append(", repliesToPostReply=");
+		builder.append(repliesToPostReply);
 		builder.append(", replyContent=");
 		builder.append(replyContent);
 		builder.append(", dateCreated=");

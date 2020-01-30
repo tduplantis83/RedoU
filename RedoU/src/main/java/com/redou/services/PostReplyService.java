@@ -21,6 +21,8 @@ public interface PostReplyService {
 
 	public PostReply createPostReplyToReply(PostReply reply, int id);
 
+	public PostReply setPostReplyasRead(int id);
+	
 	public PostReply updatePostReply(PostReply reply, int id);
 	
 	public boolean deletePostReply(int id);
