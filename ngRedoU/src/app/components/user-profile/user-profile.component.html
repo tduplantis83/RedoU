@@ -1,29 +1,31 @@
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
   <h3 class="text-center">User Info:</h3>
-  <table class="table table-bordered table-hover table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th>Username</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Birthday</th>
-        <th>Sex</th>
-        <th>Current Goal</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ user.username }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.birthday | date: "shortDate" }}</td>
-        <td>{{ user.sex }}</td>
-        <td>{{ userCurrentGoal.goalName }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="container">
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Username</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Birthday</th>
+          <th>Sex</th>
+          <th>Current Goal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.birthday | date: "shortDate" }}</td>
+          <td>{{ user.sex }}</td>
+          <td>{{ userCurrentGoal.goalName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <br />
   <div class="container" *ngIf="user.userAvatars.length > 0">
     <h3 class="text-center">Current Avatar: {{ currentAvatar.bodyType }}</h3>
@@ -183,7 +185,14 @@
           <td *ngIf="!m.hipsMM">-</td>
           <td *ngIf="m.thighMM">{{ m.thighMM }}</td>
           <td *ngIf="!m.thighMM">-</td>
-          <td>{{ (m.weightKg / ((m.heightMM | measurementConverter: "mm":"m") * (m.heightMM | measurementConverter: "mm":"m"))) | number: "1.0-2" }} </td>
+          <td>
+            {{
+              m.weightKg /
+                ((m.heightMM | measurementConverter: "mm":"m") *
+                  (m.heightMM | measurementConverter: "mm":"m"))
+                | number: "1.0-2"
+            }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -250,15 +259,25 @@
             {{ m.thighMM | measurementConverter: "mm":"in" | number: "1.0-2" }}
           </td>
           <td *ngIf="!m.thighMM">-</td>
-          <td>{{ ((703 * m.weightKg | measurementConverter: "kg":"lb") / ((m.heightMM | measurementConverter: "mm":"in") * (m.heightMM | measurementConverter: "mm":"in"))) | number: "1.0-2" }}</td>
+          <td>
+            {{
+              (703 * m.weightKg | measurementConverter: "kg":"lb") /
+                ((m.heightMM | measurementConverter: "mm":"in") *
+                  (m.heightMM | measurementConverter: "mm":"in"))
+                | number: "1.0-2"
+            }}
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <br>
+  <br />
   <div class="container" *ngIf="postsWithNewReplies.length > 0">
     <h3 class="text-center">Your Posts with New Replies:</h3>
-    <table class="table table-bordered table-hover table-striped" *ngFor="let post of postsWithNewReplies | arraySort: 'dateCreated':true">
+    <table
+      class="table table-bordered table-hover table-striped"
+      *ngFor="let post of postsWithNewReplies | arraySort: 'dateCreated':true"
+    >
       <thead class="thead-dark">
         <tr>
           <th>Posted By</th>
@@ -276,18 +295,53 @@
           <td>{{ post.content }}</td>
           <td>{{ post.dateCreated }}</td>
         </tr>
-        <tr *ngFor="let reply of post.originalPostReplies | arraySort: 'dateCreated': false">
+        <tr
+          *ngFor="
+            let reply of post.originalPostReplies
+              | arraySort: 'dateCreated':false
+          "
+        >
           <td><strong>Reply by:</strong> {{ reply.replyUser.username }}</td>
           <td><strong>Reply Date:</strong> {{ reply.dateCreated }}</td>
           <td colspan="2">{{ reply.replyContent }}</td>
-          <td><button class="btn btn-warning">Mark Read</button></td>
+          <td><button class="btn btn-warning" (click)="markReplyAsRead(reply.id)">Mark Read</button></td>
         </tr>
       </tbody>
     </table>
-</div>
   </div>
+</div>
 
 <!-- ADMIN STUFF -->
 <div class="container-fluid" *ngIf="user && user.role === 'admin'">
   <h1 class="text-center">Hello Admin</h1>
+  <table  class="table table-bordered table-hover table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birthday</th>
+        <th>Sex</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Date Created</th>
+        <th>Date Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of allUsers | arraySort: 'id': false">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.birthday }}</td>
+        <td>{{ user.sex }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.dateCreated }}</td>
+        <td>{{ user.dateUpdated }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -69,8 +69,7 @@ public class PostReplyServiceImpl implements PostReplyService{
 		
 		toUpdate.setUnread(false);
 		
-		
-		return toUpdate;
+		return repo.saveAndFlush(toUpdate);
 	}
 
 	@Override
