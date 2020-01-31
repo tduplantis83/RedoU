@@ -146,11 +146,7 @@ export class PostReplyReplyService {
       })
     };
     return this.http
-      .put<PostReply>(
-        this.baseUrl + 'api/postreply/setread/' +
-        postReplyID,
-        httpOptions
-      )
+      .put<PostReply>(this.baseUrl + 'api/postreply/setread/' + postReplyID, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
