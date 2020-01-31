@@ -21,7 +21,6 @@ import com.redou.services.AuthService;
 import com.redou.services.UserService;
 
 @RestController
-//@RequestMapping(path = "api")
 @CrossOrigin({ "*", "http://localhost:4444" })
 public class UserController {
 

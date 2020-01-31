@@ -112,7 +112,7 @@ export class UserService {
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User[]>(this.baseUrl + "api/users/all").pipe(
+    return this.http.get<User[]>(this.baseUrl + "api/users/all", httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError("In UserSvc get All");
