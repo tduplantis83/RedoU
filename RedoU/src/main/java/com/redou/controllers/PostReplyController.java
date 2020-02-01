@@ -151,7 +151,6 @@ public class PostReplyController {
 	@PutMapping("api/postreply/setread/{id}")
 	public PostReply setPostReplyasRead(@PathVariable int id, HttpServletRequest req,
 			HttpServletResponse resp) {
-		System.out.println("WTF???");
 		PostReply reply = new PostReply();
 		try {
 			reply = prSvc.setPostReplyasRead(id);

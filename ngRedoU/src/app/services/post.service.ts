@@ -158,6 +158,7 @@ export class PostService {
   }
 
   deletePost(id: number) {
+    console.log(id);
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
