@@ -9,16 +9,15 @@ import { User } from 'src/app/models/user';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent implements OnInit, OnDestroy{
+export class NavBarComponent implements OnInit, OnDestroy {
 
   constructor(private authSvc: AuthService, private usersvc: UserService, private router: Router) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
         this.error = false;
-        this.userToLogIn = new User();
-        // this.userSelected = null;
         this.userFullName = null;
+        this.userToLogIn = new User();
         this.loggedIn = false;
         this.isAdmin = false;
         this.ngOnInit();
@@ -27,8 +26,7 @@ export class NavBarComponent implements OnInit, OnDestroy{
   }
 
   userToLogIn: User = new User();
-  // userSelected: User = null;
-  userFullName: string = null;
+  userFullName: string;
   loggedIn = false;
   navigationSubscription;
   error = false;
@@ -55,10 +53,9 @@ export class NavBarComponent implements OnInit, OnDestroy{
   }
 
   logOut() {
-    this.userFullName = null;
     this.loggedIn = false;
-    this.authSvc.logout();
     this.isAdmin = false;
+    this.authSvc.logout();
   }
 
   getUser() {
@@ -67,27 +64,26 @@ export class NavBarComponent implements OnInit, OnDestroy{
         if (data.role === 'admin') {
           this.isAdmin = true;
         }
-        // this.userSelected = data;
         this.userFullName = data.firstName + ' ' + data.lastName;
       },
       err => console.error('Get Logged In User Error in Nav-Bar Component.ts')
     );
 
-    // this.userSelected = null;
   }
 
   login() {
     this.error = false;
-    this.authSvc.login(this.userToLogIn.username, this.userToLogIn.password).subscribe(
-      data => {
-        this.router.navigateByUrl('/users');
-      },
-      err => {
-        console.error(err);
-        this.error = true;
-        this.userToLogIn = null;
-      }
-    );
+    if (this.userToLogIn !== null) {
+      this.authSvc.login(this.userToLogIn.username, this.userToLogIn.password).subscribe(
+        data => {
+          this.router.navigateByUrl('/users');
+        },
+        err => {
+          console.error(err);
+          this.error = true;
+        }
+      );
+    }
   }
 
 

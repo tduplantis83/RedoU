@@ -1,17 +1,17 @@
-import { AuthService } from "src/app/services/auth.service";
-import { PostReplyReplyService } from "./../../services/post-reply.service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { UserService } from "src/app/services/user.service";
-import { User } from "src/app/models/user";
-import { Avatar } from "src/app/models/avatar";
-import { Router, NavigationEnd } from "@angular/router";
-import { Goal } from "src/app/models/goal";
-import { Post } from "src/app/models/post";
+import { AuthService } from 'src/app/services/auth.service';
+import { PostReplyReplyService } from './../../services/post-reply.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
+import { Avatar } from 'src/app/models/avatar';
+import { Router, NavigationEnd } from '@angular/router';
+import { Goal } from 'src/app/models/goal';
+import { Post } from 'src/app/models/post';
 
 @Component({
-  selector: "app-user-profile",
-  templateUrl: "./user-profile.component.html",
-  styleUrls: ["./user-profile.component.css"]
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: max-line-length
@@ -38,20 +38,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   currentAvatar: Avatar;
   postsWithNewReplies: Post[] = [];
   navigationSubscription;
-  measurementSystem = "US";
+  measurementSystem = 'US';
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
       data => {
         this.user = data;
-        if (this.user.role === "admin") {
+        if (this.user.role === 'admin') {
           this.findAllUsers();
         }
         this.getUserAvatar();
         this.getUserCurrentGoal();
         this.getNewPostReplies();
       },
-      err => console.error("In User Component getLoggedInUser Error")
+      err => console.error('In User Component getLoggedInUser Error')
     );
   }
 
@@ -93,9 +93,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   markReplyAsRead(replyID: number) {
     this.postReplySvc.markPostReplyRead(replyID).subscribe(
       data => {
-        this.getNewPostReplies();
+        this.ngOnInit();
       },
-      err => console.error("In User Component markReplyAsRead Error")
+      err => console.error('In User Component markReplyAsRead Error')
     );
   }
 
@@ -104,7 +104,25 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       data => {
         this.allUsers = data;
       },
-      err => console.error("In User Component findAllUsers Error")
+      err => console.error('In User Component findAllUsers Error')
+    );
+  }
+
+  disableUser(u: User) {
+    this.userSvc.disableUser(u.id).subscribe(
+      data => {
+        this.ngOnInit();
+      },
+      err => console.error('In User Component disableUser Error')
+    );
+  }
+
+  enableUser(u: User) {
+    this.userSvc.enableUser(u.id).subscribe(
+      data => {
+        this.ngOnInit();
+      },
+      err => console.error('In User Component enableUser Error')
     );
   }
 
