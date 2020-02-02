@@ -161,7 +161,7 @@ public class UserController {
 			HttpServletResponse resp) {
 		try {
 			// try to update the provided user
-			user = authSvc.updateUser(user, id);
+			user = userSvc.updateUser(user, id);
 			if (user == null) {
 				resp.setStatus(404);
 			} else {
@@ -186,7 +186,7 @@ public class UserController {
 		try {
 			// try to update the provided user
 			user.setEnabled(false);
-			user = authSvc.updateUser(user, id);
+			user = userSvc.updateUser(user, id);
 			if (user == null) {
 				resp.setStatus(404);
 			} else {
@@ -211,7 +211,7 @@ public class UserController {
 		try {
 			// try to update the provided user
 			user.setEnabled(true);
-			user = authSvc.updateUser(user, id);
+			user = userSvc.updateUser(user, id);
 			if (user == null) {
 				resp.setStatus(404);
 			} else {

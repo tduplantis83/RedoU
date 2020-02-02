@@ -18,14 +18,14 @@ export class UserService {
   getUserById(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User>(this.baseUrl + "users/id/" + id, httpOptions).pipe(
+    return this.http.get<User>(this.baseUrl + 'users/id/' + id, httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get by Id");
+        return throwError('In UserSvc get by Id');
       })
     );
   }
@@ -33,14 +33,14 @@ export class UserService {
   getUserByUsernameEXACT(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User>(this.baseUrl + "users/username/exact/" + username).pipe(
+    return this.http.get<User>(this.baseUrl + 'users/username/exact/' + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get by Username EXACT");
+        return throwError('In UserSvc get by Username EXACT');
       })
     );
   }
@@ -48,14 +48,14 @@ export class UserService {
   getUserByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User[]>(this.baseUrl + "users/username/" + username).pipe(
+    return this.http.get<User[]>(this.baseUrl + 'users/username/' + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get by Username");
+        return throwError('In UserSvc get by Username');
       })
     );
   }
@@ -63,14 +63,14 @@ export class UserService {
   getUserByEmail(email: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User[]>(this.baseUrl + "users/email/" + email).pipe(
+    return this.http.get<User[]>(this.baseUrl + 'users/email/' + email).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get by Email");
+        return throwError('In UserSvc get by Email');
       })
     );
   }
@@ -78,14 +78,14 @@ export class UserService {
   getUserByEnabled(enabled: boolean) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User[]>(this.baseUrl + "api/users/enabled/" + enabled).pipe(
+    return this.http.get<User[]>(this.baseUrl + 'api/users/enabled/' + enabled, httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get by Enabled");
+        return throwError('In UserSvc get by Enabled');
       })
     );
   }
@@ -93,14 +93,14 @@ export class UserService {
   getUserByRole(role: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User[]>(this.baseUrl + "api/users/role/" + role).pipe(
+    return this.http.get<User[]>(this.baseUrl + 'api/users/role/' + role, httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get by Role");
+        return throwError('In UserSvc get by Role');
       })
     );
   }
@@ -108,14 +108,14 @@ export class UserService {
   getAllUsers() {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User[]>(this.baseUrl + "api/users/all", httpOptions).pipe(
+    return this.http.get<User[]>(this.baseUrl + 'api/users/all', httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get All");
+        return throwError('In UserSvc get All');
       })
     );
   }
@@ -123,14 +123,14 @@ export class UserService {
   getLoggedInUser() {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<User>(this.baseUrl + "api/users/getloggedinuser", httpOptions).pipe(
+    return this.http.get<User>(this.baseUrl + 'api/users/getloggedinuser', httpOptions).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserSvc get Logged In User");
+        return throwError('In UserSvc get Logged In User');
       })
     );
   }
@@ -138,16 +138,16 @@ export class UserService {
   createUser(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
         // Authorization: "Basic " + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .post(this.baseUrl + "users/create/", user, httpOptions)
+      .post(this.baseUrl + 'users/create/', user, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserSvc create User");
+          return throwError('In UserSvc create User');
         })
       );
   }
@@ -155,20 +155,20 @@ export class UserService {
   updateUser(user: User) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
       .put<User>(
-        this.baseUrl + "api/users/update/" +
+        this.baseUrl + 'api/users/update/' +
         user.id, user,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserSvc update User");
+          return throwError('In UserSvc update User');
         })
       );
   }
@@ -176,20 +176,20 @@ export class UserService {
   disableUser(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
       .put<User>(
-        this.baseUrl + "api/users/disable/" +
+        this.baseUrl + 'api/users/disable/' +
         id,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserSvc disable User");
+          return throwError('In UserSvc disable User');
         })
       );
   }
@@ -197,20 +197,20 @@ export class UserService {
   enableUser(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
       .put<User>(
-        this.baseUrl + "api/users/enable/" +
+        this.baseUrl + 'api/users/enable/' +
         id,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserSvc enable User");
+          return throwError('In UserSvc enable User');
         })
       );
   }
@@ -218,16 +218,16 @@ export class UserService {
   deleteUser(userId: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/users/delete/" + userId, httpOptions)
+      .delete(this.baseUrl + 'api/users/delete/' + userId, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserSvc delete User");
+          return throwError('In UserSvc delete User');
         })
       );
   }

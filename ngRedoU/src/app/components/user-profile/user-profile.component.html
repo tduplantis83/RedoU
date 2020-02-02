@@ -301,10 +301,10 @@
               | arraySort: 'dateCreated':false
           "
         >
-          <td><strong>Reply by:</strong> {{ reply.replyUser.username }}</td>
-          <td><strong>Reply Date:</strong> {{ reply.dateCreated }}</td>
-          <td colspan="2">{{ reply.replyContent }}</td>
-          <td><button class="btn btn-warning" (click)="markReplyAsRead(reply.id)">Mark Read</button></td>
+          <td *ngIf="reply.unread === true"><strong>Reply by:</strong> {{ reply.replyUser.username }}</td>
+          <td *ngIf="reply.unread === true"><strong>Reply Date:</strong> {{ reply.dateCreated }}</td>
+          <td colspan="2" *ngIf="reply.unread === true">{{ reply.replyContent }}</td>
+          <td *ngIf="reply.unread === true"><button class="btn btn-warning" (click)="markReplyAsRead(reply.id)">Mark Read</button></td>
         </tr>
       </tbody>
     </table>
@@ -313,7 +313,22 @@
 
 <!-- ADMIN STUFF -->
 <div class="container-fluid" *ngIf="user && user.role === 'admin'">
-  <h1 class="text-center">Hello Admin</h1>
+  <h1 class="text-center">Hello {{ user.firstName }} {{ user.lastName }}</h1>
+  <div class="container" *ngIf="user.userAvatars.length > 0">
+    <div class="row">
+      <div class="col-5"></div>
+      <div class="col-2">
+        <img
+          [src]="currentAvatar.avatarUrl"
+          class="img-fluid"
+          alt="Current User Avatar"
+        />
+      </div>
+      <div class="col-5"></div>
+    </div>
+  </div>
+  <br>
+  <h3 class="text-center">User Administration:</h3>
   <table  class="table table-bordered table-hover table-striped">
     <thead class="thead-dark">
       <tr>
@@ -327,20 +342,23 @@
         <th>Role</th>
         <th>Date Created</th>
         <th>Date Updated</th>
+        <th>Enable/Disable</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of allUsers | arraySort: 'id': false">
-        <td>{{ user.id }}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.birthday }}</td>
-        <td>{{ user.sex }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.dateCreated }}</td>
-        <td>{{ user.dateUpdated }}</td>
+      <tr *ngFor="let u of allUsers | arraySort: 'id': false">
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.firstName }}</td>
+        <td>{{ u.lastName }}</td>
+        <td>{{ u.birthday }}</td>
+        <td>{{ u.sex }}</td>
+        <td><a href="mailto:{{ u.email }}" target="_blank">{{ u.email }}</a></td>
+        <td>{{ u.role }}</td>
+        <td>{{ u.dateCreated }}</td>
+        <td>{{ u.dateUpdated }}</td>
+        <td *ngIf="u.enabled === true"><button class="btn btn-warning" (click)="disableUser(u)">Disable</button></td>
+        <td *ngIf="u.enabled === false"><button class="btn btn-success" (click)="enableUser(u)">Enable</button></td>
       </tr>
     </tbody>
   </table>
