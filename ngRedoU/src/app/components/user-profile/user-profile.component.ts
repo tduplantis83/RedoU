@@ -8,6 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Goal } from 'src/app/models/goal';
 import { Post } from 'src/app/models/post';
 
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -39,6 +40,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   postsWithNewReplies: Post[] = [];
   navigationSubscription;
   measurementSystem = 'US';
+  caloriesByDateMap = new Map<Date, number>();
+
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -50,6 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.getUserAvatar();
         this.getUserCurrentGoal();
         this.getNewPostReplies();
+        this.getCaloriesByDate();
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
@@ -88,6 +92,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  getCaloriesByDate() {
+
   }
 
   markReplyAsRead(replyID: number) {
