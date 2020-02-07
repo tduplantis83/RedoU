@@ -293,7 +293,7 @@
           <td>{{ post.postTopic.topicName }}</td>
           <td>{{ post.title }}</td>
           <td>{{ post.content }}</td>
-          <td>{{ post.dateCreated }}</td>
+          <td>{{ post.dateCreated | date: "shortDate"}}</td>
         </tr>
         <tr
           *ngFor="
@@ -302,7 +302,7 @@
           "
         >
           <td *ngIf="reply.unread === true"><strong>Reply by:</strong> {{ reply.replyUser.username }}</td>
-          <td *ngIf="reply.unread === true"><strong>Reply Date:</strong> {{ reply.dateCreated }}</td>
+          <td *ngIf="reply.unread === true"><strong>Reply Date:</strong> {{ reply.dateCreated | date: "shortDate"}}</td>
           <td colspan="2" *ngIf="reply.unread === true">{{ reply.replyContent }}</td>
           <td *ngIf="reply.unread === true"><button class="btn btn-warning" (click)="markReplyAsRead(reply.id)">Mark Read</button></td>
         </tr>
@@ -355,8 +355,8 @@
         <td>{{ u.sex }}</td>
         <td><a href="mailto:{{ u.email }}" target="_blank">{{ u.email }}</a></td>
         <td>{{ u.role }}</td>
-        <td>{{ u.dateCreated }}</td>
-        <td>{{ u.dateUpdated }}</td>
+        <td>{{ u.dateCreated | date: "shortDate"}}</td>
+        <td>{{ u.dateUpdated | date: "shortDate"}}</td>
         <td *ngIf="u.enabled === true"><button class="btn btn-warning" (click)="disableUser(u)">Disable</button></td>
         <td *ngIf="u.enabled === false"><button class="btn btn-success" (click)="enableUser(u)">Enable</button></td>
       </tr>
