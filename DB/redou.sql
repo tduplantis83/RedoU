@@ -432,6 +432,9 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (35, 2, 3, 300, 'Salad (2 bowls)', '2020-02-03', '2020-02-04');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (36, 2, 3, 200, 'Salad', '2020-02-04', '2020-02-05');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (37, 2, 3, 700, 'Tofu Buffalo Bites (a lot)', '2020-02-04', '2020-02-05');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (38, 2, 3, 800, 'Fajita Bowl', '2020-02-05', '2020-02-07');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (39, 2, 2, 300, 'Tofu Buffalo Bites (small amt)', '2020-02-06', '2020-02-07');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (40, 2, 3, 800, 'Fajita Bowl', '2020-02-06', '2020-02-07');
 
 COMMIT;
 
@@ -464,6 +467,8 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (21, 2, 1888, 'Basal Metabolic Rate', '2020-02-03', '2020-02-04');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (22, 2, 1888, 'Basal Metabolic Rate', '2020-02-04', '2020-02-04');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (23, 2, 1850, 'Basal Metabolic Rate', '2020-02-05', '2020-02-05');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (24, 2, 1850, 'Basal Metabolic Rate', '2020-02-06', '2020-02-07');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (25, 2, 1850, 'Basal Metabolic Rate', '2020-02-07', '2020-02-07');
 
 COMMIT;
 
@@ -479,6 +484,8 @@ INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) 
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (4, 2, 'https://i.imgur.com/V9rUJEe.jpg', '2020-01-22', '2020-01-22');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (5, 2, 'https://i.imgur.com/k4mJmLQ.jpg', '2020-01-29', '2020-01-29');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (6, 2, 'https://i.imgur.com/mDquJgP.jpg', '2020-01-29', '2020-01-29');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (7, 2, 'https://i.imgur.com/uK3VMWA.jpg', '2020-02-05', '2020-02-07');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (8, 2, 'https://i.imgur.com/BHxZJ6P.jpg', '2020-02-05', '2020-02-07');
 
 COMMIT;
 
@@ -543,6 +550,7 @@ COMMIT;
 START TRANSACTION;
 USE `redou`;
 INSERT INTO `post` (`id`, `user_id`, `postTopic_id`, `title`, `content`, `dateCreated`, `dateUpdated`) VALUES (1, 3, 1, 'Intermittent Fasting', 'I\'m curious how intermittent fasting works. Can anyone give me some details about it and the different methods?', '2020-01-17', '2020-01-17');
+INSERT INTO `post` (`id`, `user_id`, `postTopic_id`, `title`, `content`, `dateCreated`, `dateUpdated`) VALUES (2, 2, 1, '40 Hour Fast', 'I\'m trying a 40 hour fast for the first time. I figured its good to switch things up occassionally to help prevent plateaus. Anyone tried this with good results?', '2020-02-07', '2020-02-07');
 
 COMMIT;
 
