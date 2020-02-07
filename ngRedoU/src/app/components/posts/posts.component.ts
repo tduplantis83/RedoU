@@ -1,4 +1,5 @@
-import { PostReplyReplyService } from './../../services/post-reply.service';
+import { PostReply } from './../../models/post-reply';
+import { PostReplyService } from './../../services/post-reply.service';
 import { PostService } from './../../services/post.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,7 +16,7 @@ import { User } from 'src/app/models/user';
 export class PostsComponent implements OnInit, OnDestroy{
 
   // tslint:disable-next-line: max-line-length
-  constructor(private authSvc: AuthService, private usersvc: UserService, private router: Router, private postSvc: PostService, private postReplySvc: PostReplyReplyService) {
+  constructor(private authSvc: AuthService, private usersvc: UserService, private router: Router, private postSvc: PostService, private postReplySvc: PostReplyService) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
@@ -26,7 +27,7 @@ export class PostsComponent implements OnInit, OnDestroy{
 
   navigationSubscription;
   allPosts: Post [] = [];
-  showReplies = false;
+  postReplies: PostReply [] = [];
   user: User;
 
   ngOnInit() {
@@ -48,8 +49,21 @@ export class PostsComponent implements OnInit, OnDestroy{
     }
   }
 
+  showHideReplies(id: number) {
+    if(this.postReplies.length === 0) {
+      this.postReplySvc.getPostReplyByOriginalPostId(id).subscribe(
+        data => {
+          this.postReplies = data;
+        },
+        err => console.log('In Post Component get Post Replies')
+      );
+    }
+    else {
+      this.postReplies = [];
+    }
+  }
+
   updatePost(post: Post) {
-    post.title = "Test Title";
     this.postSvc.updatePost(post).subscribe(
       data => {
         this.ngOnInit();

@@ -1,5 +1,5 @@
 import { AuthService } from 'src/app/services/auth.service';
-import { PostReplyReplyService } from './../../services/post-reply.service';
+import { PostReplyService } from './../../services/post-reply.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
@@ -19,7 +19,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(
     private userSvc: UserService,
     private router: Router,
-    private postReplySvc: PostReplyReplyService,
+    private postReplySvc: PostReplyService,
     private authSvc: AuthService
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {

@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PostReplyReplyService {
+export class PostReplyService {
   private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient, private authSvc: AuthService) { }
