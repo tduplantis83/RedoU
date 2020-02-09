@@ -1,37 +1,69 @@
 <div class="container-fluid">
-    <h3 class="text-center">Forum Posts</h3>
-      <table class="table table-bordered table-hover table-striped" *ngFor="let post of allPosts | arraySort: 'dateCreated':true">
-        <thead class="thead-dark">
-          <tr>
-            <th>Posted By</th>
-            <th>Topic</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Date Posted</th>
-            <th *ngIf="user && user.id === post.user.id">Update</th>
-            <th *ngIf="user && user.id === post.user.id">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ post.user.username }}</td>
-            <td>{{ post.postTopic.topicName }}</td>
-            <td *ngIf="post.originalPostReplies.length !== 0" (click)="showHideReplies(post.id)" id="viewReplies">{{ post.title }}</td>
-            <td *ngIf="post.originalPostReplies.length === 0">{{ post.title }}</td>
-            <td>{{ post.content }}</td>
-            <td>{{ post.dateCreated | date: "shortDate"}}</td>
-            <td *ngIf="user && user.id === post.user.id"><button class="btn btn-warning" (click)="updatePost(post.id)">Update</button></td>
-            <td *ngIf="user && user.id === post.user.id"><button class="btn btn-danger" (click)="deletePost(post.id)">Delete</button></td>
-          </tr>
-        </tbody>
-        <tfoot *ngFor="let reply of postReplies | arraySort: 'dateCreated':false">
-          <tr *ngIf="postReplies.length > 0 && reply.originalPost.id === post.id">
-            <td>{{ reply.replyUser.username }}</td>
-            <td>{{ post.postTopic.topicName }}</td>
-            <td>{{ post.title }}</td>
-            <td>{{ reply.replyContent }}</td>
-            <td>{{ reply.dateCreated | date: "shortDate"}}</td>
-          </tr>
-        </tfoot>
-      </table>
+  <h3 class="text-center">Forum Posts</h3>
+  <div class="row">
+    <div class="col-12"></div>
+  </div>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+      <button class="btn btn-success btn-block">New Post</button>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
+
+<br>
+
+<div class="container-fluid">
+  <table
+    class="table table-bordered table-hover table-striped"
+    *ngFor="let post of allPosts | arraySort: 'dateCreated':true"
+  >
+    <thead class="thead-dark">
+      <tr>
+        <th>Posted By</th>
+        <th>Topic</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Date Posted</th>
+        <th *ngIf="user && user.id === post.user.id">Update</th>
+        <th *ngIf="user && user.id === post.user.id">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ post.user.username }}</td>
+        <td>{{ post.postTopic.topicName }}</td>
+        <td
+          *ngIf="post.originalPostReplies.length !== 0"
+          (click)="showHideReplies(post.id)"
+          id="viewReplies"
+        >
+          {{ post.title }}
+        </td>
+        <td *ngIf="post.originalPostReplies.length === 0">{{ post.title }}</td>
+        <td>{{ post.content }}</td>
+        <td>{{ post.dateCreated | date: "shortDate" }}</td>
+        <td *ngIf="user && user.id === post.user.id">
+          <button class="btn btn-warning" (click)="updatePost(post.id)">
+            Update
+          </button>
+        </td>
+        <td *ngIf="user && user.id === post.user.id">
+          <button class="btn btn-danger" (click)="deletePost(post.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="postReplies.length > 0">
+      <tr *ngFor="let reply of postReplies | arraySort: 'dateCreated':false">
+        <td *ngIf="reply.originalPost.id === post.id">{{ reply.replyUser.username }}</td>
+        <td *ngIf="reply.originalPost.id === post.id">{{ reply.originalPost.postTopic.topicName }}</td>
+        <td *ngIf="reply.originalPost.id === post.id">{{ reply.originalPost.title }}</td>
+        <td *ngIf="reply.originalPost.id === post.id">{{ reply.replyContent }}</td>
+        <td *ngIf="reply.originalPost.id === post.id">{{ reply.dateCreated | date: "shortDate" }}</td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
