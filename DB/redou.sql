@@ -435,6 +435,7 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (38, 2, 3, 800, 'Fajita Bowl', '2020-02-05', '2020-02-07');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (39, 2, 2, 300, 'Tofu Buffalo Bites (small amt)', '2020-02-06', '2020-02-07');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (40, 2, 3, 800, 'Fajita Bowl', '2020-02-06', '2020-02-07');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (41, 2, 3, 0, 'Fasting', '2020-02-07', '2020-02-08');
 
 COMMIT;
 
@@ -469,6 +470,8 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (23, 2, 1850, 'Basal Metabolic Rate', '2020-02-05', '2020-02-05');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (24, 2, 1850, 'Basal Metabolic Rate', '2020-02-06', '2020-02-07');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (25, 2, 1850, 'Basal Metabolic Rate', '2020-02-07', '2020-02-07');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (26, 2, 1850, 'Basal Metabolic Rate', '2020-02-08', '2020-02-09');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (27, 2, 1850, 'Basal Metabolic Rate', '2020-02-09', '2020-02-09');
 
 COMMIT;
 
