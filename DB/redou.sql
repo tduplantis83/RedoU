@@ -435,7 +435,9 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (38, 2, 3, 800, 'Fajita Bowl', '2020-02-05', '2020-02-07');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (39, 2, 2, 300, 'Tofu Buffalo Bites (small amt)', '2020-02-06', '2020-02-07');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (40, 2, 3, 800, 'Fajita Bowl', '2020-02-06', '2020-02-07');
-INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (41, 2, 3, 0, 'Fasting', '2020-02-07', '2020-02-08');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (41, 2, 3, 0, 'Fasting', '2020-02-07', '2020-02-09');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (42, 2, 2, 2000, 'Hacienda Colorado - Enchiladas, Chips', '2020-02-08', '2020-02-09');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (43, 2, 4, 800, 'Cinnamon Toast Crunch - HUGE Bowl', '2020-02-08', '2020-02-09');
 
 COMMIT;
 
