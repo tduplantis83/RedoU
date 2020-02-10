@@ -14,4 +14,5 @@ public interface AvatarRepo extends JpaRepository<Avatar, Integer> {
 	public List<Avatar> findBySex(String sex);
 	
 	public List<Avatar> findByBodyType(String bodyType);
+		
 }
