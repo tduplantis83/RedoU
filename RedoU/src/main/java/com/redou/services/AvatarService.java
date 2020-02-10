@@ -12,7 +12,7 @@ public interface AvatarService {
 	public List<Avatar> getAvatarBySex(String sex);
 	
 	public List<Avatar> getAvatarByBodyType(String bodyType);
-	
+		
 	public Avatar createAvatar(Avatar avatar);
 	
 	public Avatar updateAvatar(Avatar avatar, int id);

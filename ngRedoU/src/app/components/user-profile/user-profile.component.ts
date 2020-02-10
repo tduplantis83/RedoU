@@ -1,3 +1,4 @@
+import { AvatarService } from './../../services/avatar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostReplyService } from './../../services/post-reply.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -20,7 +21,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private userSvc: UserService,
     private router: Router,
     private postReplySvc: PostReplyService,
-    private authSvc: AuthService
+    private authSvc: AuthService,
+    private avatarSvc: AvatarService
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -36,6 +38,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   user: User;
   allUsers: User[] = [];
   userCurrentGoal: Goal;
+  allAvatars: Avatar [] = [];
   currentAvatar: Avatar;
   postsWithNewReplies: Post[] = [];
   navigationSubscription;
@@ -54,6 +57,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.getUserCurrentGoal();
         this.getNewPostReplies();
         this.getCaloriesByDate();
+        this.getAllAvatars();
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
@@ -65,6 +69,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.currentAvatar = ua.avatar;
       }
     });
+  }
+
+  getAllAvatars() {
+      this.avatarSvc.getAvatarsBySex(this.user.sex).subscribe(
+        data => {
+          this.allAvatars = data;
+      },
+      err => console.error('In User Component getAllAvatars Error')
+    );
   }
 
   getUserCurrentGoal() {

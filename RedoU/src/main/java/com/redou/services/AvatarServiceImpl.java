@@ -34,7 +34,7 @@ public class AvatarServiceImpl implements AvatarService {
 	public List<Avatar> getAvatarByBodyType(String bodyType) {
 		return repo.findByBodyType(bodyType);
 	}
-
+	
 	@Override
 	public Avatar createAvatar(Avatar avatar) {
 		avatar.setDateCreated(LocalDate.now());
@@ -80,7 +80,5 @@ public class AvatarServiceImpl implements AvatarService {
 			return false;
 		}
 	}
-
-	
 
 }

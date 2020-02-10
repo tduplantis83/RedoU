@@ -1,5 +1,7 @@
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
   <h3 class="text-center">User Info:</h3>
+
+  <!-- BASIC USER INFO START -->
   <div class="container">
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -26,7 +28,11 @@
       </tbody>
     </table>
   </div>
+  <!-- BASIC USER INFO END -->
+
   <br />
+
+  <!-- USER'S CURRENT AVATAR START -->
   <div class="container" *ngIf="user.userAvatars.length > 0">
     <h3 class="text-center">Current Avatar: {{ currentAvatar.bodyType }}</h3>
     <h5 class="text-center">(Based on most recent diet & exercise)</h5>
@@ -42,6 +48,29 @@
       <div class="col-5"></div>
     </div>
   </div>
+  <!-- USER'S CURRENT AVATAR END -->
+
+  <!-- NEW USER CHOOSE AN AVATAR START -->
+  <div class="container" *ngIf="user.userAvatars.length === 0">
+    <h3 class="text-center">Choose a Set of Avatars</h3>
+    <h6 class="text-center">(Avatar body type will change daily based upon your caloric intake/deficit & overall fitness goal)</h6>
+      <div class="row align-items-center">
+        <div class="col-1"></div>
+        <div class="col-2" *ngFor="let avatar of allAvatars | arraySort: 'avatarGroup':false">
+            <h6 class="text-center">{{ avatar.bodyType }}</h6>
+            <img
+              id="avatarImg"
+              [src]="avatar.avatarUrl"
+              alt="Avatar Image: avatar.bodyType"
+              class="img img-fluid"/>
+              <button class="btn btn-success btn-block">Choose Avatar</button>
+        </div>
+        <div class="col-1"></div>
+      </div>
+  </div>
+  <!-- NEW USER CHOOSE AN AVATAR END -->
+
+
   <br />
   <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0">
     <h3 class="text-center">Caloric Intake:</h3>

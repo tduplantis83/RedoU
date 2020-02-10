@@ -439,6 +439,7 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (42, 2, 2, 2000, 'Hacienda Colorado - Enchiladas, Chips', '2020-02-08', '2020-02-09');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (43, 2, 4, 800, 'Cinnamon Toast Crunch - HUGE Bowl', '2020-02-08', '2020-02-09');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (44, 2, 3, 800, 'Vegetable Soup (2 big bowls)', '2020-02-09', '2020-02-10');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (45, 2, 2, 340, 'Siracha & Sesame Veggie Bowl', '2020-02-10', '2020-02-10');
 
 COMMIT;
 
