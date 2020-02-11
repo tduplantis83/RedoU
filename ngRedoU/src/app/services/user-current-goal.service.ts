@@ -18,14 +18,14 @@ export class UserCurrentGoalService {
   getUserCurrentGoalById(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<UserCurrentGoal>(this.baseUrl + "api/usercurrentgoal/id/" + id).pipe(
+    return this.http.get<UserCurrentGoal>(this.baseUrl + 'api/usercurrentgoal/id/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserCurrentGoalSvc get by Id");
+        return throwError('In UserCurrentGoalSvc get by Id');
       })
     );
   }
@@ -33,14 +33,14 @@ export class UserCurrentGoalService {
   getUserCurrentGoalByUserId(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<UserCurrentGoal[]>(this.baseUrl + "api/usercurrentgoal/userid/" + id).pipe(
+    return this.http.get<UserCurrentGoal[]>(this.baseUrl + 'api/usercurrentgoal/userid/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserCurrentGoalSvc get by UserId");
+        return throwError('In UserCurrentGoalSvc get by UserId');
       })
     );
   }
@@ -48,14 +48,14 @@ export class UserCurrentGoalService {
   getUserCurrentGoalByUsername(username: string) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
-    return this.http.get<UserCurrentGoal[]>(this.baseUrl + "api/usercurrentgoal/username/" + username).pipe(
+    return this.http.get<UserCurrentGoal[]>(this.baseUrl + 'api/usercurrentgoal/username/' + username).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError("In UserCurrentGoalSvc get by Username");
+        return throwError('In UserCurrentGoalSvc get by Username');
       })
     );
   }
@@ -63,16 +63,16 @@ export class UserCurrentGoalService {
   createUserCurrentGoal(userCurrentGoal: UserCurrentGoal) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .post(this.baseUrl + "api/usercurrentgoal/create", userCurrentGoal, httpOptions)
+      .post(this.baseUrl + 'api/usercurrentgoal/create', userCurrentGoal, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserCurrentGoalSvc create UserCurrentGoal");
+          return throwError('In UserCurrentGoalSvc create UserCurrentGoal');
         })
       );
   }
@@ -80,20 +80,20 @@ export class UserCurrentGoalService {
   updateUserCurrentGoal(userCurrentGoal: UserCurrentGoal) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
       .put<UserCurrentGoal>(
-        this.baseUrl + "api/usercurrentgoal/update/" +
+        this.baseUrl + 'api/usercurrentgoal/update/' +
         userCurrentGoal.id, userCurrentGoal,
         httpOptions
       )
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserCurrentGoalSvc update UserCurrentGoal");
+          return throwError('In UserCurrentGoalSvc update UserCurrentGoal');
         })
       );
   }
@@ -101,16 +101,16 @@ export class UserCurrentGoalService {
   deleteUserCurrentGoal(id: number) {
     const httpOptions = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: "Basic " + this.authSvc.getCredentials()
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + this.authSvc.getCredentials()
       })
     };
     return this.http
-      .delete(this.baseUrl + "api/usercurrentgoal/delete/" + id, httpOptions)
+      .delete(this.baseUrl + 'api/usercurrentgoal/delete/' + id, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
-          return throwError("In UserCurrentGoalSvc delete UserCurrentGoal");
+          return throwError('In UserCurrentGoalSvc delete UserCurrentGoal');
         })
       );
   }
