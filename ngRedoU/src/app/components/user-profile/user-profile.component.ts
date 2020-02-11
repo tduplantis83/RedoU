@@ -38,7 +38,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   user: User;
   allUsers: User[] = [];
   userCurrentGoal: Goal;
-  allAvatars: Avatar [] = [];
   currentAvatar: Avatar;
   postsWithNewReplies: Post[] = [];
   navigationSubscription;
@@ -57,7 +56,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.getUserCurrentGoal();
         this.getNewPostReplies();
         this.getCaloriesByDate();
-        this.getAllAvatars();
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
@@ -69,15 +67,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.currentAvatar = ua.avatar;
       }
     });
-  }
-
-  getAllAvatars() {
-      this.avatarSvc.getAvatarsBySex(this.user.sex).subscribe(
-        data => {
-          this.allAvatars = data;
-      },
-      err => console.error('In User Component getAllAvatars Error')
-    );
   }
 
   getUserCurrentGoal() {

@@ -7,6 +7,9 @@ import { GoalService } from 'src/app/services/goal.service';
 import { UserCurrentGoalService } from 'src/app/services/user-current-goal.service';
 import { Goal } from 'src/app/models/goal';
 import { UserCurrentGoal } from 'src/app/models/user-current-goal';
+import { NgForm } from '@angular/forms';
+import { Avatar } from 'src/app/models/avatar';
+import { AvatarService } from 'src/app/services/avatar.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +19,7 @@ import { UserCurrentGoal } from 'src/app/models/user-current-goal';
 export class RegisterComponent implements OnInit, OnDestroy  {
 
   // tslint:disable-next-line: max-line-length
-  constructor(private authSvc: AuthService, private router: Router, private usersvc: UserService, private goalSvc: GoalService, private userGoalSvc: UserCurrentGoalService) {
+  constructor(private authSvc: AuthService, private router: Router, private usersvc: UserService, private goalSvc: GoalService, private userGoalSvc: UserCurrentGoalService, private avatarSvc: AvatarService) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
@@ -29,12 +32,15 @@ export class RegisterComponent implements OnInit, OnDestroy  {
   newUser: User = new User();
   allGoals: Goal [] = [];
   userCurrGoal: UserCurrentGoal = new UserCurrentGoal();
+  allAvatars: Avatar [] = [];
   loggedIn = false;
   error = false;
+  ucgChosen = false;
   navigationSubscription;
 
   ngOnInit() {
     this.newUser = new User();
+    this.getAllAvatars();
     this.getAllGoals();
   }
 
@@ -83,15 +89,24 @@ export class RegisterComponent implements OnInit, OnDestroy  {
 
   createUserGoal() {
     this.userCurrGoal.enabled = true;
-    console.log(this.userCurrGoal);
-    // this.userGoalSvc.createUserCurrentGoal(this.userGoal).subscribe(
-    //   data => {
-    //     this.router.navigateByUrl('/users');
-    //   },
-    //   err => {
-    //     console.log('In RegisterComponent, Error creatingUserCurrentGoal');
-    //   }
-    // );
+    this.userGoalSvc.createUserCurrentGoal(this.userCurrGoal).subscribe(
+      data => {
+        this.ucgChosen = true;
+      },
+      err => {
+        console.log('In RegisterComponent, Error creatingUserCurrentGoal');
+      }
+    );
   }
+
+  getAllAvatars() {
+    this.avatarSvc.getAvatarsBySex('M').subscribe(
+      data => {
+        this.allAvatars = data;
+
+    },
+    err => console.error('In User Component getAllAvatars Error')
+  );
+}
 
 }
