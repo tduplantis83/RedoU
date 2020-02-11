@@ -146,19 +146,20 @@
   </div>
 
    <!-- USER'S GOAL START -->
-   <div class="container" *ngIf="loggedIn === true">
-    <h5 class="text-center">Goal:</h5>
-    <form name="currGoalForm">
+   <div class="container" *ngIf="loggedIn === true && ucgChosen === false">
+    <h5 class="text-center">Fitness Goal:</h5>
+    <form name="currGoalForm" id="currGoalForm">
     <div class="form-row">
       <div class="col-2"></div>
       <div class="col-8">
-        <select class="custom-select" for="userGoalSelect">
+        <select class="custom-select" name="goal" id="goal" [(ngModel)]="userCurrGoal.goal">
           <option selected diabled>Choose a Fitness Goal</option>
-          <option *ngFor="let g of allGoals | arraySort: 'goalName': false" name="userGoalSelect" id="userGoalSelect" [(ngModel)]="userCurrGoal.goal.id">{{ g.goalName }}</option>
+          <option [ngValue]="g" name="goal" *ngFor="let g of allGoals | arraySort: 'goalName': false">{{ g.goalName }}</option>
         </select>
       </div>
       <div class="col-2"></div>
     </div>
+    <br>
     <div class="form-row">
      <div class="col-2"></div>
      <div class="col-8">
@@ -176,6 +177,44 @@
     </form>
    </div>
     <!-- USER'S GOAL END -->
+
+    <!-- CHOOSE AN AVATAR SET START -->
+  <!-- <div class="container">  *ngIf="loggedIn === true && ucgChosen === true"
+        <h5 class="text-center">Choose a Set of Avatars</h5>
+        <h6 class="text-center"><small>(Avatar body type will change daily based upon your caloric intake/deficit & overall fitness goal)</small></h6>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-2" *ngFor="let avatar of allAvatars | arraySort: 'avatarGroup':false">
+            <h6 class="text-center">{{ avatar.bodyType }}</h6>
+            <img
+              id="avatarImg"
+              [src]="avatar.avatarUrl"
+              alt="Avatar Image: avatar.bodyType"
+              class="img img-fluid"/>
+              <button class="btn btn-success btn-block">Choose Avatar</button>
+        </div>
+        <div class="col-1"></div>
+      </div>
+  </div> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-item {{ i == 0 ? 'active' : '' }}" *ngFor="let avatar of allAvatars | arraySort: 'avatarGroup':false;let i = index;">
+          <img class="img img-fluid" [src]="avatar.avatarUrl" alt="Avatar Image: avatar.bodyType">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ avatar.bodyType }}</h5>
+            <button class="btn btn-success">Choose this Avatar Set</button>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </div>
+  <!-- CHOOSE AN AVATAR SET END -->
+
 </div>
 <br />
 <br />
