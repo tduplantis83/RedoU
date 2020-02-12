@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit, OnDestroy  {
   allGoals: Goal [] = [];
   userCurrGoal: UserCurrentGoal = new UserCurrentGoal();
   allAvatars: Avatar [] = [];
+  groupedAvatars: Avatar [] = [];
   loggedIn = false;
   error = false;
   ucgChosen = false;
@@ -103,10 +104,18 @@ export class RegisterComponent implements OnInit, OnDestroy  {
     this.avatarSvc.getAvatarsBySex('M').subscribe(
       data => {
         this.allAvatars = data;
-
+        this.groupedAvatars = this.groupAvatars(this.allAvatars, 5);
     },
     err => console.error('In User Component getAllAvatars Error')
   );
+}
+
+groupAvatars(arr, size) {
+  const res = [];
+  for (let i = 0; i < arr.length; i = i + size) {
+        res.push(arr.slice(i, i + size));
+      }
+  return res;
 }
 
 }
