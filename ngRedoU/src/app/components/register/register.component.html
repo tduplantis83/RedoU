@@ -196,23 +196,30 @@
         <div class="col-1"></div>
       </div>
   </div> -->
-  <div class="container">
+  <div class="container" *ngFor="let ga of groupedAvatars | arraySort:'id': false">
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6">
-        <div class="carousel slide" data-ride="carousel">
-        <div class="carousel-item {{ i == 0 ? 'active' : '' }}" *ngFor="let avatar of allAvatars | arraySort: 'avatarGroup':false;let i = index;">
+        <div id="avatarCarousel" class="carousel slide" data-ride="carousel" *ngFor="let avatar of ga;let i = index;">
+        <div class="carousel-item {{ i == 0 ? 'active' : '' }}">
           <img class="img img-fluid" [src]="avatar.avatarUrl" alt="Avatar Image: avatar.bodyType">
           <div class="carousel-caption d-none d-md-block">
             <h5>{{ avatar.bodyType }}</h5>
             <button class="btn btn-success">Choose this Avatar Set</button>
           </div>
         </div>
+        <!-- <a class="carousel-control-prev" href="#avatarCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span>
+          <span class="sr-only text-info">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#avatarCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon bg-secondary" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a> -->
       </div>
       </div>
       <div class="col-3"></div>
     </div>
-  </div>
   <!-- CHOOSE AN AVATAR SET END -->
 
 </div>
