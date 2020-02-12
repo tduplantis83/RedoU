@@ -10,6 +10,7 @@ import { UserCurrentGoal } from 'src/app/models/user-current-goal';
 import { NgForm } from '@angular/forms';
 import { Avatar } from 'src/app/models/avatar';
 import { AvatarService } from 'src/app/services/avatar.service';
+import { UserAvatarService } from 'src/app/services/user-avatar.service';
 
 @Component({
   selector: 'app-register',
@@ -19,12 +20,12 @@ import { AvatarService } from 'src/app/services/avatar.service';
 export class RegisterComponent implements OnInit, OnDestroy  {
 
   // tslint:disable-next-line: max-line-length
-  constructor(private authSvc: AuthService, private router: Router, private usersvc: UserService, private goalSvc: GoalService, private userGoalSvc: UserCurrentGoalService, private avatarSvc: AvatarService) {
+  constructor(private authSvc: AuthService, private router: Router, private usersvc: UserService, private goalSvc: GoalService, private userGoalSvc: UserCurrentGoalService, private avatarSvc: AvatarService, private userAvatarSvc: UserAvatarService) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
         this.error = false;
-        this.ngOnInit();
+        // this.ngOnInit();
       }
     });
   }
@@ -37,11 +38,11 @@ export class RegisterComponent implements OnInit, OnDestroy  {
   loggedIn = false;
   error = false;
   ucgChosen = false;
+  uavgroupChosen = false;
   navigationSubscription;
 
   ngOnInit() {
     this.newUser = new User();
-    this.getAllAvatars();
     this.getAllGoals();
   }
 
@@ -92,6 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy  {
     this.userCurrGoal.enabled = true;
     this.userGoalSvc.createUserCurrentGoal(this.userCurrGoal).subscribe(
       data => {
+        this.getAllAvatars();
         this.ucgChosen = true;
       },
       err => {
@@ -101,7 +103,7 @@ export class RegisterComponent implements OnInit, OnDestroy  {
   }
 
   getAllAvatars() {
-    this.avatarSvc.getAvatarsBySex('M').subscribe(
+    this.avatarSvc.getAvatarsBySex(this.newUser.sex).subscribe(
       data => {
         this.allAvatars = data;
         this.groupedAvatars = this.groupAvatars(this.allAvatars, 5);
@@ -116,6 +118,15 @@ groupAvatars(arr, size) {
         res.push(arr.slice(i, i + size));
       }
   return res;
+}
+
+createUserAvatar(avGroup: number) {
+  this.userAvatarSvc.createUserAvatar(avGroup).subscribe(
+    data => {
+      this.uavgroupChosen = true;
+    },
+    err => console.error('In User Component createUserAvatar Error')
+  );
 }
 
 }

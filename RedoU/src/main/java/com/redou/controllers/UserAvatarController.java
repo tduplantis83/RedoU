@@ -71,6 +71,7 @@ public class UserAvatarController {
 	@PostMapping("useravatar/create/{avatarGroupId}")
 	public List<UserAvatar> createUserAvatars(@PathVariable int avatarGroupId, HttpServletRequest req,
 			HttpServletResponse resp, Principal principal) {
+		System.out.println("*************CONTROLLER - Avatar Group ID " + avatarGroupId);
 		List<UserAvatar> userAvatars = new ArrayList<>();
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());

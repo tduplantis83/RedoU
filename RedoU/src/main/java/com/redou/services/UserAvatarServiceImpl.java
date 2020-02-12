@@ -44,6 +44,7 @@ public class UserAvatarServiceImpl implements UserAvatarService{
 	@Override
 	public List<UserAvatar> createUserAvatar(int userId, int avatarGroup) {
 		List<Avatar> avatars = avRepo.findByAvatarGroup(avatarGroup);
+		System.out.println("*************SVC IMPL - avatars list at 0 " + avatars.get(0));
 		List<UserAvatar> userAvatars = new ArrayList<>();
 		User user = uRepo.findById(userId);
 		
@@ -59,6 +60,8 @@ public class UserAvatarServiceImpl implements UserAvatarService{
 			userAvatars.add(ua);
 		}
 		
+		System.out.println("*************SVC IMPL - useravatars list to return at 0 " + userAvatars.get(0));
+
 		return userAvatars;
 	}
 
