@@ -68,15 +68,12 @@ public class UserAvatarController {
 		return uas;
 	}
 
-	@PostMapping("useravatar/create/{avatarGroupId}")
-	public List<UserAvatar> createUserAvatars(@PathVariable int avatarGroupId, HttpServletRequest req,
-			HttpServletResponse resp, Principal principal) {
-		System.out.println("*************CONTROLLER - Avatar Group ID " + avatarGroupId);
+	@PostMapping("useravatar/create/{avatarGroupId}/{userID}")
+	public List<UserAvatar> createUserAvatars(@PathVariable int userID, @PathVariable int avatarGroupId, HttpServletRequest req,
+			HttpServletResponse resp, Principal p) {
 		List<UserAvatar> userAvatars = new ArrayList<>();
 		try {
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			System.out.println("***************CONTROLLER - USER: " + u.toString());
-			userAvatars = uaSvc.createUserAvatar(u.getId(), avatarGroupId);
+			userAvatars = uaSvc.createUserAvatar(userID, avatarGroupId);
 			// if successful, send 201
 			resp.setStatus(201);
 			// get the link to the created post
@@ -121,14 +118,13 @@ public class UserAvatarController {
 
 	}
 
-	@PutMapping("useravatar/updatecurrent/{bodyType}")
-	public UserAvatar updateUserCurrentAvatar(@PathVariable String bodyType, HttpServletRequest req,
+	@PutMapping("useravatar/updatecurrent/{bodyType}/{userID}")
+	public UserAvatar updateUserCurrentAvatar(@PathVariable String bodyType, @PathVariable int userID, HttpServletRequest req,
 			HttpServletResponse resp, Principal principal) {
 		UserAvatar userAvatar = new UserAvatar();
 		try {
 			// try to update the provided user
-			User u = userSvc.getUserByUsernameExact(principal.getName());
-			userAvatar = uaSvc.updateUserCurrentAvatar(u.getId(), bodyType);
+			userAvatar = uaSvc.updateUserCurrentAvatar(userID, bodyType);
 			if (userAvatar == null) {
 				resp.setStatus(404);
 			} else {

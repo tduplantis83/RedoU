@@ -1,18 +1,19 @@
 <br />
 <br />
 <div class="container-fluid">
+  <h3 class="text-center text-primary">New User Registration</h3>
+  <h5 class="text-center"><small style="color: red;">* Required Fields</small></h5>
   <div class="container" *ngIf="loggedIn === false">
-    <h3 class="text-center text-primary">New User Registration</h3>
     <br />
     <h6 class="text-center" *ngIf="error === true" style="color: red;">
-      * An account with that Username &/or Password already exists *
+      * ERROR: An account with that Username &/or Password may already exist *
     </h6>
     <form name="registerForm">
       <h5 class="text-center">Login Credentials:</h5>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <label for="username">Username</label>
+          <small style="color: red;">*</small><label for="username">Username</label>
           <input
             type="text"
             class="form-control"
@@ -22,7 +23,7 @@
           />
         </div>
         <div class="col-4">
-          <label for="password">Password</label>
+          <small style="color: red;">*</small><label for="password">Password</label>
           <input
             type="password"
             class="form-control"
@@ -46,7 +47,7 @@
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <label for="firstName">First Name</label>
+          <small style="color: red;">*</small><label for="firstName">First Name</label>
           <input
             type="text"
             class="form-control"
@@ -56,7 +57,7 @@
           />
         </div>
         <div class="col-4">
-          <label for="lastName">Last Name</label>
+          <small style="color: red;">*</small><label for="lastName">Last Name</label>
           <input
             type="text"
             class="form-control"
@@ -80,7 +81,7 @@
           />
         </div>
         <div class="col-4">
-          <label for="birthday">Birthday</label>
+          <small style="color: red;">*</small><label for="birthday">Birthday</label>
           <input
             type="date"
             class="form-control"
@@ -102,7 +103,7 @@
               value="M"
               [(ngModel)]="newUser.sex"
             />
-            <label class="form-check-label" for="sex">Male</label>
+            <small style="color: red;">*</small><label class="form-check-label" for="sex">Male</label>
           </div>
           <div class="form-check form-check-inline">
             <input
@@ -112,7 +113,7 @@
               value="F"
               [(ngModel)]="newUser.sex"
             />
-            <label class="form-check-label" for="sex">Female</label>
+            <small style="color: red;">*</small><label class="form-check-label" for="sex">Female</label>
           </div>
         </div>
         <div class="col-6"></div>
@@ -137,7 +138,7 @@
             style="float:right;"
             (click)="register()"
           >
-            Register
+            Next
           </button>
         </div>
         <div class="col-2"></div>
@@ -147,7 +148,8 @@
 
   <!-- USER'S GOAL START -->
   <div class="container" *ngIf="loggedIn === true && ucgChosen === false">
-    <h5 class="text-center">Fitness Goal:</h5>
+    <h5 class="text-center"><small style="color: red;">*</small>Fitness Goal:</h5>
+    <br>
     <form name="currGoalForm" id="currGoalForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -158,7 +160,7 @@
             id="goal"
             [(ngModel)]="userCurrGoal.goal"
           >
-            <option selected diabled>Choose a Fitness Goal</option>
+          <option selected diabled>Choose a Fitness Goal</option>
             <option
               [ngValue]="g"
               name="goal"
@@ -172,14 +174,24 @@
       <br />
       <div class="form-row">
         <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="cancelRegistration()"
+          >
+            Cancel Registration
+          </button>
+        </div>
+        <div class="col-4">
           <button
             type="submit"
             class="btn btn-primary"
             style="float:right;"
             (click)="createUserGoal()"
           >
-            Create Goal
+            Next
           </button>
         </div>
         <div class="col-2"></div>
@@ -189,14 +201,15 @@
   <!-- USER'S GOAL END -->
 
   <!-- CHOOSE AN AVATAR SET START -->
-  <div class="container" *ngIf="loggedIn === true && ucgChosen === true">
-    <h5 class="text-center">Choose a Set of Avatars</h5>
+  <div class="container" *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === false">
+    <h5 class="text-center"><small style="color: red;">*</small>Choose a Set of Avatars</h5>
     <h6 class="text-center">
       <small
         >(Avatar body type will change daily based upon your caloric
         intake/deficit & overall fitness goal)</small
       >
     </h6>
+    <br>
     <div class="row" *ngFor="let ga of groupedAvatars | arraySort: 'id':false">
       <div class="col-1"></div>
       <div class="col-2" *ngFor="let avatar of ga; let i = index">
@@ -217,6 +230,332 @@
     </div>
   </div>
   <!-- CHOOSE AN AVATAR SET END -->
+
+  <!-- INTIAL BODY MEASUREMENTS SET START -->
+  <div class="container" *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === true">
+    <h5 class="text-center">Body Measurements:</h5>
+    <div class="form-check form-check-inline">
+      <input
+      class="form-check-input"
+      type="radio"
+      name="system"
+      id="system"
+      value="US"
+      [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system">US</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+      class="form-check-input"
+      type="radio"
+      name="system"
+      id="system"
+      value="metric"
+      [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system">Metric</label>
+    </div>
+    <!-- METRIC SELECTED -->
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'metric'">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateMeasured"
+            name="dateMeasured"
+            [(ngModel)]="measurement.dateMeasured"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="heightMM">Height (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="heightMM"
+            name="heightMM"
+            [(ngModel)]="measurement.heightMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="weightKg">Weight (kg)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weightKg"
+            name="weightKg"
+            [(ngModel)]="measurement.weightKg"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="waistMM">Waist (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="waistMM"
+            name="waistMM"
+            [(ngModel)]="measurement.waistMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="neckMM">Neck (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="neckMM"
+            name="neckMM"
+            [(ngModel)]="measurement.neckMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="shouldersMM">Shoulders (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="shouldersMM"
+            name="shouldersMM"
+            [(ngModel)]="measurement.shouldersMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="chestMM">Chest (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="chestMM"
+            name="chestMM"
+            [(ngModel)]="measurement.chestMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="bicepMM">Bicep (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bicepMM"
+            name="bicepMM"
+            [(ngModel)]="measurement.bicepMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="hipsMM">Hips (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="hipsMM"
+            name="hipsMM"
+            [(ngModel)]="measurement.hipsMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="thighMM">Thigh (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="thighMM"
+            name="thighMM"
+            [(ngModel)]="measurement.thighMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="cancelRegistration()"
+          >
+            Cancel Registration
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="float:right;"
+            (click)="createBodyMeasurement()"
+          >
+            Complete Registration
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+
+    <!-- US SELECTED -->
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'US'">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateMeasured"
+            name="dateMeasured"
+            [(ngModel)]="measurement.dateMeasured"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="heightMM">Height (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="heightMM"
+            name="heightMM"
+            [(ngModel)]="measurement.heightMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="weightKg">Weight (lbs)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weightKg"
+            name="weightKg"
+            [(ngModel)]="measurement.weightKg"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="waistMM">Waist (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="waistMM"
+            name="waistMM"
+            [(ngModel)]="measurement.waistMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="neckMM">Neck (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="neckMM"
+            name="neckMM"
+            [(ngModel)]="measurement.neckMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="shouldersMM">Shoulders (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="shouldersMM"
+            name="shouldersMM"
+            [(ngModel)]="measurement.shouldersMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="chestMM">Chest (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="chestMM"
+            name="chestMM"
+            [(ngModel)]="measurement.chestMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="bicepMM">Bicep (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bicepMM"
+            name="bicepMM"
+            [(ngModel)]="measurement.bicepMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="hipsMM">Hips (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="hipsMM"
+            name="hipsMM"
+            [(ngModel)]="measurement.hipsMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="thighMM">Thigh (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="thighMM"
+            name="thighMM"
+            [(ngModel)]="measurement.thighMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="cancelRegistration()"
+          >
+            Cancel Registration
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="float:right;"
+            (click)="createBodyMeasurement()"
+          >
+            Complete Registration
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+  </div>
+  <!-- INTIAL BODY MEASUREMENTS SET END -->
+
 </div>
 <br />
 <br />
