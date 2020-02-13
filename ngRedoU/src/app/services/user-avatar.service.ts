@@ -60,7 +60,7 @@ export class UserAvatarService {
     );
   }
 
-  createUserAvatar(avatarGroupID: number) {
+  createUserAvatar(userID: number, avatarGroupID: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export class UserAvatarService {
       })
     };
     return this.http
-      .post(this.baseUrl + 'api/useravatar/create/' + avatarGroupID, httpOptions)
+      .post(this.baseUrl + 'api/useravatar/create/' + avatarGroupID + '/' + userID, httpOptions)
       .pipe(
         catchError((err: any) => {
           console.log(err);
@@ -98,7 +98,7 @@ export class UserAvatarService {
       );
   }
 
-  updateCURRENTUserAvatar(bodyType: string) {
+  updateCURRENTUserAvatar(bodyType: string, userID: number) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export class UserAvatarService {
     return this.http
       .put<UserAvatar>(
         this.baseUrl + 'api/useravatar/updatecurrent/' +
-        bodyType,
+        bodyType + '/' + userID,
         httpOptions
       )
       .pipe(

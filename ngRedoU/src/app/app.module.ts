@@ -38,7 +38,7 @@ import { MeasurementConverterPipe } from './Pipes/measurement-converter.pipe';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthService, ArraySortPipe],
+  providers: [AuthService, ArraySortPipe, MeasurementConverterPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
