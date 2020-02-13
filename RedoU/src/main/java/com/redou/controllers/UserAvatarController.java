@@ -75,6 +75,7 @@ public class UserAvatarController {
 		List<UserAvatar> userAvatars = new ArrayList<>();
 		try {
 			User u = userSvc.getUserByUsernameExact(principal.getName());
+			System.out.println("***************CONTROLLER - USER: " + u.toString());
 			userAvatars = uaSvc.createUserAvatar(u.getId(), avatarGroupId);
 			// if successful, send 201
 			resp.setStatus(201);
