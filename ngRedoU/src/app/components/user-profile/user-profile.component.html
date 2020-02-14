@@ -60,6 +60,7 @@
           <th>Meal</th>
           <th>Meal Description</th>
           <th>Calories</th>
+          <th>Total Caloric Intake this Day</th>
         </tr>
       </thead>
       <tbody>
@@ -73,6 +74,7 @@
           <td>{{ caloricIntake.mealType.mealTypeName }}</td>
           <td>{{ caloricIntake.mealDescription }}</td>
           <td>{{ caloricIntake.caloriesThisMeal }}</td>
+          <td *ngIf="caloricIntakeByDateMap.get(caloricIntake.dateCreated) >= 0">{{ caloricIntakeByDateMap.get(caloricIntake.dateCreated) }}</td>
         </tr>
       </tbody>
     </table>
@@ -89,6 +91,8 @@
           <th>Date</th>
           <th>Activity Description</th>
           <th>Total Calories Burned</th>
+          <th>Total Caloric Deficit this Day</th>
+
         </tr>
       </thead>
       <tbody>
@@ -101,6 +105,8 @@
           <td>{{ caloricDeficit.dateCreated | date: "shortDate" }}</td>
           <td>{{ caloricDeficit.activityDescription }}</td>
           <td>{{ caloricDeficit.totalCaloriesBurned }}</td>
+          <td *ngIf="caloricDeficitByDateMap.get(caloricDeficit.dateCreated) >= 0">{{ caloricDeficitByDateMap.get(caloricDeficit.dateCreated) }}</td>
+
         </tr>
       </tbody>
     </table>

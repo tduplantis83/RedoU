@@ -27,17 +27,29 @@ public class AuthController {
 
 	@PostMapping("register")
 	public User register(@RequestBody User user, HttpServletResponse res) {
-
-		if (!authSvc.isUserUnique(user.getUsername(), user.getEmail())) {
-			user = null;
-			res.setStatus(400);
-			return null;
+		if (user.getEmail() != null) {
+			if (!authSvc.isUserUnique(user.getUsername(), user.getEmail())) {
+				user = null;
+				res.setStatus(400);
+			}
+			else {
+				user = authSvc.register(user);
+				res.setStatus(201);
+			}
 		}
-		else {
-			user = authSvc.register(user);
-			res.setStatus(201);
-			return user;
+		else if(user.getEmail() == null){
+			if (!authSvc.isUserUsernameUnique(user.getUsername())) {
+				user = null;
+				res.setStatus(400);
+				return null;
+			}
+			else {
+				user = authSvc.register(user);
+				res.setStatus(201);
+			}
 		}
+		return user;
+		
 	}
 
 	@GetMapping("authenticate")
