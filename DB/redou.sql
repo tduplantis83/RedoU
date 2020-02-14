@@ -444,6 +444,8 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (46, 2, 3, 1000, 'Hacienda Colorado - Fajitas', '2020-02-10', '2020-02-10');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (47, 2, 3, 0, 'Fasting', '2020-02-11', '2020-02-11');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (48, 2, 3, 750, '4 Tacos with Rice & Beans', '2020-02-12', '2020-02-12');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (49, 2, 2, 200, 'Thai Veggie Bowl', '2020-02-13', '2020-02-14');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (50, 2, 3, 3500, 'Maggianos', '2020-02-13', '2020-02-14');
 
 COMMIT;
 
@@ -484,6 +486,7 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (29, 2, 1850, 'Basal Metabolic Rate', '2020-02-11', '2020-02-11');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (30, 2, 1842, 'Basal Metabolic Rate', '2020-02-12', '2020-02-12');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (31, 2, 1842, 'Basal Metabolic Rate', '2020-02-13', '2020-02-12');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (32, 2, 1842, 'Basal Metabolic Rate', '2020-02-14', '2020-02-14');
 
 COMMIT;
 
