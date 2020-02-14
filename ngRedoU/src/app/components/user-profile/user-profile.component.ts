@@ -42,7 +42,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   postsWithNewReplies: Post[] = [];
   navigationSubscription;
   measurementSystem = 'US';
-  caloriesByDateMap = new Map<Date, number>();
+  caloricIntakeByDateMap = new Map<Date, number>();
+  caloricDeficitByDateMap = new Map<Date, number>();
 
 
   ngOnInit() {
@@ -55,7 +56,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.getUserAvatar();
         this.getUserCurrentGoal();
         this.getNewPostReplies();
-        this.getCaloriesByDate();
+        if (this.user.userDailyCaloricIntakes.length > 0) {
+          this.caloricIntakeByDateMap = this.groupCaloriesByDate(this.user.userDailyCaloricIntakes);
+        }
+        if (this.user.userDailyExerciseCaloricDeficits.length > 0) {
+          this.caloricDeficitByDateMap = this.groupCaloriesByDate(this.user.userDailyExerciseCaloricDeficits);
+        }
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
@@ -96,11 +102,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCaloriesByDate() {
-
+  groupCaloriesByDate(arr) {
+    const res = new Map<Date, number>();
+    let sum = 0;
+    for (let i = 0; i < arr.length; i ++) {
+        if (!res.has(arr[i].dateCreated)) {
+          res.set(arr[i].dateCreated, arr[i].caloriesThisMeal);
+        }
+        else {
+          sum = res.get(arr[i].dateCreated);
+          sum += arr[i].caloriesThisMeal;
+          res.set(arr[i].dateCreated, sum);
+          sum = 0;
+        }
+    }
+    return res;
   }
 
-  markReplyAsRead(replyID: number) {
+    markReplyAsRead(replyID: number) {
     this.postReplySvc.markPostReplyRead(replyID).subscribe(
       data => {
         this.ngOnInit();
@@ -109,7 +128,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  findAllUsers() {
+    findAllUsers() {
     this.userSvc.getAllUsers().subscribe(
       data => {
         this.allUsers = data;
@@ -118,7 +137,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  disableUser(u: User) {
+    disableUser(u: User) {
     this.userSvc.disableUser(u.id).subscribe(
       data => {
         this.ngOnInit();
@@ -127,7 +146,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  enableUser(u: User) {
+    enableUser(u: User) {
     this.userSvc.enableUser(u.id).subscribe(
       data => {
         this.ngOnInit();
@@ -136,7 +155,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+    ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
     // don't then we will continue to run our initialiseInvites()
     // method on every navigationEnd event.
