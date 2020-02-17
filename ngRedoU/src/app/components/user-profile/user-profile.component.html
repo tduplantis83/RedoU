@@ -2,7 +2,7 @@
   <h3 class="text-center">User Info:</h3>
 
   <!-- BASIC USER INFO START -->
-  <div class="container">
+  <div class="container" *ngIf="newCalorieRecord === false">
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -32,28 +32,37 @@
 
   <br />
 
-  <!-- USER'S CURRENT AVATAR START -->
-  <div class="container" *ngIf="user.userAvatars.length > 0">
-    <h3 class="text-center">Current Avatar: {{ currentAvatar.bodyType }}</h3>
-    <h5 class="text-center"><small>(Based on most recent diet & exercise totals)</small></h5>
+  <!-- USER'S AVATAR START -->
+  <div class="container" *ngIf="bmiAvatar && currentAvatar">
     <div class="row">
-      <div class="col-5"></div>
-      <div class="col-2">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <h5 class="text-center">BMI Avatar:</h5>
+        <h5 class="text-center">{{ bmiAvatar.bodyType }}</h5>
+        <img
+        [src]="bmiAvatar.avatarUrl"
+        class="img-fluid"
+        alt="BMI-based Avatar"
+        />
+      </div>
+      <div class="col-4">
+        <h5 class="text-center">Behavior-Based Avatar:</h5>
+        <h5 class="text-center">{{ currentAvatar.bodyType }}</h5>
         <img
           [src]="currentAvatar.avatarUrl"
           class="img-fluid"
-          alt="Current User Avatar"
+          alt="Caloric-based Avatar"
         />
       </div>
-      <div class="col-5"></div>
+      <div class="col-2"></div>
     </div>
   </div>
-  <!-- USER'S CURRENT AVATAR END -->
+  <!-- USER'S AVATAR END -->
 
   <br />
 
   <!-- USER'S CALORIC PERFORMANCE START -->
-  <div class="container" *ngIf="user.userDailyExerciseCaloricDeficits.length > 0">
+  <div class="container" *ngIf="user.userDailyExerciseCaloricDeficits.length > 0 && newCalorieRecord === false">
     <h3 class="text-center">Caloric Performance:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -90,8 +99,9 @@
   <!-- USER'S CALORIC PERFORMANCE END -->
 
   <!-- USER'S CALORIC INTAKE START -->
-  <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0">
+  <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0 && newCalorieRecord === false">
     <h3 class="text-center">Caloric Intake:</h3>
+    <h3 class="text-center"><button class="btn btn-success" (click)="newCalorieRecord = true">Add Caloric Intake</button></h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -114,12 +124,102 @@
   </div>
   <!-- USER'S CALORIC INTAKE END -->
 
+  <!-- USER ADD CALORIC INTAKE START -->
+    <div class="container" *ngIf="newCalorieRecord === true">
+      <br />
+      <form name="addCaloricIntakeForm">
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <label for="date">Date Eaten</label>
+            <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            [(ngModel)]="caloricIntake.dateCreated"
+          />
+          </div>
+        <div class="col-4">
+          <label for="mealType">Meal Type</label>
+          <select
+            class="custom-select"
+            name="mealType"
+            id="mealType"
+            [(ngModel)]="caloricIntake.mealType"
+          >
+          <option selected>Choose a Meal Type</option>
+            <option
+              [ngValue]="mt"
+              name="mealType"
+              *ngFor="let mt of mealTypes | arraySort: 'mealTypeName':false"
+              >{{ mt.mealTypeName }}</option
+            >
+          </select>
+        </div>
+        <div class="col-2"></div>
+        </div>
+        <br />
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <label for="calories">Total Calories This Meal</label>
+            <input
+              type="number"
+              class="form-control"
+              id="calories"
+              name="calories"
+              [(ngModel)]="caloricIntake.caloriesThisMeal"
+            />
+          </div>
+          <div class="col-4">
+            <label for="description">Meal Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              name="description"
+              [(ngModel)]="caloricIntake.mealDescription"
+            />
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <br />
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              style="float:left;"
+              (click)="newCalorieRecord = false"
+              [routerLink]="['/users']"
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="float:right;"
+              (click)="addCalories()"
+            >
+              Next
+            </button>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </form>
+    </div>
+    <!-- USER ADD CALORIC INTAKE END -->
+
   <br />
 
   <!-- USER'S CALORIES BURNED START -->
   <div
     class="container"
-    *ngIf="user.userDailyExerciseCaloricDeficits.length > 0"
+    *ngIf="user.userDailyExerciseCaloricDeficits.length > 0 && newCalorieRecord === false"
   >
     <h3 class="text-center">Calories Burned:</h3>
     <table class="table table-bordered table-hover table-striped">
@@ -148,7 +248,7 @@
 
   <!-- USER'S PROGRESS IMAGES START -->
   <br />
-  <div class="container" *ngIf="user.userImages.length > 0">
+  <div class="container" *ngIf="user.userImages.length > 0 && newCalorieRecord === false">
     <h3 class="text-center">Progress Images:</h3>
     <div class="col-md-12">
       <div class="row align-items-center">
@@ -173,7 +273,7 @@
   <br />
 
   <!-- USER'S BODY MEASUREMENTS START -->
-  <div class="container" *ngIf="user.userBodyMeasurementMetrics.length > 0">
+  <div class="container" *ngIf="user.userBodyMeasurementMetrics.length > 0 && newCalorieRecord === false">
     <h3 class="text-center">Body Measurements:</h3>
     <div class="form-check form-check-inline">
       <input
@@ -331,7 +431,7 @@
   <br />
 
   <!-- USER'S POSTS WITH UNREAD REPLIES START -->
-  <div class="container" *ngIf="postsWithNewReplies.length > 0">
+  <div class="container" *ngIf="postsWithNewReplies.length > 0 && newCalorieRecord === false">
     <h3 class="text-center">Your Posts with New Replies:</h3>
     <table
       class="table table-bordered table-hover table-striped"
