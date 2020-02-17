@@ -387,6 +387,7 @@ INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VAL
 INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (2, 'Lunch', '2020-01-18', '2020-01-18');
 INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (3, 'Dinner', '2020-01-18', '2020-01-18');
 INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (4, 'Snack', '2020-01-18', '2020-01-18');
+INSERT INTO `meal_type` (`id`, `mealTypeName`, `dateCreated`, `dateUpdated`) VALUES (5, 'Dessert', '2020-02-16', '2020-02-16');
 
 COMMIT;
 
@@ -447,8 +448,11 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (49, 2, 2, 200, 'Thai Veggie Bowl', '2020-02-13', '2020-02-14');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (50, 2, 3, 3500, 'Maggianos', '2020-02-13', '2020-02-14');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (51, 2, 3, 600, 'Fajita Bowl - small', '2020-02-14', '2020-02-16');
-INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (52, 2, 3, 3500, 'Burger King - Impossible Whopper, Fries, Onion Rings', '2020-02-15', '2020-02-16');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (52, 2, 3, 2000, 'Burger King - Impossible Whopper, Fries, Onion Rings', '2020-02-15', '2020-02-16');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (53, 2, 1, 220, 'Raisin Bread with Butter - 2 slices', '2020-02-16', '2020-02-16');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (54, 2, 2, 300, 'Little Ceasar\'s Cheese Pizza (2 slices)', '2020-02-16', '2020-02-16');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (55, 2, 3, 700, 'Little Ceasar\'s Cheese Pizza (4 slices)', '2020-02-16', '2020-02-16');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (56, 2, 5, 799, 'Stuffed Cookies', '2020-02-16', '2020-02-16');
 
 COMMIT;
 
