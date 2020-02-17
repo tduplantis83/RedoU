@@ -35,7 +35,7 @@
   <!-- USER'S CURRENT AVATAR START -->
   <div class="container" *ngIf="user.userAvatars.length > 0">
     <h3 class="text-center">Current Avatar: {{ currentAvatar.bodyType }}</h3>
-    <h5 class="text-center">(Based on most recent diet & exercise)</h5>
+    <h5 class="text-center"><small>(Based on most recent diet & exercise totals)</small></h5>
     <div class="row">
       <div class="col-5"></div>
       <div class="col-2">
@@ -51,6 +51,45 @@
   <!-- USER'S CURRENT AVATAR END -->
 
   <br />
+
+  <!-- USER'S CALORIC PERFORMANCE START -->
+  <div class="container" *ngIf="user.userDailyExerciseCaloricDeficits.length > 0">
+    <h3 class="text-center">Caloric Performance:</h3>
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Date</th>
+          <th>Calories Eaten</th>
+          <th>Calories Burned</th>
+          <th>+Gain / -Loss</th>
+          <th>Day Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let calBurn of user.userDailyExerciseCaloricDeficits  | arraySort: 'dateCreated':true">
+          <td>{{ calBurn.dateCreated | date: "shortDate" }}</td>
+
+          <td *ngIf="caloricIntakeByDateMap.get(calBurn.dateCreated) != null">{{ caloricIntakeByDateMap.get(calBurn.dateCreated) }}</td>
+          <td *ngIf="caloricIntakeByDateMap.get(calBurn.dateCreated) == null">No Data</td>
+
+          <td *ngIf="caloricDeficitByDateMap.get(calBurn.dateCreated) != null">{{ caloricDeficitByDateMap.get(calBurn.dateCreated) }}</td>
+          <td *ngIf="caloricDeficitByDateMap.get(calBurn.dateCreated) == null">No Data</td>
+
+          <td *ngIf="caloricIntakeByDateMap.get(calBurn.dateCreated) != null && caloricDeficitByDateMap.get(calBurn.dateCreated) != null">{{ (caloricIntakeByDateMap.get(calBurn.dateCreated) - caloricDeficitByDateMap.get(calBurn.dateCreated)) }}</td>
+          <td *ngIf="caloricIntakeByDateMap.get(calBurn.dateCreated) == null">Unknown</td>
+          <td *ngIf="caloricDeficitByDateMap.get(calBurn.dateCreated) == null">Unknown</td>
+
+          <td *ngIf="caloricIntakeByDateMap.get(calBurn.dateCreated) == null || caloricDeficitByDateMap.get(calBurn.dateCreated) == null">Unknown</td>
+          <td *ngIf="(caloricIntakeByDateMap.get(calBurn.dateCreated) - caloricDeficitByDateMap.get(calBurn.dateCreated)) == 0">No Change</td>
+          <td id="loss" *ngIf="(caloricIntakeByDateMap.get(calBurn.dateCreated) - caloricDeficitByDateMap.get(calBurn.dateCreated)) < 0">Weight Loss!</td>
+          <td id="gain" *ngIf="(caloricIntakeByDateMap.get(calBurn.dateCreated) - caloricDeficitByDateMap.get(calBurn.dateCreated)) > 0">Weight Gain!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- USER'S CALORIC PERFORMANCE END -->
+
+  <!-- USER'S CALORIC INTAKE START -->
   <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0">
     <h3 class="text-center">Caloric Intake:</h3>
     <table class="table table-bordered table-hover table-striped">
@@ -60,26 +99,24 @@
           <th>Meal</th>
           <th>Meal Description</th>
           <th>Calories</th>
-          <th>Total Caloric Intake this Day</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          *ngFor="
-            let caloricIntake of user.userDailyCaloricIntakes
-              | arraySort: 'dateCreated':true
-          "
-        >
+          *ngFor="let caloricIntake of user.userDailyCaloricIntakes | arraySort: 'dateCreated':true">
           <td>{{ caloricIntake.dateCreated | date: "shortDate" }}</td>
           <td>{{ caloricIntake.mealType.mealTypeName }}</td>
           <td>{{ caloricIntake.mealDescription }}</td>
           <td>{{ caloricIntake.caloriesThisMeal }}</td>
-          <td *ngIf="caloricIntakeByDateMap.get(caloricIntake.dateCreated) >= 0">{{ caloricIntakeByDateMap.get(caloricIntake.dateCreated) }}</td>
         </tr>
       </tbody>
     </table>
   </div>
+  <!-- USER'S CALORIC INTAKE END -->
+
   <br />
+
+  <!-- USER'S CALORIES BURNED START -->
   <div
     class="container"
     *ngIf="user.userDailyExerciseCaloricDeficits.length > 0"
@@ -91,8 +128,6 @@
           <th>Date</th>
           <th>Activity Description</th>
           <th>Total Calories Burned</th>
-          <th>Total Caloric Deficit this Day</th>
-
         </tr>
       </thead>
       <tbody>
@@ -105,12 +140,13 @@
           <td>{{ caloricDeficit.dateCreated | date: "shortDate" }}</td>
           <td>{{ caloricDeficit.activityDescription }}</td>
           <td>{{ caloricDeficit.totalCaloriesBurned }}</td>
-          <td *ngIf="caloricDeficitByDateMap.get(caloricDeficit.dateCreated) >= 0">{{ caloricDeficitByDateMap.get(caloricDeficit.dateCreated) }}</td>
-
         </tr>
       </tbody>
     </table>
   </div>
+  <!-- USER'S CALORIES BURNED END -->
+
+  <!-- USER'S PROGRESS IMAGES START -->
   <br />
   <div class="container" *ngIf="user.userImages.length > 0">
     <h3 class="text-center">Progress Images:</h3>
@@ -131,7 +167,12 @@
       </div>
     </div>
   </div>
+  <!-- USER'S PROGRESS IMAGES END -->
+
+
   <br />
+
+  <!-- USER'S BODY MEASUREMENTS START -->
   <div class="container" *ngIf="user.userBodyMeasurementMetrics.length > 0">
     <h3 class="text-center">Body Measurements:</h3>
     <div class="form-check form-check-inline">
@@ -285,7 +326,11 @@
       </tbody>
     </table>
   </div>
+  <!-- USER'S BODY MEASUREMENTS END -->
+
   <br />
+
+  <!-- USER'S POSTS WITH UNREAD REPLIES START -->
   <div class="container" *ngIf="postsWithNewReplies.length > 0">
     <h3 class="text-center">Your Posts with New Replies:</h3>
     <table
@@ -324,6 +369,7 @@
     </table>
   </div>
 </div>
+<!-- USER'S POSTS WITH UNREAD REPLIES END -->
 
 <!-- ADMIN STUFF -->
 <div class="container-fluid" *ngIf="user && user.role === 'admin'">
