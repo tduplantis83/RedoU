@@ -2,7 +2,7 @@
   <h3 class="text-center">User Info:</h3>
 
   <!-- BASIC USER INFO START -->
-  <div class="container" *ngIf="newCalorieRecord === false">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit">
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -33,7 +33,7 @@
   <br />
 
   <!-- USER'S AVATAR START -->
-  <div class="container" *ngIf="bmiAvatar && currentAvatar">
+  <div class="container" *ngIf="bmiAvatar && currentAvatar && !caloricIntake && !caloricDeficit">
     <div class="row">
       <div class="col-2"></div>
       <div class="col-4">
@@ -62,7 +62,7 @@
   <br />
 
   <!-- USER'S CALORIC PERFORMANCE START -->
-  <div class="container" *ngIf="user.userDailyExerciseCaloricDeficits.length > 0 && newCalorieRecord === false">
+  <div class="container" *ngIf="user.userDailyExerciseCaloricDeficits.length > 0 && !caloricIntake && !caloricDeficit">
     <h3 class="text-center">Caloric Performance:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -99,9 +99,9 @@
   <!-- USER'S CALORIC PERFORMANCE END -->
 
   <!-- USER'S CALORIC INTAKE START -->
-  <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0 && newCalorieRecord === false">
+  <div class="container" *ngIf="user.userDailyCaloricIntakes.length > 0 && !caloricIntake && !caloricDeficit">
     <h3 class="text-center">Caloric Intake:</h3>
-    <h3 class="text-center"><button class="btn btn-success" (click)="newCalorieRecord = true">Add Caloric Intake</button></h3>
+    <h3 class="text-center"><button class="btn btn-success" (click)="addACaloricRecord()">New Caloric Intake Record</button></h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -109,6 +109,8 @@
           <th>Meal</th>
           <th>Meal Description</th>
           <th>Calories</th>
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -118,6 +120,8 @@
           <td>{{ caloricIntake.mealType.mealTypeName }}</td>
           <td>{{ caloricIntake.mealDescription }}</td>
           <td>{{ caloricIntake.caloriesThisMeal }}</td>
+          <td><button class="btn btn-warning" (click)="setUpdateCalorieRecord(caloricIntake)">Update</button></td>
+          <td><button class="btn btn-danger" (click)="deleteCalories(caloricIntake)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -125,7 +129,7 @@
   <!-- USER'S CALORIC INTAKE END -->
 
   <!-- USER ADD CALORIC INTAKE START -->
-    <div class="container" *ngIf="newCalorieRecord === true">
+    <div class="container" *ngIf="caloricIntake && newCalorieRecord === true">
       <br />
       <form name="addCaloricIntakeForm">
         <div class="form-row">
@@ -192,7 +196,7 @@
               type="submit"
               class="btn btn-secondary"
               style="float:left;"
-              (click)="newCalorieRecord = false"
+              (click)="newCalorieRecord = false; caloricIntake = null"
               [routerLink]="['/users']"
             >
               Cancel
@@ -201,11 +205,11 @@
           <div class="col-4">
             <button
               type="submit"
-              class="btn btn-primary"
+              class="btn btn-success"
               style="float:right;"
               (click)="addCalories()"
             >
-              Next
+              Submit
             </button>
           </div>
           <div class="col-2"></div>
@@ -214,20 +218,113 @@
     </div>
     <!-- USER ADD CALORIC INTAKE END -->
 
+    <!-- USER UPDATE CALORIC INTAKE START -->
+    <div class="container" *ngIf="caloricIntake && newCalorieRecord === false">
+      <br />
+      <form name="updateCaloricIntakeForm">
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <label for="date">Date Eaten</label>
+            <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            [(ngModel)]="caloricIntake.dateCreated"
+          />
+          </div>
+        <div class="col-4">
+          <label for="mealType">Meal Type</label>
+          <select
+            class="custom-select"
+            name="mealType"
+            id="mealType"
+            [(ngModel)]="caloricIntake.mealType"
+          >
+          <option selected>{{ caloricIntake.mealType.mealTypeName }}</option>
+            <option
+              [ngValue]="mt"
+              name="mealType"
+              *ngFor="let mt of mealTypes | arraySort: 'mealTypeName':false"
+              >{{ mt.mealTypeName }}</option
+            >
+          </select>
+        </div>
+        <div class="col-2"></div>
+        </div>
+        <br />
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <label for="calories">Total Calories This Meal</label>
+            <input
+              type="number"
+              class="form-control"
+              id="calories"
+              name="calories"
+              [(ngModel)]="caloricIntake.caloriesThisMeal"
+            />
+          </div>
+          <div class="col-4">
+            <label for="description">Meal Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              name="description"
+              [(ngModel)]="caloricIntake.mealDescription"
+            />
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <br />
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              style="float:left;"
+              (click)="newCalorieRecord = false; caloricIntake = null"
+              [routerLink]="['/users']"
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-warning"
+              style="float:right;"
+              (click)="updateCalories()"
+            >
+              Update
+            </button>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </form>
+    </div>
+    <!-- USER UPDATE CALORIC INTAKE END -->
+
   <br />
 
   <!-- USER'S CALORIES BURNED START -->
   <div
     class="container"
-    *ngIf="user.userDailyExerciseCaloricDeficits.length > 0 && newCalorieRecord === false"
+    *ngIf="user.userDailyExerciseCaloricDeficits.length > 0 && !caloricIntake && !caloricDeficit"
   >
     <h3 class="text-center">Calories Burned:</h3>
+    <h3 class="text-center"><button class="btn btn-success" (click)="addACaloricBurnRecord()">New Caloric Deficit Record</button></h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
           <th>Date</th>
           <th>Activity Description</th>
           <th>Total Calories Burned</th>
+          <th>Update</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -240,15 +337,161 @@
           <td>{{ caloricDeficit.dateCreated | date: "shortDate" }}</td>
           <td>{{ caloricDeficit.activityDescription }}</td>
           <td>{{ caloricDeficit.totalCaloriesBurned }}</td>
+          <td><button class="btn btn-warning" (click)="setUpdateCalorieBurnRecord(caloricDeficit)">Update</button></td>
+          <td><button class="btn btn-danger" (click)="deleteCalorieBurn(caloricDeficit)">Delete</button></td>
         </tr>
       </tbody>
     </table>
   </div>
   <!-- USER'S CALORIES BURNED END -->
 
+    <!-- USER ADD CALORIES BURNED START -->
+    <div class="container" *ngIf="caloricDeficit && newCalorieBurnRecord === true">
+      <br />
+      <form name="addCaloricDeficitForm">
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <label for="date">Date</label>
+            <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            [(ngModel)]="caloricDeficit.dateCreated"
+          />
+          </div>
+        <div class="col-4">
+            <label for="calories">Total Calories Burned Today</label>
+            <input
+              type="number"
+              class="form-control"
+              id="calories"
+              name="calories"
+              [(ngModel)]="caloricDeficit.totalCaloriesBurned"
+            />
+          </div>
+          <div class="col-2"></div>
+        </div>
+          <div class="form-row">
+            <div class="col-2"></div>
+          <div class="col-8">
+            <label for="description">Activity Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              name="description"
+              [(ngModel)]="caloricDeficit.activityDescription"
+            />
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <br />
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              style="float:left;"
+              (click)="newCalorieBurnRecord = false; caloricDeficit = null"
+              [routerLink]="['/users']"
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-success"
+              style="float:right;"
+              (click)="addCalorieBurn()"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </form>
+    </div>
+    <!-- USER ADD CALORIES BURNED END -->
+
+    <!-- USER UPDATE CALORIES BURNED START -->
+    <div class="container" *ngIf="caloricDeficit && newCalorieBurnRecord === false">
+      <br />
+      <form name="addCaloricDeficitForm">
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <label for="date">Date</label>
+            <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            [(ngModel)]="caloricDeficit.dateCreated"
+          />
+          </div>
+        <div class="col-4">
+            <label for="calories">Total Calories Burned Today</label>
+            <input
+              type="number"
+              class="form-control"
+              id="calories"
+              name="calories"
+              [(ngModel)]="caloricDeficit.totalCaloriesBurned"
+            />
+          </div>
+          <div class="col-2"></div>
+        </div>
+          <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <label for="description">Activity Description</label>
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              name="description"
+              [(ngModel)]="caloricDeficit.activityDescription"
+            />
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <br />
+        <div class="form-row">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              style="float:left;"
+              (click)="newCalorieBurnRecord = false; caloricDeficit = null"
+              [routerLink]="['/users']"
+            >
+              Cancel
+            </button>
+          </div>
+          <div class="col-4">
+            <button
+              type="submit"
+              class="btn btn-warning"
+              style="float:right;"
+              (click)="updateCalorieBurn()"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </form>
+    </div>
+    <!-- USER UPDATE CALORIES BURNED END -->
+
   <!-- USER'S PROGRESS IMAGES START -->
   <br />
-  <div class="container" *ngIf="user.userImages.length > 0 && newCalorieRecord === false">
+  <div class="container" *ngIf="user.userImages.length > 0 && !caloricIntake && !caloricDeficit">
     <h3 class="text-center">Progress Images:</h3>
     <div class="col-md-12">
       <div class="row align-items-center">
@@ -273,7 +516,7 @@
   <br />
 
   <!-- USER'S BODY MEASUREMENTS START -->
-  <div class="container" *ngIf="user.userBodyMeasurementMetrics.length > 0 && newCalorieRecord === false">
+  <div class="container" *ngIf="user.userBodyMeasurementMetrics.length > 0 && !caloricIntake && !caloricDeficit">
     <h3 class="text-center">Body Measurements:</h3>
     <div class="form-check form-check-inline">
       <input
@@ -431,7 +674,7 @@
   <br />
 
   <!-- USER'S POSTS WITH UNREAD REPLIES START -->
-  <div class="container" *ngIf="postsWithNewReplies.length > 0 && newCalorieRecord === false">
+  <div class="container" *ngIf="postsWithNewReplies.length > 0 && !caloricIntake && !caloricDeficit">
     <h3 class="text-center">Your Posts with New Replies:</h3>
     <table
       class="table table-bordered table-hover table-striped"
