@@ -9,7 +9,11 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Goal } from 'src/app/models/goal';
 import { Post } from 'src/app/models/post';
 import { UserAvatarService } from 'src/app/services/user-avatar.service';
-
+import { DailyCaloricIntakeService } from 'src/app/services/daily-caloric-intake.service';
+import { MealTypeService } from 'src/app/services/meal-type.service';
+import { MealType } from 'src/app/models/meal-type';
+import { DailyCaloricIntake } from 'src/app/models/daily-caloric-intake';
+import { MeasurementConverterPipe } from 'src/app/Pipes/measurement-converter.pipe';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,20 +21,21 @@ import { UserAvatarService } from 'src/app/services/user-avatar.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  // tslint:disable-next-line: max-line-length
   constructor(
     private userSvc: UserService,
     private router: Router,
     private postReplySvc: PostReplyService,
-    private authSvc: AuthService,
-    private avatarSvc: AvatarService,
-    private userAvatarSvc: UserAvatarService
+    private userAvatarSvc: UserAvatarService,
+    private dailyCalorieSvc: DailyCaloricIntakeService,
+    private mealTypeSvc: MealTypeService,
+    private measurementConverterPipe: MeasurementConverterPipe
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
       if (e instanceof NavigationEnd) {
         this.currentAvatar = null;
         this.postsWithNewReplies = [];
+        this.newCalorieRecord = false;
         this.ngOnInit();
       }
     });
@@ -39,14 +44,19 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   user: User;
   allUsers: User[] = [];
   userCurrentGoal: Goal = new Goal();
+  bmiAvatar: Avatar;
   currentAvatar: Avatar;
   postsWithNewReplies: Post[] = [];
   navigationSubscription;
   measurementSystem = 'US';
   caloricIntakeByDateMap = new Map<Date, number>();
   caloricDeficitByDateMap = new Map<Date, number>();
-  caloricPerformanceByDate = [] = [];
-
+  caloricPerformanceByDate: [] = [];
+  newCalorieRecord = false;
+  mealTypes: MealType[] = [];
+  caloricIntake: DailyCaloricIntake = new DailyCaloricIntake();
+  bmi: number;
+  bodyType: string;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -55,40 +65,91 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if (this.user.role === 'admin') {
           this.findAllUsers();
         }
-        this.getCurrentUserAvatar();
         this.getUserCurrentGoal();
+        this.getBMIUserAvatar();
         this.getNewPostReplies();
+        this.getMealTypes();
         if (this.user.userDailyCaloricIntakes.length > 0) {
-          this.caloricIntakeByDateMap = this.groupCaloricIntakeByDate(this.user.userDailyCaloricIntakes);
-        }
+          this.caloricIntakeByDateMap = this.groupCaloricIntakeByDate(
+            this.user.userDailyCaloricIntakes
+            );
+          }
         if (this.user.userDailyExerciseCaloricDeficits.length > 0) {
-          this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(this.user.userDailyExerciseCaloricDeficits);
+            this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(
+              this.user.userDailyExerciseCaloricDeficits
+            );
         }
+        this.getCurrentUserAvatar();
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
   }
 
-  getCurrentUserAvatar() {
-    // first find the user's CURRENT avatar
-    this.user.userAvatars.forEach(ua => {
-      if (ua.current === true) {
-        this.currentAvatar = ua.avatar;
+  getMealTypes() {
+    this.mealTypeSvc.getAllMealTypes().subscribe(
+      data => {
+        this.mealTypes = data;
+      },
+      err => console.error('In User Component getMealTypes Error')
+    );
+  }
+
+  getBMIUserAvatar() {
+    // // find BMI & use as initial avatar each time
+    let maxMeasureDate = this.user.dateCreated;
+    let i = 0;
+
+    this.user.userBodyMeasurementMetrics.forEach((m, index) => {
+      if (m.dateMeasured >= maxMeasureDate) {
+        maxMeasureDate = m.dateMeasured;
+        i = index;
       }
     });
 
-    // find most recent data from intake & deficit map
-    var maxIntakeDate = this.user.dateCreated;
-    var maxDeficitDate = this.user.dateCreated;
+    const heightm = this.measurementConverterPipe.transform(
+      this.user.userBodyMeasurementMetrics[i].heightMM,
+      'mm',
+      'm'
+    );
 
-    for (let key of this.caloricIntakeByDateMap.keys()) {
-      if(key >= maxIntakeDate ) {
+    this.bmi =
+      this.user.userBodyMeasurementMetrics[i].weightKg / (heightm * heightm);
+
+    if (this.bmi < 18.5) {
+      // thin avatar
+      this.bodyType = 'Thin';
+    } else if (this.bmi >= 18.5 && this.bmi <= 24.9) {
+      // average avatar
+      this.bodyType = 'Average';
+    } else {
+      // fat avatar
+      this.bodyType = 'Fat';
+    }
+
+    // use bmi to find the user's initial avatar
+    this.userAvatarSvc
+      .updateCURRENTUserAvatar(this.bodyType, this.user.id)
+      .subscribe(
+        data => {
+          this.bmiAvatar = data.avatar;
+        },
+        error => console.error('In User Component getBMIUserAvatar Error')
+      );
+  }
+
+  getCurrentUserAvatar() {
+    // now use most recent caloric info to update current avatar
+    let maxIntakeDate = this.user.dateCreated;
+    let maxDeficitDate = this.user.dateCreated;
+
+    for (const key of this.caloricIntakeByDateMap.keys()) {
+      if (key >= maxIntakeDate) {
         maxIntakeDate = key;
       }
     }
 
-    for (let key of this.caloricDeficitByDateMap.keys()) {
-      if(key >= maxDeficitDate ) {
+    for (const key of this.caloricDeficitByDateMap.keys()) {
+      if (key >= maxDeficitDate) {
         maxDeficitDate = key;
       }
     }
@@ -96,71 +157,88 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     // if user goal is weight loss...
     if (this.userCurrentGoal.goalName === 'Weight Loss') {
       // if the value at either is null, then don't change avatar
-      if (this.caloricIntakeByDateMap.get(maxIntakeDate) == null || this.caloricDeficitByDateMap.get(maxDeficitDate) == null) {
+      if (
+        this.caloricIntakeByDateMap.get(maxIntakeDate) == null ||
+        this.caloricDeficitByDateMap.get(maxDeficitDate) == null
+      ) {
         this.user.userAvatars.forEach(ua => {
           if (ua.current === true) {
             this.currentAvatar = ua.avatar;
           }
         });
-      }
-      // if the values subtracted = 0, then don't change avatar - no change
-      else if (this.caloricIntakeByDateMap.get(maxIntakeDate) - this.caloricDeficitByDateMap.get(maxDeficitDate) === 0) {
+      } else if (
+        this.caloricIntakeByDateMap.get(maxIntakeDate) -
+          this.caloricDeficitByDateMap.get(maxDeficitDate) ===
+        0
+      ) {
         this.user.userAvatars.forEach(ua => {
           if (ua.current === true) {
             this.currentAvatar = ua.avatar;
           }
         });
-      }
-      // if your calorie intake was LESS than what you burned, make avatar thin
-      else if (this.caloricIntakeByDateMap.get(maxIntakeDate) - this.caloricDeficitByDateMap.get(maxDeficitDate) < 0) {
-        if (this.currentAvatar.bodyType === 'Fat') {
-          this.userAvatarSvc.updateCURRENTUserAvatar('Average', this.user.id).subscribe(
-            data => {
-              this.currentAvatar = data.avatar;
-            },
-            error => console.error('In User Component getCurrentUserAvatar Error')
-          );
-        }
-        else if (this.currentAvatar.bodyType === 'Average') {
-          this.userAvatarSvc.updateCURRENTUserAvatar('Thin', this.user.id).subscribe(
-            data => {
-              this.currentAvatar = data.avatar;
-            },
-            error => console.error('In User Component getCurrentUserAvatar Error')
-          );
+      } else if (
+        this.caloricIntakeByDateMap.get(maxIntakeDate) -
+          this.caloricDeficitByDateMap.get(maxDeficitDate) <
+        0
+      ) {
+
+        if (this.bodyType === 'Fat') {
+          this.userAvatarSvc
+            .updateCURRENTUserAvatar('Average', this.user.id)
+            .subscribe(
+              data => {
+                this.currentAvatar = data.avatar;
+              },
+              error =>
+                console.error('In User Component getCurrentUserAvatar Error')
+            );
+        } else if (this.bodyType === 'Average') {
+          this.userAvatarSvc
+            .updateCURRENTUserAvatar('Thin', this.user.id)
+            .subscribe(
+              data => {
+                this.currentAvatar = data.avatar;
+              },
+              error =>
+                console.error('In User Component getCurrentUserAvatar Error')
+            );
         }
         // if user avatar is already thin, do nothing
-      }
-      // if your calorie intake was MORE than what you burned, make avatar FAT
-      else if (this.caloricIntakeByDateMap.get(maxIntakeDate) - this.caloricDeficitByDateMap.get(maxDeficitDate) < 0) {
-        if (this.currentAvatar.bodyType === 'Thin') {
-          this.userAvatarSvc.updateCURRENTUserAvatar('Average', this.user.id).subscribe(
-            data => {
-              this.currentAvatar = data.avatar;
-            },
-            error => console.error('In User Component getCurrentUserAvatar Error')
-          );
-        }
-        else if (this.currentAvatar.bodyType === 'Average') {
-          this.userAvatarSvc.updateCURRENTUserAvatar('Fat', this.user.id).subscribe(
-            data => {
-              this.currentAvatar = data.avatar;
-            },
-            error => console.error('In User Component getCurrentUserAvatar Error')
-          );
+      } else if (
+        this.caloricIntakeByDateMap.get(maxIntakeDate) -
+          this.caloricDeficitByDateMap.get(maxDeficitDate) >
+        0
+      ) {
+        if (this.bodyType === 'Thin') {
+          this.userAvatarSvc
+            .updateCURRENTUserAvatar('Average', this.user.id)
+            .subscribe(
+              data => {
+                this.currentAvatar = data.avatar;
+              },
+              error =>
+                console.error('In User Component getCurrentUserAvatar Error')
+            );
+        } else if (this.bodyType === 'Average') {
+          this.userAvatarSvc
+            .updateCURRENTUserAvatar('Fat', this.user.id)
+            .subscribe(
+              data => {
+                this.currentAvatar = data.avatar;
+              },
+              error =>
+                console.error('In User Component getCurrentUserAvatar Error')
+            );
         }
         // if user avatar is already fat, do nothing
       }
-    }
-    // if user goal is muscle building...
-    else if (this.userCurrentGoal.goalName === 'Muscle Building') {
+    } else if (this.userCurrentGoal.goalName === 'Muscle Building') {
+      console.log('add muscle building mod here');
+    } else if (
+      this.userCurrentGoal.goalName === 'General Fitness Maintanence'
+    ) {
       console.log('add muscle building mod here');
     }
-    // if user goal is maintanence...
-    else if (this.userCurrentGoal.goalName === 'General Fitness Maintanence') {
-      console.log('add muscle building mod here');
-    }
-
   }
 
   getUserCurrentGoal() {
@@ -190,41 +268,49 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  groupCaloricIntakeByDate(arr: any []) {
+  groupCaloricIntakeByDate(arr: any[]) {
     const res = new Map<Date, number>();
     let sum = 0;
-    for (let i = 0; i < arr.length; i ++) {
-        if (!res.has(arr[i].dateCreated)) {
-          res.set(arr[i].dateCreated, arr[i].caloriesThisMeal);
-        }
-        else {
-          sum = res.get(arr[i].dateCreated);
-          sum += arr[i].caloriesThisMeal;
-          res.set(arr[i].dateCreated, sum);
-          sum = 0;
-        }
+    for (let i = 0; i < arr.length; i++) {
+      if (!res.has(arr[i].dateCreated)) {
+        res.set(arr[i].dateCreated, arr[i].caloriesThisMeal);
+      } else {
+        sum = res.get(arr[i].dateCreated);
+        sum += arr[i].caloriesThisMeal;
+        res.set(arr[i].dateCreated, sum);
+        sum = 0;
+      }
     }
     return res;
   }
 
-  groupCaloricDeficitByDate(arr: any []) {
+  groupCaloricDeficitByDate(arr: any[]) {
     const res = new Map<Date, number>();
     let sum = 0;
-    for (let i = 0; i < arr.length; i ++) {
-        if (!res.has(arr[i].dateCreated)) {
-          res.set(arr[i].dateCreated, arr[i].totalCaloriesBurned);
-        }
-        else {
-          sum = res.get(arr[i].dateCreated);
-          sum += arr[i].caloriesThisMeal;
-          res.set(arr[i].dateCreated, sum);
-          sum = 0;
-        }
+    for (let i = 0; i < arr.length; i++) {
+      if (!res.has(arr[i].dateCreated)) {
+        res.set(arr[i].dateCreated, arr[i].totalCaloriesBurned);
+      } else {
+        sum = res.get(arr[i].dateCreated);
+        sum += arr[i].caloriesThisMeal;
+        res.set(arr[i].dateCreated, sum);
+        sum = 0;
+      }
     }
     return res;
   }
 
-    markReplyAsRead(replyID: number) {
+  addCalories() {
+    this.dailyCalorieSvc.createDailyCaloricIntake(this.caloricIntake).subscribe(
+      data => {
+        this.newCalorieRecord = false;
+        this.ngOnInit();
+      },
+      err => console.error('In User Component addCalories Error')
+    );
+  }
+
+  markReplyAsRead(replyID: number) {
     this.postReplySvc.markPostReplyRead(replyID).subscribe(
       data => {
         this.ngOnInit();
@@ -233,7 +319,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-    findAllUsers() {
+  findAllUsers() {
     this.userSvc.getAllUsers().subscribe(
       data => {
         this.allUsers = data;
@@ -242,7 +328,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-    disableUser(u: User) {
+  disableUser(u: User) {
     this.userSvc.disableUser(u.id).subscribe(
       data => {
         this.ngOnInit();
@@ -251,7 +337,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-    enableUser(u: User) {
+  enableUser(u: User) {
     this.userSvc.enableUser(u.id).subscribe(
       data => {
         this.ngOnInit();
@@ -260,7 +346,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-    ngOnDestroy() {
+  ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
     // don't then we will continue to run our initialiseInvites()
     // method on every navigationEnd event.
