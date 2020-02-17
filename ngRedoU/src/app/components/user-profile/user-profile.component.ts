@@ -14,6 +14,8 @@ import { MealTypeService } from 'src/app/services/meal-type.service';
 import { MealType } from 'src/app/models/meal-type';
 import { DailyCaloricIntake } from 'src/app/models/daily-caloric-intake';
 import { MeasurementConverterPipe } from 'src/app/Pipes/measurement-converter.pipe';
+import { DailyExerciseCaloricDeficit } from 'src/app/models/daily-exercise-caloric-deficit';
+import { DailyExerciseCaloricDeficitService } from 'src/app/services/daily-exercise-caloric-deficit.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -27,6 +29,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private postReplySvc: PostReplyService,
     private userAvatarSvc: UserAvatarService,
     private dailyCalorieSvc: DailyCaloricIntakeService,
+    private dailyCalorieBurnSvc: DailyExerciseCaloricDeficitService,
     private mealTypeSvc: MealTypeService,
     private measurementConverterPipe: MeasurementConverterPipe
   ) {
@@ -53,8 +56,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   caloricDeficitByDateMap = new Map<Date, number>();
   caloricPerformanceByDate: [] = [];
   newCalorieRecord = false;
+  newCalorieBurnRecord = false;
   mealTypes: MealType[] = [];
-  caloricIntake: DailyCaloricIntake = new DailyCaloricIntake();
+  caloricIntake = null;
+  caloricDeficit = null;
   bmi: number;
   bodyType: string;
 
@@ -271,6 +276,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   groupCaloricIntakeByDate(arr: any[]) {
     const res = new Map<Date, number>();
     let sum = 0;
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < arr.length; i++) {
       if (!res.has(arr[i].dateCreated)) {
         res.set(arr[i].dateCreated, arr[i].caloriesThisMeal);
@@ -287,6 +293,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   groupCaloricDeficitByDate(arr: any[]) {
     const res = new Map<Date, number>();
     let sum = 0;
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < arr.length; i++) {
       if (!res.has(arr[i].dateCreated)) {
         res.set(arr[i].dateCreated, arr[i].totalCaloriesBurned);
@@ -300,20 +307,102 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return res;
   }
 
+  addACaloricRecord() {
+    this.caloricIntake = new DailyCaloricIntake();
+    this.newCalorieRecord = true;
+  }
+
+  addACaloricBurnRecord() {
+    this.caloricDeficit = new DailyExerciseCaloricDeficit();
+    this.newCalorieBurnRecord = true;
+  }
+
   addCalories() {
     this.dailyCalorieSvc.createDailyCaloricIntake(this.caloricIntake).subscribe(
       data => {
         this.newCalorieRecord = false;
-        this.ngOnInit();
+        this.caloricIntake = null;
+        this.router.navigateByUrl('/users');
       },
       err => console.error('In User Component addCalories Error')
     );
   }
 
+  addCalorieBurn() {
+    this.dailyCalorieBurnSvc.createDailyExerciseCaloricDeficit(this.caloricDeficit).subscribe(
+      data => {
+        this.newCalorieBurnRecord = false;
+        this.caloricDeficit = null;
+        this.router.navigateByUrl('/users');
+      },
+      err => console.error('In User Component addCalories Error')
+    );
+  }
+
+  setUpdateCalorieRecord(toUpdate: DailyCaloricIntake) {
+    this.caloricIntake = Object.assign({}, toUpdate);
+  }
+
+  setUpdateCalorieBurnRecord(toUpdate: DailyExerciseCaloricDeficit) {
+    this.caloricDeficit = Object.assign({}, toUpdate);
+  }
+
+  updateCalories() {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to UPDATE the Calorie Intake record for ' + this.caloricIntake.mealType.mealTypeName + ' on ' + this.caloricIntake.dateCreated + '?')) {
+      this.dailyCalorieSvc.updateDailyCaloricIntake(this.caloricIntake).subscribe(
+        data => {
+          this.caloricIntake = null;
+        },
+        err => console.error('In User Component updateCalories Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
+  }
+
+  updateCalorieBurn() {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to UPDATE the Calorie Deficit record for ' + this.caloricDeficit.activityDescription + ' on ' + this.caloricDeficit.dateCreated + '?')) {
+      this.dailyCalorieBurnSvc.updateDailyExerciseCaloricDeficit(this.caloricDeficit).subscribe(
+        data => {
+          this.caloricDeficit = null;
+        },
+        err => console.error('In User Component updateCalorieBurn Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
+  }
+
+  deleteCalories(toDelete: DailyCaloricIntake) {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to DELETE the Calorie Intake record for ' + toDelete.mealType.mealTypeName + ' on ' + toDelete.dateCreated + '?')) {
+      this.dailyCalorieSvc.deleteDailyCaloricIntake(toDelete.id).subscribe(
+        data => {
+
+        },
+        err => console.error('In User Component deleteCalories Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
+  }
+
+  deleteCalorieBurn(toDelete: DailyExerciseCaloricDeficit) {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to DELETE the Calorie Deficit record for ' + toDelete.activityDescription + ' on ' + toDelete.dateCreated + '?')) {
+      this.dailyCalorieBurnSvc.deleteDailyExerciseCaloricDeficit(toDelete.id).subscribe(
+        data => {
+
+        },
+        err => console.error('In User Component deleteCalories Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
+  }
+
   markReplyAsRead(replyID: number) {
     this.postReplySvc.markPostReplyRead(replyID).subscribe(
       data => {
-        this.ngOnInit();
+        this.router.navigateByUrl('/users');
       },
       err => console.error('In User Component markReplyAsRead Error')
     );
@@ -331,7 +420,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   disableUser(u: User) {
     this.userSvc.disableUser(u.id).subscribe(
       data => {
-        this.ngOnInit();
+        this.router.navigateByUrl('/users');
       },
       err => console.error('In User Component disableUser Error')
     );
@@ -340,7 +429,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   enableUser(u: User) {
     this.userSvc.enableUser(u.id).subscribe(
       data => {
-        this.ngOnInit();
+        this.router.navigateByUrl('/users');
       },
       err => console.error('In User Component enableUser Error')
     );
