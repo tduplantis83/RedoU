@@ -8,6 +8,7 @@ import { Avatar } from 'src/app/models/avatar';
 import { Router, NavigationEnd } from '@angular/router';
 import { Goal } from 'src/app/models/goal';
 import { Post } from 'src/app/models/post';
+import { Image } from 'src/app/models/image';
 import { UserAvatarService } from 'src/app/services/user-avatar.service';
 import { DailyCaloricIntakeService } from 'src/app/services/daily-caloric-intake.service';
 import { MealTypeService } from 'src/app/services/meal-type.service';
@@ -69,22 +70,21 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.user = data;
         if (this.user.role === 'admin') {
           this.findAllUsers();
-        }
-        this.getUserCurrentGoal();
-        this.getBMIUserAvatar();
-        this.getNewPostReplies();
-        this.getMealTypes();
-        if (this.user.userDailyCaloricIntakes.length > 0) {
-          this.caloricIntakeByDateMap = this.groupCaloricIntakeByDate(
-            this.user.userDailyCaloricIntakes
-            );
+          this.getCurrentUserAvatar();
+      }
+      else {
+          this.getUserCurrentGoal();
+          this.getBMIUserAvatar();
+          this.getNewPostReplies();
+          this.getMealTypes();
+          if (this.user.userDailyCaloricIntakes.length > 0) {
+              this.caloricIntakeByDateMap = this.groupCaloricIntakeByDate(this.user.userDailyCaloricIntakes);
           }
-        if (this.user.userDailyExerciseCaloricDeficits.length > 0) {
-            this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(
-              this.user.userDailyExerciseCaloricDeficits
-            );
-        }
-        this.getCurrentUserAvatar();
+          if (this.user.userDailyExerciseCaloricDeficits.length > 0) {
+              this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(this.user.userDailyExerciseCaloricDeficits);
+          }
+          this.getCurrentUserAvatar();
+      }
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
@@ -143,106 +143,116 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserAvatar() {
-    // now use most recent caloric info to update current avatar
-    let maxIntakeDate = this.user.dateCreated;
-    let maxDeficitDate = this.user.dateCreated;
-
-    for (const key of this.caloricIntakeByDateMap.keys()) {
-      if (key >= maxIntakeDate) {
-        maxIntakeDate = key;
-      }
+    if (this.user.role === 'admin') {
+      this.user.userAvatars.forEach(ua => {
+        if (ua.current === true) {
+          this.currentAvatar = ua.avatar;
+        }
+      });
     }
 
-    for (const key of this.caloricDeficitByDateMap.keys()) {
-      if (key >= maxDeficitDate) {
-        maxDeficitDate = key;
-      }
-    }
+    else {
+      // now use most recent caloric info to update current avatar
+      let maxIntakeDate = this.user.dateCreated;
+      let maxDeficitDate = this.user.dateCreated;
 
-    // if user goal is weight loss...
-    if (this.userCurrentGoal.goalName === 'Weight Loss') {
-      // if the value at either is null, then don't change avatar
-      if (
-        this.caloricIntakeByDateMap.get(maxIntakeDate) == null ||
-        this.caloricDeficitByDateMap.get(maxDeficitDate) == null
-      ) {
-        this.user.userAvatars.forEach(ua => {
-          if (ua.current === true) {
-            this.currentAvatar = ua.avatar;
-          }
-        });
-      } else if (
-        this.caloricIntakeByDateMap.get(maxIntakeDate) -
-          this.caloricDeficitByDateMap.get(maxDeficitDate) ===
-        0
-      ) {
-        this.user.userAvatars.forEach(ua => {
-          if (ua.current === true) {
-            this.currentAvatar = ua.avatar;
-          }
-        });
-      } else if (
-        this.caloricIntakeByDateMap.get(maxIntakeDate) -
-          this.caloricDeficitByDateMap.get(maxDeficitDate) <
-        0
-      ) {
-
-        if (this.bodyType === 'Fat') {
-          this.userAvatarSvc
-            .updateCURRENTUserAvatar('Average', this.user.id)
-            .subscribe(
-              data => {
-                this.currentAvatar = data.avatar;
-              },
-              error =>
-                console.error('In User Component getCurrentUserAvatar Error')
-            );
-        } else if (this.bodyType === 'Average') {
-          this.userAvatarSvc
-            .updateCURRENTUserAvatar('Thin', this.user.id)
-            .subscribe(
-              data => {
-                this.currentAvatar = data.avatar;
-              },
-              error =>
-                console.error('In User Component getCurrentUserAvatar Error')
-            );
+      for (const key of this.caloricIntakeByDateMap.keys()) {
+        if (key >= maxIntakeDate) {
+          maxIntakeDate = key;
         }
-        // if user avatar is already thin, do nothing
-      } else if (
-        this.caloricIntakeByDateMap.get(maxIntakeDate) -
-          this.caloricDeficitByDateMap.get(maxDeficitDate) >
-        0
-      ) {
-        if (this.bodyType === 'Thin') {
-          this.userAvatarSvc
-            .updateCURRENTUserAvatar('Average', this.user.id)
-            .subscribe(
-              data => {
-                this.currentAvatar = data.avatar;
-              },
-              error =>
-                console.error('In User Component getCurrentUserAvatar Error')
-            );
-        } else if (this.bodyType === 'Average') {
-          this.userAvatarSvc
-            .updateCURRENTUserAvatar('Fat', this.user.id)
-            .subscribe(
-              data => {
-                this.currentAvatar = data.avatar;
-              },
-              error =>
-                console.error('In User Component getCurrentUserAvatar Error')
-            );
-        }
-        // if user avatar is already fat, do nothing
       }
-    } else if (this.userCurrentGoal.goalName === 'Muscle Building') {
-      console.log('add muscle building mod here');
-    } else if (
-      this.userCurrentGoal.goalName === 'General Fitness Maintanence'
-    ) {
-      console.log('add muscle building mod here');
+
+      for (const key of this.caloricDeficitByDateMap.keys()) {
+        if (key >= maxDeficitDate) {
+          maxDeficitDate = key;
+        }
+      }
+
+      // if user goal is weight loss...
+      if (this.userCurrentGoal.goalName === 'Weight Loss') {
+        // if the value at either is null, then don't change avatar
+        if (
+          this.caloricIntakeByDateMap.get(maxIntakeDate) == null ||
+          this.caloricDeficitByDateMap.get(maxDeficitDate) == null
+        ) {
+          this.user.userAvatars.forEach(ua => {
+            if (ua.current === true) {
+              this.currentAvatar = ua.avatar;
+            }
+          });
+        } else if (
+          this.caloricIntakeByDateMap.get(maxIntakeDate) -
+            this.caloricDeficitByDateMap.get(maxDeficitDate) ===
+          0
+        ) {
+          this.user.userAvatars.forEach(ua => {
+            if (ua.current === true) {
+              this.currentAvatar = ua.avatar;
+            }
+          });
+        } else if (
+          this.caloricIntakeByDateMap.get(maxIntakeDate) -
+            this.caloricDeficitByDateMap.get(maxDeficitDate) <
+          0
+        ) {
+
+          if (this.bodyType === 'Fat') {
+            this.userAvatarSvc
+              .updateCURRENTUserAvatar('Average', this.user.id)
+              .subscribe(
+                data => {
+                  this.currentAvatar = data.avatar;
+                },
+                error =>
+                  console.error('In User Component getCurrentUserAvatar Error')
+              );
+          } else if (this.bodyType === 'Average') {
+            this.userAvatarSvc
+              .updateCURRENTUserAvatar('Thin', this.user.id)
+              .subscribe(
+                data => {
+                  this.currentAvatar = data.avatar;
+                },
+                error =>
+                  console.error('In User Component getCurrentUserAvatar Error')
+              );
+          }
+          // if user avatar is already thin, do nothing
+        } else if (
+          this.caloricIntakeByDateMap.get(maxIntakeDate) -
+            this.caloricDeficitByDateMap.get(maxDeficitDate) >
+          0
+        ) {
+          if (this.bodyType === 'Thin') {
+            this.userAvatarSvc
+              .updateCURRENTUserAvatar('Average', this.user.id)
+              .subscribe(
+                data => {
+                  this.currentAvatar = data.avatar;
+                },
+                error =>
+                  console.error('In User Component getCurrentUserAvatar Error')
+              );
+          } else if (this.bodyType === 'Average') {
+            this.userAvatarSvc
+              .updateCURRENTUserAvatar('Fat', this.user.id)
+              .subscribe(
+                data => {
+                  this.currentAvatar = data.avatar;
+                },
+                error =>
+                  console.error('In User Component getCurrentUserAvatar Error')
+              );
+          }
+          // if user avatar is already fat, do nothing
+        }
+      } else if (this.userCurrentGoal.goalName === 'Muscle Building') {
+        console.log('add muscle building mod here');
+      } else if (
+        this.userCurrentGoal.goalName === 'General Fitness Maintanence'
+      ) {
+        console.log('add muscle building mod here');
+      }
     }
   }
 

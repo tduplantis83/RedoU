@@ -493,22 +493,19 @@
   <br />
   <div class="container" *ngIf="user.userImages.length > 0 && !caloricIntake && !caloricDeficit">
     <h3 class="text-center">Progress Images:</h3>
-    <div class="col-md-12">
-      <div class="row align-items-center">
-        <div
-          class="col-xs"
-          *ngFor="let img of user.userImages | arraySort: 'dateCreated':false"
-        >
-          <h6 class="text-center">{{ img.dateCreated | date: "shortDate" }}</h6>
-          <img
-            id="progressImg"
-            [src]="img.imageUrl"
-            alt="Progress Image: img.dateCreated"
-            width="200"
-          />
-        </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let img of user.userImages | arraySort: 'dateCreated':true">
+        <h6 class="text-center">{{ img.dateCreated | date: "shortDate" }}</h6>
+        <img
+          id="progressImg"
+          [src]="img.imageUrl"
+          alt="Progress Image: img.dateCreated"
+          class="img img-fluid"
+        />
       </div>
-    </div>
+      <div class="col-2"></div>
+     </div>
   </div>
   <!-- USER'S PROGRESS IMAGES END -->
 
@@ -724,7 +721,7 @@
         <img
           [src]="currentAvatar.avatarUrl"
           class="img-fluid"
-          alt="Current User Avatar"
+          alt="Admin Avatar"
         />
       </div>
       <div class="col-5"></div>
