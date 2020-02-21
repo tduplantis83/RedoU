@@ -37,7 +37,7 @@ class ImageRepoTest {
 	}
 
 	@Test
-	@DisplayName("test findByUser_UsernameIgnoreCase")
+	@DisplayName("test queryByUserID")
 	void test3() {
 		List<Image> imgs = repo.findByUser_UsernameIgnoreCase("TRAVisd");
 		assertEquals("https://i.imgur.com/puVjtA9.jpg", imgs.get(0).getImageUrl());
