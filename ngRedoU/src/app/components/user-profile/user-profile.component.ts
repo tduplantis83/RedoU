@@ -1,5 +1,3 @@
-import { AvatarService } from './../../services/avatar.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { PostReplyService } from './../../services/post-reply.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
@@ -8,7 +6,6 @@ import { Avatar } from 'src/app/models/avatar';
 import { Router, NavigationEnd } from '@angular/router';
 import { Goal } from 'src/app/models/goal';
 import { Post } from 'src/app/models/post';
-import { Image } from 'src/app/models/image';
 import { UserAvatarService } from 'src/app/services/user-avatar.service';
 import { DailyCaloricIntakeService } from 'src/app/services/daily-caloric-intake.service';
 import { MealTypeService } from 'src/app/services/meal-type.service';
@@ -17,6 +14,7 @@ import { DailyCaloricIntake } from 'src/app/models/daily-caloric-intake';
 import { MeasurementConverterPipe } from 'src/app/Pipes/measurement-converter.pipe';
 import { DailyExerciseCaloricDeficit } from 'src/app/models/daily-exercise-caloric-deficit';
 import { DailyExerciseCaloricDeficitService } from 'src/app/services/daily-exercise-caloric-deficit.service';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -56,6 +54,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   caloricIntakeByDateMap = new Map<Date, number>();
   caloricDeficitByDateMap = new Map<Date, number>();
   caloricPerformanceByDate: [] = [];
+  userImagesByDate = null;
   newCalorieRecord = false;
   newCalorieBurnRecord = false;
   mealTypes: MealType[] = [];
@@ -71,8 +70,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if (this.user.role === 'admin') {
           this.findAllUsers();
           this.getCurrentUserAvatar();
-      }
-      else {
+        }
+        else {
           this.getUserCurrentGoal();
           this.getBMIUserAvatar();
           this.getNewPostReplies();
@@ -84,7 +83,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
               this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(this.user.userDailyExerciseCaloricDeficits);
           }
           this.getCurrentUserAvatar();
-      }
+          this.userImagesByDate = this.groupUserImagesByDate(this.user.userImages);
+        }
       },
       err => console.error('In User Component getLoggedInUser Error')
     );
@@ -315,6 +315,29 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
     }
     return res;
+  }
+
+  groupUserImagesByDate(arr: any[]) {
+    // this gives an object with dates as keys
+    const groups = arr.reduce((groups, image) => {
+      const date = image.dateCreated;
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(image);
+      return groups;
+    }, {});
+
+    // Edit: to add it in the array format instead
+    const groupArrays = Object.keys(groups).map((date) => {
+      return {
+        date,
+        image: groups[date]
+      };
+    });
+
+
+    return groupArrays;
   }
 
   addACaloricRecord() {
