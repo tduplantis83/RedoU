@@ -459,6 +459,8 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (59, 2, 3, 600, 'Vegetarian Chili - 3 cups', '2020-02-19', '2020-02-19');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (60, 2, 2, 300, 'Thai Veggie Bowl (added Just Eggs)', '2020-02-20', '2020-02-20');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (61, 2, 3, 450, 'Beyond Meat Patty on a Salad', '2020-02-20', '2020-02-20');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (62, 2, 3, 800, '3 Tacos with Rice & Beans & Chips & Guacamole', '2020-02-21', '2020-02-21');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (63, 2, 5, 400, 'PB&J', '2020-02-21', '2020-02-21');
 
 COMMIT;
 
