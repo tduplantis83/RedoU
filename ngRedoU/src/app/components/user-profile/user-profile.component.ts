@@ -6,6 +6,7 @@ import { Avatar } from 'src/app/models/avatar';
 import { Router, NavigationEnd } from '@angular/router';
 import { Goal } from 'src/app/models/goal';
 import { Post } from 'src/app/models/post';
+import { Image } from 'src/app/models/image';
 import { UserAvatarService } from 'src/app/services/user-avatar.service';
 import { DailyCaloricIntakeService } from 'src/app/services/daily-caloric-intake.service';
 import { MealTypeService } from 'src/app/services/meal-type.service';
@@ -67,6 +68,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   progressImageFront = null;
   progressImageSide = null;
   newprogressImages = false;
+  progressImage = null;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -388,20 +390,48 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.imgSvc.createImage(this.progressImageFront).subscribe(
       data => {
         //side facing image
-      this.imgSvc.createImage(this.progressImageSide).subscribe(
-      data => {
-        this.progressImageFront = null;
-        this.progressImageSide = null;
-        this.newprogressImages = false;
-        this.router.navigateByUrl('/users');
-      },
-      err => console.error('In User Component createNewProgressImages (SIDE FACING) Error')
-    );
+        this.imgSvc.createImage(this.progressImageSide).subscribe(
+        data => {
+          this.progressImageFront = null;
+          this.progressImageSide = null;
+          this.newprogressImages = false;
+          this.router.navigateByUrl('/users');
+        },
+        err => console.error('In User Component createNewProgressImages (SIDE FACING) Error')
+      );
       },
       err => console.error('In User Component createNewProgressImages (FRONT FACING) Error')
     );
+  }
 
+  setUpdateAProgressImage(toUpdate: Image) {
+    this.progressImage = Object.assign({}, toUpdate);
+  }
 
+  updateAProgressImage() {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to UPDATE the Progress Image for ' + this.progressImage.dateCreated + '?')) {
+      this.imgSvc.updateImage(this.progressImage).subscribe(
+        data => {
+          this.progressImage = null;
+        },
+        err => console.error('In User Component updateAProgressImage Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
+  }
+
+  deleteAProgressImage(toDelete: Image) {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to DELETE the Progress Image for ' + toDelete.dateCreated + '?')) {
+      this.imgSvc.deleteImage(toDelete.id).subscribe(
+        data => {
+
+        },
+        err => console.error('In User Component deleteCalories Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
   }
 
   setUpdateCalorieRecord(toUpdate: DailyCaloricIntake) {
