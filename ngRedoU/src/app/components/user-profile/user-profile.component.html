@@ -1,12 +1,11 @@
 <!-- ADD WEIGHT YOU SHOULD LOSE/GAIN PER DAY
-ADD ABILITY TO CREATE UPDATE DELETE IMAGES
 ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS
 CHECK UNREAD POST MARK AS READ -->
 
 
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
   <!-- BASIC USER INFO START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
     <h3 class="text-center">User Info:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -40,7 +39,7 @@ CHECK UNREAD POST MARK AS READ -->
   <!-- USER'S AVATAR START -->
   <div
     class="container"
-    *ngIf="bmiAvatar && currentAvatar && !caloricIntake && !caloricDeficit && !newprogressImages"
+    *ngIf="bmiAvatar && currentAvatar && !caloricIntake && !caloricDeficit && !newprogressImages && !progressImage"
   >
     <div class="row">
       <div class="col-2"></div>
@@ -75,9 +74,7 @@ CHECK UNREAD POST MARK AS READ -->
     *ngIf="
       user.userDailyExerciseCaloricDeficits.length > 0 &&
       !caloricIntake &&
-      !caloricDeficit && !newprogressImages
-    "
-  >
+      !caloricDeficit && !newprogressImages && !progressImage">
     <h3 class="text-center">Caloric Performance:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -174,7 +171,7 @@ CHECK UNREAD POST MARK AS READ -->
   <!-- USER'S CALORIC PERFORMANCE END -->
 
   <!-- USER'S CALORIC INTAKE START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
     <h3 class="text-center">Caloric Intake:</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricRecord()">
@@ -411,7 +408,7 @@ CHECK UNREAD POST MARK AS READ -->
   <br />
 
   <!-- USER'S CALORIES BURNED START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
     <h3 class="text-center">Calories Burned:</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricBurnRecord()">
@@ -616,34 +613,60 @@ CHECK UNREAD POST MARK AS READ -->
   <br />
 
   <!-- USER'S PROGRESS IMAGES START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
     <h3 class="text-center">Progress Images:</h3>
     <h3 class="text-center"><button class="btn btn-success" (click)="addAProgressImage()">
       New Progress Images
     </button></h3>
     <div *ngIf="userImagesByDate">
-      <div
-        class="row"
-        *ngFor="let d of userImagesByDate | arraySort: 'date':true"
-      >
+      <div *ngFor="let d of userImagesByDate | arraySort: 'date':true">
+      <div *ngIf="d.image.length === 2" class="row">
         <div class="col-2"></div>
-        <div class="col-4" *ngFor="let img of d.image">
-          <h6 class="text-center">{{ d.date | date: "shortDate" }}</h6>
-          <img
-            id="progressImg"
-            [src]="img.imageUrl"
-            alt="Progress Image: {{ d.date | date: 'shortDate' }}"
-            class="img img-fluid"
-          />
-        </div>
+          <div class="col-4" *ngFor="let img of d.image">
+            <h6 class="text-center"><strong>{{ d.date | date: "shortDate" }}</strong></h6>
+            <img
+              id="progressImg"
+              [src]="img.imageUrl"
+              alt="Progress Image: {{ d.date | date: 'shortDate' }}"
+              class="img img-fluid"
+            />
+            <button class="btn btn-sm btn-warning" style="float: left" (click)="setUpdateAProgressImage(img)">
+              Update
+            </button>
+            <button class="btn btn-sm btn-danger" style="float: right"(click)="deleteAProgressImage(img)">
+              Delete
+            </button>
+          </div>
         <div class="col-2"></div>
       </div>
+
+      <div *ngIf="d.image.length < 2" class="row">
+        <div class="col-2"></div>
+          <div class="col-8" *ngFor="let img of d.image">
+            <h6 class="text-center"><strong>{{ d.date | date: "shortDate" }}</strong></h6>
+            <img
+              id="progressImg"
+              [src]="img.imageUrl"
+              alt="Progress Image: {{ d.date | date: 'shortDate' }}"
+              class="img img-fluid"
+            />
+            <button class="btn btn-sm btn-warning" style="float: left" (click)="setUpdateAProgressImage(img)">
+              Update
+            </button>
+            <button class="btn btn-sm btn-danger" style="float: right"(click)="deleteAProgressImage(img)">
+              Delete
+            </button>
+          </div>
+        <div class="col-2"></div>
+      </div>
+    </div>
+    <br>
     </div>
   </div>
   <!-- USER'S PROGRESS IMAGES END -->
 
-  <!-- ADD NEW USER'S PROGRESS IMAGES START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && newprogressImages">
+  <!-- USER ADD PROGRESS IMAGES START -->
+  <div class="container" *ngIf="progressImageFront && progressImageSide && newprogressImages === true">
     <h3 class="text-center">New Progress Images:</h3>
     <form name="addProgressImagesForm">
       <div class="form-row">
@@ -661,6 +684,7 @@ CHECK UNREAD POST MARK AS READ -->
         </div>
         <div class="col-4"></div>
       </div>
+      <br>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -713,12 +737,75 @@ CHECK UNREAD POST MARK AS READ -->
       </div>
     </form>
   </div>
-<!-- ADD NEW USER'S PROGRESS IMAGES END -->
+  <!-- USER ADD PROGRESS IMAGES END -->
+
+  <!-- USER UPDATE PROGRESS IMAGES START -->
+  <div class="container" *ngIf="progressImage && newprogressImages === false">
+    <h3 class="text-center">Update Progress Image</h3>
+    <form name="addProgressImagesForm">
+      <div class="form-row">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <label for="date">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="date"
+            [(ngModel)]="progressImage.dateCreated"
+          />
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <label for="imageUrl">Image URL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="imageUrl"
+            name="imageUrl"
+            [(ngModel)]="progressImage.imageUrl"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="progressImage = null"
+            [routerLink]="['/users']"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-warning"
+            style="float:right;"
+            (click)="updateAProgressImage()"
+          >
+            Update
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+  </div>
+  <!-- USER UPDATE PROGRESS IMAGES END -->
 
   <br />
 
   <!-- USER'S BODY MEASUREMENTS START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
     <h3 class="text-center">Body Measurements:</h3>
     <div *ngIf="user.userBodyMeasurementMetrics.length > 0">
       <div class="form-check form-check-inline">
@@ -921,9 +1008,7 @@ CHECK UNREAD POST MARK AS READ -->
         <tr
           *ngFor="
             let reply of post.originalPostReplies
-              | arraySort: 'dateCreated':false
-          "
-        >
+              | arraySort: 'dateCreated':false">
           <td *ngIf="reply.unread === true">
             <strong>Reply by:</strong> {{ reply.replyUser.username }}
           </td>
@@ -943,8 +1028,9 @@ CHECK UNREAD POST MARK AS READ -->
       </tbody>
     </table>
   </div>
+  <!-- USER'S POSTS WITH UNREAD REPLIES END -->
+
 </div>
-<!-- USER'S POSTS WITH UNREAD REPLIES END -->
 
 <!-- ADMIN STUFF -->
 <div class="container-fluid" *ngIf="user && user.role === 'admin'">
