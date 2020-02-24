@@ -14,6 +14,7 @@ import { DailyCaloricIntake } from 'src/app/models/daily-caloric-intake';
 import { MeasurementConverterPipe } from 'src/app/Pipes/measurement-converter.pipe';
 import { DailyExerciseCaloricDeficit } from 'src/app/models/daily-exercise-caloric-deficit';
 import { DailyExerciseCaloricDeficitService } from 'src/app/services/daily-exercise-caloric-deficit.service';
+import { ImageService } from 'src/app/services/image.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private dailyCalorieSvc: DailyCaloricIntakeService,
     private dailyCalorieBurnSvc: DailyExerciseCaloricDeficitService,
     private mealTypeSvc: MealTypeService,
-    private measurementConverterPipe: MeasurementConverterPipe
+    private measurementConverterPipe: MeasurementConverterPipe,
+    private imgSvc: ImageService
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -62,6 +64,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   caloricDeficit = null;
   bmi: number;
   bodyType: string;
+  progressImageFront = null;
+  progressImageSide = null;
+  newprogressImages = false;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -370,6 +375,33 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       },
       err => console.error('In User Component addCalories Error')
     );
+  }
+
+  addAProgressImage() {
+    this.progressImageFront = new Image();
+    this.progressImageSide = new Image();
+    this.newprogressImages = true;
+  }
+
+  createNewProgressImages() {
+    //front facing image
+    this.imgSvc.createImage(this.progressImageFront).subscribe(
+      data => {
+        //side facing image
+      this.imgSvc.createImage(this.progressImageSide).subscribe(
+      data => {
+        this.progressImageFront = null;
+        this.progressImageSide = null;
+        this.newprogressImages = false;
+        this.router.navigateByUrl('/users');
+      },
+      err => console.error('In User Component createNewProgressImages (SIDE FACING) Error')
+    );
+      },
+      err => console.error('In User Component createNewProgressImages (FRONT FACING) Error')
+    );
+
+
   }
 
   setUpdateCalorieRecord(toUpdate: DailyCaloricIntake) {
