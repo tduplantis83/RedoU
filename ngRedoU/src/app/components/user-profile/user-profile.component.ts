@@ -16,6 +16,8 @@ import { MeasurementConverterPipe } from 'src/app/Pipes/measurement-converter.pi
 import { DailyExerciseCaloricDeficit } from 'src/app/models/daily-exercise-caloric-deficit';
 import { DailyExerciseCaloricDeficitService } from 'src/app/services/daily-exercise-caloric-deficit.service';
 import { ImageService } from 'src/app/services/image.service';
+import { BodyMeasurementMetricService } from 'src/app/services/body-measurement-metric.service';
+import { BodyMeasurementMetric } from 'src/app/models/body-measurement-metric';
 
 
 @Component({
@@ -33,7 +35,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private dailyCalorieBurnSvc: DailyExerciseCaloricDeficitService,
     private mealTypeSvc: MealTypeService,
     private measurementConverterPipe: MeasurementConverterPipe,
-    private imgSvc: ImageService
+    private imgSvc: ImageService,
+    private bodyMeasurementSvc: BodyMeasurementMetricService
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -63,6 +66,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   mealTypes: MealType[] = [];
   caloricIntake = null;
   caloricDeficit = null;
+  bodyMeasurement = null;
+  newBodyMeasurement = false;
   bmi: number;
   bodyType: string;
   progressImageFront = null;
@@ -357,6 +362,106 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.newCalorieBurnRecord = true;
   }
 
+  addNewBodyMeasurementRecord() {
+    this.newBodyMeasurement = true;
+    this.bodyMeasurement = new BodyMeasurementMetric();
+  }
+
+  createBodyMeasurement() {
+    // if US selected, convert to metric first
+  if (this.measurementSystem === 'US') {
+    this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
+    this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
+    this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'in', 'mm');
+
+    if (this.bodyMeasurement.neckMM !== null) {
+      this.bodyMeasurement.neckMM = this.measurementConverterPipe.transform(this.bodyMeasurement.neckMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.shouldersMM !== null) {
+      this.bodyMeasurement.shouldersMM = this.measurementConverterPipe.transform(this.bodyMeasurement.shouldersMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.chestMM !== null) {
+      this.bodyMeasurement.chestMM = this.measurementConverterPipe.transform(this.bodyMeasurement.chestMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.bicepMM !== null) {
+      this.bodyMeasurement.bicepMM = this.measurementConverterPipe.transform(this.bodyMeasurement.bicepMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.hipsMM !== null) {
+      this.bodyMeasurement.hipsMM = this.measurementConverterPipe.transform(this.bodyMeasurement.hipsMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.thighMM !== null) {
+      this.bodyMeasurement.thighMM = this.measurementConverterPipe.transform(this.bodyMeasurement.thighMM, 'in', 'mm');
+    }
+  }
+
+  this.bodyMeasurementSvc.createBodyMeasurement(this.bodyMeasurement).subscribe(
+    data => {
+      this.newBodyMeasurement = false;
+      this.bodyMeasurement = null;
+      this.router.navigateByUrl('/users');
+    },
+    err => {
+      console.error('In User Component createBodyMeasurement Error');
+    }
+    );
+  }
+
+  setUpdateBodyMeasurmentRecord(toUpdate: BodyMeasurementMetric) {
+    this.bodyMeasurement = Object.assign({}, toUpdate);
+  }
+
+  updateBodyMeasurmentRecord() {
+      // if US selected, convert to metric first
+  if (this.measurementSystem === 'US') {
+    this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
+    this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
+    this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'in', 'mm');
+
+    if (this.bodyMeasurement.neckMM !== null) {
+      this.bodyMeasurement.neckMM = this.measurementConverterPipe.transform(this.bodyMeasurement.neckMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.shouldersMM !== null) {
+      this.bodyMeasurement.shouldersMM = this.measurementConverterPipe.transform(this.bodyMeasurement.shouldersMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.chestMM !== null) {
+      this.bodyMeasurement.chestMM = this.measurementConverterPipe.transform(this.bodyMeasurement.chestMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.bicepMM !== null) {
+      this.bodyMeasurement.bicepMM = this.measurementConverterPipe.transform(this.bodyMeasurement.bicepMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.hipsMM !== null) {
+      this.bodyMeasurement.hipsMM = this.measurementConverterPipe.transform(this.bodyMeasurement.hipsMM, 'in', 'mm');
+    }
+    if (this.bodyMeasurement.thighMM !== null) {
+      this.bodyMeasurement.thighMM = this.measurementConverterPipe.transform(this.bodyMeasurement.thighMM, 'in', 'mm');
+    }
+  }
+
+    // tslint:disable-next-line: max-line-length
+  if (confirm('Are you sure you want to UPDATE the Body Measurement for ' + this.bodyMeasurement.dateCreated + '?')) {
+    this.bodyMeasurementSvc.updateBodyMeasurement(this.bodyMeasurement).subscribe(
+      data => {
+        this.bodyMeasurement = null;
+      },
+        err => console.error('In User Component updateBodyMeasurmentRecord Error')
+      );
+  }
+    this.router.navigateByUrl('/users');
+  }
+
+  deleteBodyMeasurmentRecord(toDelete: Image) {
+    // tslint:disable-next-line: max-line-length
+    if (confirm('Are you sure you want to DELETE the Body Measurement for ' + toDelete.dateCreated + '?')) {
+      this.bodyMeasurementSvc.deleteBodyMeasurement(toDelete.id).subscribe(
+        data => {
+
+        },
+        err => console.error('In User Component deleteBodyMeasurmentRecord Error')
+      );
+    }
+    this.router.navigateByUrl('/users');
+  }
+
   addCalories() {
     this.dailyCalorieSvc.createDailyCaloricIntake(this.caloricIntake).subscribe(
       data => {
@@ -386,22 +491,48 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   createNewProgressImages() {
-    //front facing image
-    this.imgSvc.createImage(this.progressImageFront).subscribe(
-      data => {
-        //side facing image
-        this.imgSvc.createImage(this.progressImageSide).subscribe(
+    if(this.progressImageFront.imageUrl !== null && this.progressImageSide.imageUrl !== null) {
+      //front facing image
+      this.imgSvc.createImage(this.progressImageFront).subscribe(
         data => {
-          this.progressImageFront = null;
-          this.progressImageSide = null;
-          this.newprogressImages = false;
-          this.router.navigateByUrl('/users');
+          //side facing image
+          this.imgSvc.createImage(this.progressImageSide).subscribe(
+          data => {
+            this.progressImageFront = null;
+            this.progressImageSide = null;
+            this.newprogressImages = false;
+            this.router.navigateByUrl('/users');
+          },
+          err => console.error('In User Component createNewProgressImages (SIDE FACING) Error')
+        );
+        },
+        err => console.error('In User Component createNewProgressImages (FRONT FACING) Error')
+      );
+    }
+    else if (this.progressImageFront.imageUrl !== null && this.progressImageSide.imageUrl === null) {
+      //front facing image
+      this.imgSvc.createImage(this.progressImageFront).subscribe(
+        data => {
+            this.progressImageFront = null;
+            this.progressImageSide = null;
+            this.newprogressImages = false;
+            this.router.navigateByUrl('/users');
+        },
+        err => console.error('In User Component createNewProgressImages (FRONT FACING) Error')
+      );
+    }
+    else if (this.progressImageFront.imageUrl === null && this.progressImageSide.imageUrl !== null) {
+      //side facing image
+      this.imgSvc.createImage(this.progressImageSide).subscribe(
+        data => {
+            this.progressImageFront = null;
+            this.progressImageSide = null;
+            this.newprogressImages = false;
+            this.router.navigateByUrl('/users');
         },
         err => console.error('In User Component createNewProgressImages (SIDE FACING) Error')
       );
-      },
-      err => console.error('In User Component createNewProgressImages (FRONT FACING) Error')
-    );
+    }
   }
 
   setUpdateAProgressImage(toUpdate: Image) {
@@ -497,7 +628,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   markReplyAsRead(replyID: number) {
     this.postReplySvc.markPostReplyRead(replyID).subscribe(
       data => {
-        this.router.navigateByUrl('/users');
+        this.ngOnInit();
       },
       err => console.error('In User Component markReplyAsRead Error')
     );
