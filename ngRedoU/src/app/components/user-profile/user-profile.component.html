@@ -1,11 +1,10 @@
 <!-- ADD WEIGHT YOU SHOULD LOSE/GAIN PER DAY
-ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS
-CHECK UNREAD POST MARK AS READ -->
+ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
 
 
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
   <!-- BASIC USER INFO START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
     <h3 class="text-center">User Info:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -39,7 +38,7 @@ CHECK UNREAD POST MARK AS READ -->
   <!-- USER'S AVATAR START -->
   <div
     class="container"
-    *ngIf="bmiAvatar && currentAvatar && !caloricIntake && !caloricDeficit && !newprogressImages && !progressImage"
+    *ngIf="bmiAvatar && currentAvatar && !caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement"
   >
     <div class="row">
       <div class="col-2"></div>
@@ -74,7 +73,7 @@ CHECK UNREAD POST MARK AS READ -->
     *ngIf="
       user.userDailyExerciseCaloricDeficits.length > 0 &&
       !caloricIntake &&
-      !caloricDeficit && !newprogressImages && !progressImage">
+      !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
     <h3 class="text-center">Caloric Performance:</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
@@ -170,8 +169,10 @@ CHECK UNREAD POST MARK AS READ -->
   </div>
   <!-- USER'S CALORIC PERFORMANCE END -->
 
+  <br>
+
   <!-- USER'S CALORIC INTAKE START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
     <h3 class="text-center">Caloric Intake:</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricRecord()">
@@ -188,7 +189,7 @@ CHECK UNREAD POST MARK AS READ -->
           <th>Meal</th>
           <th>Meal Description</th>
           <th>Calories</th>
-          <th>Update</th>
+          <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -208,7 +209,7 @@ CHECK UNREAD POST MARK AS READ -->
               class="btn btn-warning"
               (click)="setUpdateCalorieRecord(caloricIntake)"
             >
-              Update
+              Edit
             </button>
           </td>
           <td>
@@ -227,7 +228,7 @@ CHECK UNREAD POST MARK AS READ -->
 
   <!-- USER ADD CALORIC INTAKE START -->
   <div class="container" *ngIf="caloricIntake && newCalorieRecord === true">
-    <br />
+    <h3 class="text-center">New Caloric Intake:</h3>
     <form name="addCaloricIntakeForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -317,7 +318,7 @@ CHECK UNREAD POST MARK AS READ -->
 
   <!-- USER UPDATE CALORIC INTAKE START -->
   <div class="container" *ngIf="caloricIntake && newCalorieRecord === false">
-    <br />
+    <h3 class="text-center">Edit Caloric Intake:</h3>
     <form name="updateCaloricIntakeForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -396,7 +397,7 @@ CHECK UNREAD POST MARK AS READ -->
             style="float:right;"
             (click)="updateCalories()"
           >
-            Update
+            Submit
           </button>
         </div>
         <div class="col-2"></div>
@@ -408,7 +409,7 @@ CHECK UNREAD POST MARK AS READ -->
   <br />
 
   <!-- USER'S CALORIES BURNED START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
     <h3 class="text-center">Calories Burned:</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricBurnRecord()">
@@ -424,7 +425,7 @@ CHECK UNREAD POST MARK AS READ -->
           <th>Date</th>
           <th>Activity Description</th>
           <th>Total Calories Burned</th>
-          <th>Update</th>
+          <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -443,7 +444,7 @@ CHECK UNREAD POST MARK AS READ -->
               class="btn btn-warning"
               (click)="setUpdateCalorieBurnRecord(caloricDeficit)"
             >
-              Update
+              Edit
             </button>
           </td>
           <td>
@@ -465,7 +466,7 @@ CHECK UNREAD POST MARK AS READ -->
     class="container"
     *ngIf="caloricDeficit && newCalorieBurnRecord === true"
   >
-    <br />
+  <h3 class="text-center">New Calories Burned:</h3>
     <form name="addCaloricDeficitForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -540,7 +541,7 @@ CHECK UNREAD POST MARK AS READ -->
     class="container"
     *ngIf="caloricDeficit && newCalorieBurnRecord === false"
   >
-    <br />
+  <h3 class="text-center">Edit Calories Burned:</h3>
     <form name="addCaloricDeficitForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -613,7 +614,7 @@ CHECK UNREAD POST MARK AS READ -->
   <br />
 
   <!-- USER'S PROGRESS IMAGES START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
     <h3 class="text-center">Progress Images:</h3>
     <h3 class="text-center"><button class="btn btn-success" (click)="addAProgressImage()">
       New Progress Images
@@ -631,7 +632,7 @@ CHECK UNREAD POST MARK AS READ -->
               class="img img-fluid"
             />
             <button class="btn btn-sm btn-warning" style="float: left" (click)="setUpdateAProgressImage(img)">
-              Update
+              Edit
             </button>
             <button class="btn btn-sm btn-danger" style="float: right"(click)="deleteAProgressImage(img)">
               Delete
@@ -651,7 +652,7 @@ CHECK UNREAD POST MARK AS READ -->
               class="img img-fluid"
             />
             <button class="btn btn-sm btn-warning" style="float: left" (click)="setUpdateAProgressImage(img)">
-              Update
+              Edit
             </button>
             <button class="btn btn-sm btn-danger" style="float: right"(click)="deleteAProgressImage(img)">
               Delete
@@ -741,7 +742,7 @@ CHECK UNREAD POST MARK AS READ -->
 
   <!-- USER UPDATE PROGRESS IMAGES START -->
   <div class="container" *ngIf="progressImage && newprogressImages === false">
-    <h3 class="text-center">Update Progress Image</h3>
+    <h3 class="text-center">Edit Progress Image</h3>
     <form name="addProgressImagesForm">
       <div class="form-row">
         <div class="col-4"></div>
@@ -793,7 +794,7 @@ CHECK UNREAD POST MARK AS READ -->
             style="float:right;"
             (click)="updateAProgressImage()"
           >
-            Update
+            Submit
           </button>
         </div>
         <div class="col-2"></div>
@@ -805,8 +806,13 @@ CHECK UNREAD POST MARK AS READ -->
   <br />
 
   <!-- USER'S BODY MEASUREMENTS START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage">
+  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
     <h3 class="text-center">Body Measurements:</h3>
+    <h3 class="text-center">
+      <button class="btn btn-success" (click)="addNewBodyMeasurementRecord()">
+        New Body Measurement
+      </button>
+    </h3>
     <div *ngIf="user.userBodyMeasurementMetrics.length > 0">
       <div class="form-check form-check-inline">
         <input
@@ -848,6 +854,8 @@ CHECK UNREAD POST MARK AS READ -->
             <th>Hip (mm)</th>
             <th>Thigh (mm)</th>
             <th>BMI</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -881,6 +889,22 @@ CHECK UNREAD POST MARK AS READ -->
                   | number: "1.0-2"
               }}
             </td>
+            <td>
+              <button
+                class="btn btn-warning"
+                (click)="setUpdateBodyMeasurmentRecord(m)"
+              >
+                Edit
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-danger"
+                (click)="deleteBodyMeasurmentRecord(m)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -902,6 +926,8 @@ CHECK UNREAD POST MARK AS READ -->
             <th>Hip (in)</th>
             <th>Thigh (in)</th>
             <th>BMI</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -969,6 +995,22 @@ CHECK UNREAD POST MARK AS READ -->
                   | number: "1.0-2"
               }}
             </td>
+            <td>
+              <button
+                class="btn btn-warning"
+                (click)="setUpdateBodyMeasurmentRecord(m)"
+              >
+                Edit
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-danger"
+                (click)="deleteBodyMeasurmentRecord(m)"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -976,12 +1018,680 @@ CHECK UNREAD POST MARK AS READ -->
   </div>
   <!-- USER'S BODY MEASUREMENTS END -->
 
+  <!-- USER ADD BODY MEASUREMENTS START -->
+  <div class="container" *ngIf="bodyMeasurement && newBodyMeasurement === true">
+    <h3 class="text-center">New Body Measurement:</h3>
+    <h5 class="text-center"><small style="color: red;">* Required Fields</small></h5>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-4">
+    <div class="form-check form-check-inline">
+      <input
+      class="form-check-input"
+      type="radio"
+      name="system"
+      id="system"
+      value="US"
+      [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system">US</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+      class="form-check-input"
+      type="radio"
+      name="system"
+      id="system"
+      value="metric"
+      [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system">Metric</label>
+    </div>
+    </div>
+    <div class="col-6"></div>
+    </div>
+    <!-- METRIC SELECTED -->
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'metric'">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateMeasured"
+            name="dateMeasured"
+            [(ngModel)]="bodyMeasurement.dateMeasured"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="heightMM">Height (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="heightMM"
+            name="heightMM"
+            [(ngModel)]="bodyMeasurement.heightMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="weightKg">Weight (kg)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weightKg"
+            name="weightKg"
+            [(ngModel)]="bodyMeasurement.weightKg"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="waistMM">Waist (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="waistMM"
+            name="waistMM"
+            [(ngModel)]="bodyMeasurement.waistMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="neckMM">Neck (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="neckMM"
+            name="neckMM"
+            [(ngModel)]="bodyMeasurement.neckMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="shouldersMM">Shoulders (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="shouldersMM"
+            name="shouldersMM"
+            [(ngModel)]="bodyMeasurement.shouldersMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="chestMM">Chest (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="chestMM"
+            name="chestMM"
+            [(ngModel)]="bodyMeasurement.chestMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="bicepMM">Bicep (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bicepMM"
+            name="bicepMM"
+            [(ngModel)]="bodyMeasurement.bicepMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="hipsMM">Hips (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="hipsMM"
+            name="hipsMM"
+            [(ngModel)]="bodyMeasurement.hipsMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="thighMM">Thigh (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="thighMM"
+            name="thighMM"
+            [(ngModel)]="bodyMeasurement.thighMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="newBodyMeasurement = false; bodyMeasurement = null"
+            [routerLink]="['/users']"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="float:right;"
+            (click)="createBodyMeasurement()"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+
+    <!-- US SELECTED -->
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'US'">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateMeasured"
+            name="dateMeasured"
+            [(ngModel)]="bodyMeasurement.dateMeasured"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="heightMM">Height (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="heightMM"
+            name="heightMM"
+            [(ngModel)]="bodyMeasurement.heightMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="weightKg">Weight (lbs)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weightKg"
+            name="weightKg"
+            [(ngModel)]="bodyMeasurement.weightKg"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="waistMM">Waist (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="waistMM"
+            name="waistMM"
+            [(ngModel)]="bodyMeasurement.waistMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="neckMM">Neck (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="neckMM"
+            name="neckMM"
+            [(ngModel)]="bodyMeasurement.neckMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="shouldersMM">Shoulders (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="shouldersMM"
+            name="shouldersMM"
+            [(ngModel)]="bodyMeasurement.shouldersMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="chestMM">Chest (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="chestMM"
+            name="chestMM"
+            [(ngModel)]="bodyMeasurement.chestMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="bicepMM">Bicep (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bicepMM"
+            name="bicepMM"
+            [(ngModel)]="bodyMeasurement.bicepMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="hipsMM">Hips (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="hipsMM"
+            name="hipsMM"
+            [(ngModel)]="bodyMeasurement.hipsMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="thighMM">Thigh (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="thighMM"
+            name="thighMM"
+            [(ngModel)]="bodyMeasurement.thighMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="newBodyMeasurement = false; bodyMeasurement = null"
+            [routerLink]="['/users']"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="float:right;"
+            (click)="createBodyMeasurement()"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+  </div>
+  <!-- USER ADD BODY MEASUREMENTS END -->
+
+  <!-- USER UPDATE BODY MEASUREMENTS START -->
+  <div class="container" *ngIf="bodyMeasurement && newBodyMeasurement === false">
+    <h3 class="text-center">Edit Body Measurement:</h3>
+    <h5 class="text-center"><small style="color: red;">* Required Fields</small></h5>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-4">
+    <div class="form-check form-check-inline">
+      <input
+      class="form-check-input"
+      type="radio"
+      name="system"
+      id="system"
+      value="US"
+      [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system">US</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+      class="form-check-input"
+      type="radio"
+      name="system"
+      id="system"
+      value="metric"
+      [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system">Metric</label>
+    </div>
+    </div>
+    <div class="col-6"></div>
+    </div>
+    <!-- METRIC SELECTED -->
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'metric'">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateMeasured"
+            name="dateMeasured"
+            [(ngModel)]="bodyMeasurement.dateMeasured"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="heightMM">Height (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="heightMM"
+            name="heightMM"
+            [(ngModel)]="bodyMeasurement.heightMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="weightKg">Weight (kg)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weightKg"
+            name="weightKg"
+            [(ngModel)]="bodyMeasurement.weightKg"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="waistMM">Waist (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="waistMM"
+            name="waistMM"
+            [(ngModel)]="bodyMeasurement.waistMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="neckMM">Neck (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="neckMM"
+            name="neckMM"
+            [(ngModel)]="bodyMeasurement.neckMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="shouldersMM">Shoulders (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="shouldersMM"
+            name="shouldersMM"
+            [(ngModel)]="bodyMeasurement.shouldersMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="chestMM">Chest (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="chestMM"
+            name="chestMM"
+            [(ngModel)]="bodyMeasurement.chestMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="bicepMM">Bicep (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bicepMM"
+            name="bicepMM"
+            [(ngModel)]="bodyMeasurement.bicepMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="hipsMM">Hips (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="hipsMM"
+            name="hipsMM"
+            [(ngModel)]="bodyMeasurement.hipsMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="thighMM">Thigh (mm)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="thighMM"
+            name="thighMM"
+            [(ngModel)]="bodyMeasurement.thighMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="bodyMeasurement = null"
+            [routerLink]="['/users']"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="float:right;"
+            (click)="updateBodyMeasurmentRecord()"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+
+    <!-- US SELECTED -->
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'US'">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateMeasured"
+            name="dateMeasured"
+            [(ngModel)]="bodyMeasurement.dateMeasured"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="heightMM">Height (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="heightMM"
+            name="heightMM"
+            [(ngModel)]="bodyMeasurement.heightMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="weightKg">Weight (lbs)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weightKg"
+            name="weightKg"
+            [(ngModel)]="bodyMeasurement.weightKg"
+          />
+        </div>
+        <div class="col-4">
+          <small style="color: red;">*</small><label for="waistMM">Waist (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="waistMM"
+            name="waistMM"
+            [(ngModel)]="bodyMeasurement.waistMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="neckMM">Neck (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="neckMM"
+            name="neckMM"
+            [(ngModel)]="bodyMeasurement.neckMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="shouldersMM">Shoulders (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="shouldersMM"
+            name="shouldersMM"
+            [(ngModel)]="bodyMeasurement.shouldersMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="chestMM">Chest (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="chestMM"
+            name="chestMM"
+            [(ngModel)]="bodyMeasurement.chestMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="bicepMM">Bicep (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="bicepMM"
+            name="bicepMM"
+            [(ngModel)]="bodyMeasurement.bicepMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="hipsMM">Hips (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="hipsMM"
+            name="hipsMM"
+            [(ngModel)]="bodyMeasurement.hipsMM"
+          />
+        </div>
+        <div class="col-4">
+          <label for="thighMM">Thigh (in)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="thighMM"
+            name="thighMM"
+            [(ngModel)]="bodyMeasurement.thighMM"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="bodyMeasurement = null"
+            [routerLink]="['/users']"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="float:right;"
+            (click)="updateBodyMeasurmentRecord()"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+  </div>
+  <!-- USER UPDATE BODY MEASUREMENTS END -->
+
   <br />
 
   <!-- USER'S POSTS WITH UNREAD REPLIES START -->
   <div
     class="container"
-    *ngIf="postsWithNewReplies.length > 0 && !caloricIntake && !caloricDeficit && !newprogressImages"
+    *ngIf="postsWithNewReplies.length > 0 && !caloricIntake && !caloricDeficit && !newprogressImages && !newBodyMeasurement && !bodyMeasurement"
   >
     <h3 class="text-center">Your Posts with New Replies:</h3>
     <table
