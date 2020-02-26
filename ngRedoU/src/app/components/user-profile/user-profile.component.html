@@ -1,11 +1,19 @@
-<!-- ADD WEIGHT YOU SHOULD LOSE/GAIN PER DAY
-ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
-
+<!-- ADD WEIGHT YOU SHOULD LOSE/GAIN PER DAY -->
 
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
   <!-- BASIC USER INFO START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
-    <h3 class="text-center">User Info:</h3>
+  <div
+    class="container"
+    *ngIf="
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
+  >
+    <h3 class="text-center">User Info</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -30,20 +38,28 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         </tr>
       </tbody>
     </table>
+    <br />
   </div>
   <!-- BASIC USER INFO END -->
-
-  <br />
 
   <!-- USER'S AVATAR START -->
   <div
     class="container"
-    *ngIf="bmiAvatar && currentAvatar && !caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement"
+    *ngIf="
+      bmiAvatar &&
+      currentAvatar &&
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
   >
     <div class="row">
       <div class="col-2"></div>
       <div class="col-4">
-        <h5 class="text-center">BMI Avatar:</h5>
+        <h5 class="text-center">BMI Avatar</h5>
         <h5 class="text-center">{{ bmiAvatar.bodyType }}</h5>
         <img
           [src]="bmiAvatar.avatarUrl"
@@ -52,7 +68,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         />
       </div>
       <div class="col-4">
-        <h5 class="text-center">Behavior-Based Avatar:</h5>
+        <h5 class="text-center">Behavior-Based Avatar</h5>
         <h5 class="text-center">{{ currentAvatar.bodyType }}</h5>
         <img
           [src]="currentAvatar.avatarUrl"
@@ -63,9 +79,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       <div class="col-2"></div>
     </div>
   </div>
-  <!-- USER'S AVATAR END -->
-
   <br />
+  <!-- USER'S AVATAR END -->
 
   <!-- USER'S CALORIC PERFORMANCE START -->
   <div
@@ -73,8 +88,14 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
     *ngIf="
       user.userDailyExerciseCaloricDeficits.length > 0 &&
       !caloricIntake &&
-      !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
-    <h3 class="text-center">Caloric Performance:</h3>
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
+  >
+    <h3 class="text-center">Caloric Performance</h3>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -167,13 +188,22 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       </tbody>
     </table>
   </div>
+  <br />
   <!-- USER'S CALORIC PERFORMANCE END -->
 
-  <br>
-
   <!-- USER'S CALORIC INTAKE START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
-    <h3 class="text-center">Caloric Intake:</h3>
+  <div
+    class="container"
+    *ngIf="
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
+  >
+    <h3 class="text-center">Caloric Intake</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricRecord()">
         New Caloric Intake Record
@@ -223,12 +253,13 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         </tr>
       </tbody>
     </table>
+    <br />
   </div>
   <!-- USER'S CALORIC INTAKE END -->
 
   <!-- USER ADD CALORIC INTAKE START -->
   <div class="container" *ngIf="caloricIntake && newCalorieRecord === true">
-    <h3 class="text-center">New Caloric Intake:</h3>
+    <h3 class="text-center">New Caloric Intake</h3>
     <form name="addCaloricIntakeForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -318,7 +349,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
 
   <!-- USER UPDATE CALORIC INTAKE START -->
   <div class="container" *ngIf="caloricIntake && newCalorieRecord === false">
-    <h3 class="text-center">Edit Caloric Intake:</h3>
+    <h3 class="text-center">Edit Caloric Intake</h3>
     <form name="updateCaloricIntakeForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -406,11 +437,19 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
   </div>
   <!-- USER UPDATE CALORIC INTAKE END -->
 
-  <br />
-
   <!-- USER'S CALORIES BURNED START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
-    <h3 class="text-center">Calories Burned:</h3>
+  <div
+    class="container"
+    *ngIf="
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
+  >
+    <h3 class="text-center">Calories Burned</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricBurnRecord()">
         New Caloric Deficit Record
@@ -458,6 +497,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         </tr>
       </tbody>
     </table>
+    <br />
   </div>
   <!-- USER'S CALORIES BURNED END -->
 
@@ -466,7 +506,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
     class="container"
     *ngIf="caloricDeficit && newCalorieBurnRecord === true"
   >
-  <h3 class="text-center">New Calories Burned:</h3>
+    <h3 class="text-center">New Calories Burned</h3>
     <form name="addCaloricDeficitForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -541,7 +581,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
     class="container"
     *ngIf="caloricDeficit && newCalorieBurnRecord === false"
   >
-  <h3 class="text-center">Edit Calories Burned:</h3>
+    <h3 class="text-center">Edit Calories Burned</h3>
     <form name="addCaloricDeficitForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -611,64 +651,100 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
   </div>
   <!-- USER UPDATE CALORIES BURNED END -->
 
-  <br />
-
   <!-- USER'S PROGRESS IMAGES START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
-    <h3 class="text-center">Progress Images:</h3>
-    <h3 class="text-center"><button class="btn btn-success" (click)="addAProgressImage()">
-      New Progress Images
-    </button></h3>
+  <div
+    class="container"
+    *ngIf="
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
+  >
+    <h3 class="text-center">Progress Images</h3>
+    <h3 class="text-center">
+      <button class="btn btn-success" (click)="addAProgressImage()">
+        New Progress Images
+      </button>
+    </h3>
     <div *ngIf="userImagesByDate">
       <div *ngFor="let d of userImagesByDate | arraySort: 'date':true">
-      <div *ngIf="d.image.length === 2" class="row">
-        <div class="col-2"></div>
+        <div *ngIf="d.image.length === 2" class="row">
+          <div class="col-2"></div>
           <div class="col-4" *ngFor="let img of d.image">
-            <h6 class="text-center"><strong>{{ d.date | date: "shortDate" }}</strong></h6>
+            <h6 class="text-center">
+              <strong>{{ d.date | date: "shortDate" }}</strong>
+            </h6>
             <img
               id="progressImg"
               [src]="img.imageUrl"
               alt="Progress Image: {{ d.date | date: 'shortDate' }}"
               class="img img-fluid"
             />
-            <button class="btn btn-sm btn-warning" style="float: left" (click)="setUpdateAProgressImage(img)">
+            <button
+              class="btn btn-sm btn-warning"
+              style="float: left"
+              (click)="setUpdateAProgressImage(img)"
+            >
               Edit
             </button>
-            <button class="btn btn-sm btn-danger" style="float: right"(click)="deleteAProgressImage(img)">
+            <button
+              class="btn btn-sm btn-danger"
+              style="float: right"
+              (click)="deleteAProgressImage(img)"
+            >
               Delete
             </button>
           </div>
-        <div class="col-2"></div>
-      </div>
+          <div class="col-2"></div>
+        </div>
 
-      <div *ngIf="d.image.length < 2" class="row">
-        <div class="col-2"></div>
+        <div *ngIf="d.image.length < 2" class="row">
+          <div class="col-2"></div>
           <div class="col-8" *ngFor="let img of d.image">
-            <h6 class="text-center"><strong>{{ d.date | date: "shortDate" }}</strong></h6>
+            <h6 class="text-center">
+              <strong>{{ d.date | date: "shortDate" }}</strong>
+            </h6>
             <img
               id="progressImg"
               [src]="img.imageUrl"
               alt="Progress Image: {{ d.date | date: 'shortDate' }}"
               class="img img-fluid"
             />
-            <button class="btn btn-sm btn-warning" style="float: left" (click)="setUpdateAProgressImage(img)">
+            <button
+              class="btn btn-sm btn-warning"
+              style="float: left"
+              (click)="setUpdateAProgressImage(img)"
+            >
               Edit
             </button>
-            <button class="btn btn-sm btn-danger" style="float: right"(click)="deleteAProgressImage(img)">
+            <button
+              class="btn btn-sm btn-danger"
+              style="float: right"
+              (click)="deleteAProgressImage(img)"
+            >
               Delete
             </button>
           </div>
-        <div class="col-2"></div>
+          <div class="col-2"></div>
+        </div>
       </div>
+      <br />
     </div>
-    <br>
-    </div>
+    <br />
   </div>
   <!-- USER'S PROGRESS IMAGES END -->
 
   <!-- USER ADD PROGRESS IMAGES START -->
-  <div class="container" *ngIf="progressImageFront && progressImageSide && newprogressImages === true">
-    <h3 class="text-center">New Progress Images:</h3>
+  <div
+    class="container"
+    *ngIf="
+      progressImageFront && progressImageSide && newprogressImages === true
+    "
+  >
+    <h3 class="text-center">New Progress Image(s)</h3>
     <form name="addProgressImagesForm">
       <div class="form-row">
         <div class="col-4"></div>
@@ -685,7 +761,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         </div>
         <div class="col-4"></div>
       </div>
-      <br>
+      <br />
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -718,7 +794,11 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
             type="submit"
             class="btn btn-secondary"
             style="float:left;"
-            (click)="newprogressImages = false; progressImageFront = null; progressImageSide = null"
+            (click)="
+              newprogressImages = false;
+              progressImageFront = null;
+              progressImageSide = null
+            "
             [routerLink]="['/users']"
           >
             Cancel
@@ -758,7 +838,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         </div>
         <div class="col-4"></div>
       </div>
-      <br>
+      <br />
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-8">
@@ -803,11 +883,19 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
   </div>
   <!-- USER UPDATE PROGRESS IMAGES END -->
 
-  <br />
-
   <!-- USER'S BODY MEASUREMENTS START -->
-  <div class="container" *ngIf="!caloricIntake && !caloricDeficit && !newprogressImages && !progressImage && !newBodyMeasurement && !bodyMeasurement">
-    <h3 class="text-center">Body Measurements:</h3>
+  <div
+    class="container"
+    *ngIf="
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
+  >
+    <h3 class="text-center">Body Measurements</h3>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addNewBodyMeasurementRecord()">
         New Body Measurement
@@ -1015,47 +1103,51 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         </tbody>
       </table>
     </div>
+    <br />
   </div>
   <!-- USER'S BODY MEASUREMENTS END -->
 
   <!-- USER ADD BODY MEASUREMENTS START -->
   <div class="container" *ngIf="bodyMeasurement && newBodyMeasurement === true">
-    <h3 class="text-center">New Body Measurement:</h3>
-    <h5 class="text-center"><small style="color: red;">* Required Fields</small></h5>
+    <h3 class="text-center">New Body Measurement</h3>
+    <h5 class="text-center">
+      <small style="color: red;">* Required Fields</small>
+    </h5>
     <div class="row">
       <div class="col-2"></div>
       <div class="col-4">
-    <div class="form-check form-check-inline">
-      <input
-      class="form-check-input"
-      type="radio"
-      name="system"
-      id="system"
-      value="US"
-      [(ngModel)]="measurementSystem"
-      />
-      <label class="form-check-label" for="system">US</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input
-      class="form-check-input"
-      type="radio"
-      name="system"
-      id="system"
-      value="metric"
-      [(ngModel)]="measurementSystem"
-      />
-      <label class="form-check-label" for="system">Metric</label>
-    </div>
-    </div>
-    <div class="col-6"></div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="system"
+            id="system"
+            value="US"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="system">US</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="system"
+            id="system"
+            value="metric"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="system">Metric</label>
+        </div>
+      </div>
+      <div class="col-6"></div>
     </div>
     <!-- METRIC SELECTED -->
     <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'metric'">
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <small style="color: red;">*</small
+          ><label for="dateMeasured">Date Measured</label>
           <input
             type="date"
             class="form-control"
@@ -1065,7 +1157,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="heightMM">Height (mm)</label>
+          <small style="color: red;">*</small
+          ><label for="heightMM">Height (mm)</label>
           <input
             type="number"
             class="form-control"
@@ -1079,7 +1172,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="weightKg">Weight (kg)</label>
+          <small style="color: red;">*</small
+          ><label for="weightKg">Weight (kg)</label>
           <input
             type="number"
             class="form-control"
@@ -1089,7 +1183,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="waistMM">Waist (mm)</label>
+          <small style="color: red;">*</small
+          ><label for="waistMM">Waist (mm)</label>
           <input
             type="number"
             class="form-control"
@@ -1205,7 +1300,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <small style="color: red;">*</small
+          ><label for="dateMeasured">Date Measured</label>
           <input
             type="date"
             class="form-control"
@@ -1215,7 +1311,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="heightMM">Height (in)</label>
+          <small style="color: red;">*</small
+          ><label for="heightMM">Height (in)</label>
           <input
             type="number"
             class="form-control"
@@ -1229,7 +1326,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="weightKg">Weight (lbs)</label>
+          <small style="color: red;">*</small
+          ><label for="weightKg">Weight (lbs)</label>
           <input
             type="number"
             class="form-control"
@@ -1239,7 +1337,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="waistMM">Waist (in)</label>
+          <small style="color: red;">*</small
+          ><label for="waistMM">Waist (in)</label>
           <input
             type="number"
             class="form-control"
@@ -1353,43 +1452,51 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
   <!-- USER ADD BODY MEASUREMENTS END -->
 
   <!-- USER UPDATE BODY MEASUREMENTS START -->
-  <div class="container" *ngIf="bodyMeasurement && newBodyMeasurement === false">
-    <h3 class="text-center">Edit Body Measurement:</h3>
-    <h5 class="text-center"><small style="color: red;">* Required Fields</small></h5>
+  <div
+    class="container"
+    *ngIf="bodyMeasurement && newBodyMeasurement === false"
+  >
+    <h3 class="text-center">Edit Body Measurement</h3>
+    <h5 class="text-center">
+      <small style="color: red;">* Required Fields</small>
+    </h5>
     <div class="row">
       <div class="col-2"></div>
       <div class="col-4">
-    <div class="form-check form-check-inline">
-      <input
-      class="form-check-input"
-      type="radio"
-      name="system"
-      id="system"
-      value="US"
-      [(ngModel)]="measurementSystem"
-      />
-      <label class="form-check-label" for="system">US</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input
-      class="form-check-input"
-      type="radio"
-      name="system"
-      id="system"
-      value="metric"
-      [(ngModel)]="measurementSystem"
-      />
-      <label class="form-check-label" for="system">Metric</label>
-    </div>
-    </div>
-    <div class="col-6"></div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="system"
+            id="system"
+            value="US"
+            (click)="convertBodyMeasurementsToUS()"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="system">US</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="system"
+            id="system"
+            value="metric"
+            (click)="convertBodyMeasurementsToMetric()"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="system">Metric</label>
+        </div>
+      </div>
+      <div class="col-6"></div>
     </div>
     <!-- METRIC SELECTED -->
-    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'metric'">
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem === 'metric'">
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <small style="color: red;">*</small
+          ><label for="dateMeasured">Date Measured</label>
           <input
             type="date"
             class="form-control"
@@ -1399,7 +1506,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="heightMM">Height (mm)</label>
+          <small style="color: red;">*</small
+          ><label for="heightMM">Height (mm)</label>
           <input
             type="number"
             class="form-control"
@@ -1413,7 +1521,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="weightKg">Weight (kg)</label>
+          <small style="color: red;">*</small
+          ><label for="weightKg">Weight (kg)</label>
           <input
             type="number"
             class="form-control"
@@ -1423,7 +1532,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="waistMM">Waist (mm)</label>
+          <small style="color: red;">*</small
+          ><label for="waistMM">Waist (mm)</label>
           <input
             type="number"
             class="form-control"
@@ -1535,11 +1645,12 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
     </form>
 
     <!-- US SELECTED -->
-    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'US'">
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem === 'US'">
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <small style="color: red;">*</small
+          ><label for="dateMeasured">Date Measured</label>
           <input
             type="date"
             class="form-control"
@@ -1549,7 +1660,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="heightMM">Height (in)</label>
+          <small style="color: red;">*</small
+          ><label for="heightMM">Height (in)</label>
           <input
             type="number"
             class="form-control"
@@ -1563,7 +1675,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="weightKg">Weight (lbs)</label>
+          <small style="color: red;">*</small
+          ><label for="weightKg">Weight (lbs)</label>
           <input
             type="number"
             class="form-control"
@@ -1573,7 +1686,8 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="waistMM">Waist (in)</label>
+          <small style="color: red;">*</small
+          ><label for="waistMM">Waist (in)</label>
           <input
             type="number"
             class="form-control"
@@ -1686,14 +1800,19 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
   </div>
   <!-- USER UPDATE BODY MEASUREMENTS END -->
 
-  <br />
-
   <!-- USER'S POSTS WITH UNREAD REPLIES START -->
   <div
     class="container"
-    *ngIf="postsWithNewReplies.length > 0 && !caloricIntake && !caloricDeficit && !newprogressImages && !newBodyMeasurement && !bodyMeasurement"
+    *ngIf="
+      postsWithNewReplies.length > 0 &&
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !newBodyMeasurement &&
+      !bodyMeasurement
+    "
   >
-    <h3 class="text-center">Your Posts with New Replies:</h3>
+    <h3 class="text-center">Posts with New Replies</h3>
     <table
       class="table table-bordered table-hover table-striped"
       *ngFor="let post of postsWithNewReplies | arraySort: 'dateCreated':true"
@@ -1718,7 +1837,9 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
         <tr
           *ngFor="
             let reply of post.originalPostReplies
-              | arraySort: 'dateCreated':false">
+              | arraySort: 'dateCreated':false
+          "
+        >
           <td *ngIf="reply.unread === true">
             <strong>Reply by:</strong> {{ reply.replyUser.username }}
           </td>
@@ -1739,7 +1860,6 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
     </table>
   </div>
   <!-- USER'S POSTS WITH UNREAD REPLIES END -->
-
 </div>
 
 <!-- ADMIN STUFF -->
@@ -1759,7 +1879,7 @@ ADD ABILITY TO CREATE UPDATE DELETE BODY MEASUREMENTS -->
     </div>
   </div>
   <br />
-  <h3 class="text-center">User Administration:</h3>
+  <h3 class="text-center">User Administration</h3>
   <table class="table table-bordered table-hover table-striped">
     <thead class="thead-dark">
       <tr>

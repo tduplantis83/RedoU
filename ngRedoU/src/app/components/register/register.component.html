@@ -234,6 +234,9 @@
   <!-- INTIAL BODY MEASUREMENTS SET START -->
   <div class="container" *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === true">
     <h5 class="text-center">Body Measurements:</h5>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-4">
     <div class="form-check form-check-inline">
       <input
       class="form-check-input"
@@ -256,8 +259,11 @@
       />
       <label class="form-check-label" for="system">Metric</label>
     </div>
+    </div>
+    <div class="col-6"></div>
+    </div>
     <!-- METRIC SELECTED -->
-    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'metric'">
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem === 'metric'">
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -406,7 +412,7 @@
     </form>
 
     <!-- US SELECTED -->
-    <form name="bodyMeasurementsForm" *ngIf="measurementSystem == 'US'">
+    <form name="bodyMeasurementsForm" *ngIf="measurementSystem === 'US'">
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
