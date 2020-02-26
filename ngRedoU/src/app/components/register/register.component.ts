@@ -222,6 +222,7 @@ setCurrentAvatar() {
 cancelRegistration() {
   this.usersvc.deleteUser(this.newUser.id).subscribe(
     data => {
+      this.authSvc.logout();
       this.router.navigateByUrl('/home');
     },
     err => {

@@ -2,18 +2,31 @@
 <br />
 <div class="container-fluid">
   <h3 class="text-center text-primary">New User Registration</h3>
-  <h5 class="text-center"><small style="color: red;">* Required Fields</small></h5>
+  <h5 class="text-center">
+    <small style="color: red;">* Required Fields</small>
+  </h5>
+
+  <!-- USER'S BASIC INFO START -->
   <div class="container" *ngIf="loggedIn === false">
     <br />
     <h6 class="text-center" *ngIf="error === true" style="color: red;">
-      * ERROR: An account with that Username &/or Password may already exist *
+      * An account with that Username &/or Password may already exist *
+    </h6>
+
+    <h6 class="text-center" *ngIf="error === true" style="color: red;">
+      * OR *
+    </h6>
+
+    <h6 class="text-center" *ngIf="error === true" style="color: red;">
+      * A REQUIRED field may not have been completed *
     </h6>
     <form name="registerForm">
       <h5 class="text-center">Login Credentials:</h5>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="username">Username</label>
+          <small style="color: red;">*</small
+          ><label for="username">Username</label>
           <input
             type="text"
             class="form-control"
@@ -23,7 +36,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="password">Password</label>
+          <small style="color: red;">*</small
+          ><label for="password">Password</label>
           <input
             type="password"
             class="form-control"
@@ -47,7 +61,8 @@
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="firstName">First Name</label>
+          <small style="color: red;">*</small
+          ><label for="firstName">First Name</label>
           <input
             type="text"
             class="form-control"
@@ -57,7 +72,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="lastName">Last Name</label>
+          <small style="color: red;">*</small
+          ><label for="lastName">Last Name</label>
           <input
             type="text"
             class="form-control"
@@ -81,7 +97,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="birthday">Birthday</label>
+          <small style="color: red;">*</small
+          ><label for="birthday">Birthday</label>
           <input
             type="date"
             class="form-control"
@@ -103,7 +120,8 @@
               value="M"
               [(ngModel)]="newUser.sex"
             />
-            <small style="color: red;">*</small><label class="form-check-label" for="sex">Male</label>
+            <small style="color: red;">*</small
+            ><label class="form-check-label" for="sex">Male</label>
           </div>
           <div class="form-check form-check-inline">
             <input
@@ -113,7 +131,8 @@
               value="F"
               [(ngModel)]="newUser.sex"
             />
-            <small style="color: red;">*</small><label class="form-check-label" for="sex">Female</label>
+            <small style="color: red;">*</small
+            ><label class="form-check-label" for="sex">Female</label>
           </div>
         </div>
         <div class="col-6"></div>
@@ -145,11 +164,14 @@
       </div>
     </form>
   </div>
+  <!-- USER'S BASIC INFO END -->
 
   <!-- USER'S GOAL START -->
   <div class="container" *ngIf="loggedIn === true && ucgChosen === false">
-    <h5 class="text-center"><small style="color: red;">*</small>Fitness Goal:</h5>
-    <br>
+    <h5 class="text-center">
+      <small style="color: red;">*</small>Fitness Goal:
+    </h5>
+    <br />
     <form name="currGoalForm" id="currGoalForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -160,7 +182,7 @@
             id="goal"
             [(ngModel)]="userCurrGoal.goal"
           >
-          <option selected diabled>Choose a Fitness Goal</option>
+            <option selected diabled>Choose a Fitness Goal</option>
             <option
               [ngValue]="g"
               name="goal"
@@ -201,15 +223,20 @@
   <!-- USER'S GOAL END -->
 
   <!-- CHOOSE AN AVATAR SET START -->
-  <div class="container" *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === false">
-    <h5 class="text-center"><small style="color: red;">*</small>Choose a Set of Avatars</h5>
+  <div
+    class="container"
+    *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === false"
+  >
+    <h5 class="text-center">
+      <small style="color: red;">*</small>Choose a Set of Avatars
+    </h5>
     <h6 class="text-center">
       <small
         >(Avatar body type will change daily based upon your caloric
         intake/deficit & overall fitness goal)</small
       >
     </h6>
-    <br>
+    <br />
     <div class="row" *ngFor="let ga of groupedAvatars | arraySort: 'id':false">
       <div class="col-1"></div>
       <div class="col-2" *ngFor="let avatar of ga; let i = index">
@@ -221,7 +248,11 @@
           width="130px"
           height="229px"
         />
-        <button class="btn btn-success btn-sm btn-block" *ngIf="i == 2" (click)="createUserAvatar(avatar.avatarGroup)">
+        <button
+          class="btn btn-success btn-sm btn-block"
+          *ngIf="i == 2"
+          (click)="createUserAvatar(avatar.avatarGroup)"
+        >
           Choose Avatar Set
         </button>
         <br />
@@ -232,42 +263,46 @@
   <!-- CHOOSE AN AVATAR SET END -->
 
   <!-- INTIAL BODY MEASUREMENTS SET START -->
-  <div class="container" *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === true">
+  <div
+    class="container"
+    *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === true"
+  >
     <h5 class="text-center">Body Measurements:</h5>
     <div class="row">
       <div class="col-2"></div>
       <div class="col-4">
-    <div class="form-check form-check-inline">
-      <input
-      class="form-check-input"
-      type="radio"
-      name="system"
-      id="system"
-      value="US"
-      [(ngModel)]="measurementSystem"
-      />
-      <label class="form-check-label" for="system">US</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input
-      class="form-check-input"
-      type="radio"
-      name="system"
-      id="system"
-      value="metric"
-      [(ngModel)]="measurementSystem"
-      />
-      <label class="form-check-label" for="system">Metric</label>
-    </div>
-    </div>
-    <div class="col-6"></div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="system"
+            id="system"
+            value="US"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="system">US</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="system"
+            id="system"
+            value="metric"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="system">Metric</label>
+        </div>
+      </div>
+      <div class="col-6"></div>
     </div>
     <!-- METRIC SELECTED -->
     <form name="bodyMeasurementsForm" *ngIf="measurementSystem === 'metric'">
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <small style="color: red;">*</small
+          ><label for="dateMeasured">Date Measured</label>
           <input
             type="date"
             class="form-control"
@@ -277,7 +312,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="heightMM">Height (mm)</label>
+          <small style="color: red;">*</small
+          ><label for="heightMM">Height (mm)</label>
           <input
             type="number"
             class="form-control"
@@ -291,7 +327,8 @@
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="weightKg">Weight (kg)</label>
+          <small style="color: red;">*</small
+          ><label for="weightKg">Weight (kg)</label>
           <input
             type="number"
             class="form-control"
@@ -301,7 +338,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="waistMM">Waist (mm)</label>
+          <small style="color: red;">*</small
+          ><label for="waistMM">Waist (mm)</label>
           <input
             type="number"
             class="form-control"
@@ -416,7 +454,8 @@
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="dateMeasured">Date Measured</label>
+          <small style="color: red;">*</small
+          ><label for="dateMeasured">Date Measured</label>
           <input
             type="date"
             class="form-control"
@@ -426,7 +465,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="heightMM">Height (in)</label>
+          <small style="color: red;">*</small
+          ><label for="heightMM">Height (in)</label>
           <input
             type="number"
             class="form-control"
@@ -440,7 +480,8 @@
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="weightKg">Weight (lbs)</label>
+          <small style="color: red;">*</small
+          ><label for="weightKg">Weight (lbs)</label>
           <input
             type="number"
             class="form-control"
@@ -450,7 +491,8 @@
           />
         </div>
         <div class="col-4">
-          <small style="color: red;">*</small><label for="waistMM">Waist (in)</label>
+          <small style="color: red;">*</small
+          ><label for="waistMM">Waist (in)</label>
           <input
             type="number"
             class="form-control"
@@ -561,7 +603,6 @@
     </form>
   </div>
   <!-- INTIAL BODY MEASUREMENTS SET END -->
-
 </div>
 <br />
 <br />

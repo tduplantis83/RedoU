@@ -8,7 +8,10 @@ Built by:
 
 The purpose of this application is to help users get into shape in a fun, social, non-threatening way.
 
-New Users begin by registering on the website. First they enter the following:
+
+#### Registration:
+
+1. New Users begin by registering on the website. First they enter the following:
 * Username
 * Password
 * First Name
@@ -16,17 +19,18 @@ New Users begin by registering on the website. First they enter the following:
 * Email Address (optional)
 * Birthday
 * Sex
+After this point, the user is technically registered and logged in; however, they lack any other information and it is therefore suggested that to complete registration, they must complete steps 2-4. If the User does NOT complete these final steps, they may choose to Cancel Registration, which will delete them, log them out, and redirect them to the application home page.
 
-Next, the user will be prompted to choose a primary goal:
+2. The user will be prompted to choose a primary goal:
 * Weight Loss
 * Muscle Gain
 * General Fitness
 
-Then users will be asked to choose a SET of Avatars based upon the sex they chose during registration.
+3. Users will be asked to choose a SET of Avatars based upon the sex they chose during registration.
 * Initially the selection of avatars is limited to 3 male and 3 female options, which I created (with each body type - thin, average, fat, athletic, & muscular) using Bitmoji.
-* After project completion, I hope to submit the application to Bitmoji, to allow users to create a set of fully personalized avatars.
+* FUTURE IMPLEMENTATION - After project completion, I hope to submit the application to Bitmoji, to allow users to create a set of fully personalized avatars.
 
-Finally, users will input their initial body measurements in US or Metric.
+4. Finally, users will input their initial body measurements in US or Metric.
 * Height
 * Weight
 * Waist
