@@ -1,5 +1,5 @@
 import { PostReplyService } from './../../services/post-reply.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, PipeTransform } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
 import { Avatar } from 'src/app/models/avatar';
@@ -18,6 +18,8 @@ import { DailyExerciseCaloricDeficitService } from 'src/app/services/daily-exerc
 import { ImageService } from 'src/app/services/image.service';
 import { BodyMeasurementMetricService } from 'src/app/services/body-measurement-metric.service';
 import { BodyMeasurementMetric } from 'src/app/models/body-measurement-metric';
+import { DecimalPipe } from '@angular/common';
+
 
 
 @Component({
@@ -35,6 +37,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private dailyCalorieBurnSvc: DailyExerciseCaloricDeficitService,
     private mealTypeSvc: MealTypeService,
     private measurementConverterPipe: MeasurementConverterPipe,
+    private decimalPipe: DecimalPipe,
     private imgSvc: ImageService,
     private bodyMeasurementSvc: BodyMeasurementMetricService
   ) {
@@ -368,77 +371,99 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   createBodyMeasurement() {
-    // if US selected, convert to metric first
-  if (this.measurementSystem === 'US') {
-    this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
-    this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
-    this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'in', 'mm');
+    if (this.measurementSystem === 'US') {
+      this.convertBodyMeasurementsToMetric();
+    }
 
-    if (this.bodyMeasurement.neckMM !== null) {
-      this.bodyMeasurement.neckMM = this.measurementConverterPipe.transform(this.bodyMeasurement.neckMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.shouldersMM !== null) {
-      this.bodyMeasurement.shouldersMM = this.measurementConverterPipe.transform(this.bodyMeasurement.shouldersMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.chestMM !== null) {
-      this.bodyMeasurement.chestMM = this.measurementConverterPipe.transform(this.bodyMeasurement.chestMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.bicepMM !== null) {
-      this.bodyMeasurement.bicepMM = this.measurementConverterPipe.transform(this.bodyMeasurement.bicepMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.hipsMM !== null) {
-      this.bodyMeasurement.hipsMM = this.measurementConverterPipe.transform(this.bodyMeasurement.hipsMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.thighMM !== null) {
-      this.bodyMeasurement.thighMM = this.measurementConverterPipe.transform(this.bodyMeasurement.thighMM, 'in', 'mm');
-    }
-  }
-
-  this.bodyMeasurementSvc.createBodyMeasurement(this.bodyMeasurement).subscribe(
-    data => {
-      this.newBodyMeasurement = false;
-      this.bodyMeasurement = null;
-      this.router.navigateByUrl('/users');
-    },
-    err => {
-      console.error('In User Component createBodyMeasurement Error');
-    }
-    );
+    this.bodyMeasurementSvc.createBodyMeasurement(this.bodyMeasurement).subscribe(
+      data => {
+        this.newBodyMeasurement = false;
+        this.bodyMeasurement = null;
+        this.router.navigateByUrl('/users');
+      },
+      err => {
+        console.error('In User Component createBodyMeasurement Error');
+      }
+      );
   }
 
   setUpdateBodyMeasurmentRecord(toUpdate: BodyMeasurementMetric) {
-    this.bodyMeasurement = Object.assign({}, toUpdate);
+    if (this.measurementSystem === 'metric') {
+      this.bodyMeasurement = Object.assign({}, toUpdate);
+    }
+    else if (this.measurementSystem === 'US') {
+      this.bodyMeasurement = Object.assign({}, toUpdate);
+      this.convertBodyMeasurementsToUS();
+    }
+  }
+
+  convertBodyMeasurementsToUS() {
+      this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'mm', 'in');
+      this.bodyMeasurement.heightMM = this.decimalPipe.transform(this.bodyMeasurement.heightMM, '1.0-2');
+      this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'kg', 'lb');
+      this.bodyMeasurement.weightKg = this.decimalPipe.transform(this.bodyMeasurement.weightKg, '1.0-2');
+      this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'mm', 'in');
+      this.bodyMeasurement.waistMM = this.decimalPipe.transform(this.bodyMeasurement.waistMM, '1.0-2');
+
+      if (this.bodyMeasurement.neckMM !== null) {
+        this.bodyMeasurement.neckMM = this.measurementConverterPipe.transform(this.bodyMeasurement.neckMM, 'mm', 'in');
+        this.bodyMeasurement.neckMM = this.decimalPipe.transform(this.bodyMeasurement.neckMM, '1.0-2');
+      }
+      if (this.bodyMeasurement.shouldersMM !== null) {
+        this.bodyMeasurement.shouldersMM = this.measurementConverterPipe.transform(this.bodyMeasurement.shouldersMM, 'mm', 'in');
+        this.bodyMeasurement.shouldersMM = this.decimalPipe.transform(this.bodyMeasurement.shouldersMM, '1.0-2');
+      }
+      if (this.bodyMeasurement.chestMM !== null) {
+        this.bodyMeasurement.chestMM = this.measurementConverterPipe.transform(this.bodyMeasurement.chestMM, 'mm', 'in');
+        this.bodyMeasurement.chestMM = this.decimalPipe.transform(this.bodyMeasurement.chestMM, '1.0-2');
+      }
+      if (this.bodyMeasurement.bicepMM !== null) {
+        this.bodyMeasurement.bicepMM = this.measurementConverterPipe.transform(this.bodyMeasurement.bicepMM, 'mm', 'in');
+        this.bodyMeasurement.bicepMM = this.decimalPipe.transform(this.bodyMeasurement.bicepMM, '1.0-2');
+      }
+      if (this.bodyMeasurement.hipsMM !== null) {
+        this.bodyMeasurement.hipsMM = this.measurementConverterPipe.transform(this.bodyMeasurement.hipsMM, 'mm', 'in');
+        this.bodyMeasurement.hipsMM = this.decimalPipe.transform(this.bodyMeasurement.hipsMM, '1.0-2');
+      }
+      if (this.bodyMeasurement.thighMM !== null) {
+        this.bodyMeasurement.thighMM = this.measurementConverterPipe.transform(this.bodyMeasurement.thighMM, 'mm', 'in');
+        this.bodyMeasurement.thighMM = this.decimalPipe.transform(this.bodyMeasurement.thighMM, '1.0-2');
+      }
+  }
+
+  convertBodyMeasurementsToMetric() {
+      this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
+      this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
+      this.bodyMeasurement.weightKg = this.decimalPipe.transform(this.bodyMeasurement.weightKg, '1.0-2');
+      this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'in', 'mm');
+
+      if (this.bodyMeasurement.neckMM !== null) {
+        this.bodyMeasurement.neckMM = this.measurementConverterPipe.transform(this.bodyMeasurement.neckMM, 'in', 'mm');
+      }
+      if (this.bodyMeasurement.shouldersMM !== null) {
+        this.bodyMeasurement.shouldersMM = this.measurementConverterPipe.transform(this.bodyMeasurement.shouldersMM, 'in', 'mm');
+      }
+      if (this.bodyMeasurement.chestMM !== null) {
+        this.bodyMeasurement.chestMM = this.measurementConverterPipe.transform(this.bodyMeasurement.chestMM, 'in', 'mm');
+      }
+      if (this.bodyMeasurement.bicepMM !== null) {
+        this.bodyMeasurement.bicepMM = this.measurementConverterPipe.transform(this.bodyMeasurement.bicepMM, 'in', 'mm');
+      }
+      if (this.bodyMeasurement.hipsMM !== null) {
+        this.bodyMeasurement.hipsMM = this.measurementConverterPipe.transform(this.bodyMeasurement.hipsMM, 'in', 'mm');
+      }
+      if (this.bodyMeasurement.thighMM !== null) {
+        this.bodyMeasurement.thighMM = this.measurementConverterPipe.transform(this.bodyMeasurement.thighMM, 'in', 'mm');
+      }
   }
 
   updateBodyMeasurmentRecord() {
-      // if US selected, convert to metric first
-  if (this.measurementSystem === 'US') {
-    this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
-    this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
-    this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'in', 'mm');
-
-    if (this.bodyMeasurement.neckMM !== null) {
-      this.bodyMeasurement.neckMM = this.measurementConverterPipe.transform(this.bodyMeasurement.neckMM, 'in', 'mm');
+    if (this.measurementSystem === 'US') {
+      this.convertBodyMeasurementsToMetric();
     }
-    if (this.bodyMeasurement.shouldersMM !== null) {
-      this.bodyMeasurement.shouldersMM = this.measurementConverterPipe.transform(this.bodyMeasurement.shouldersMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.chestMM !== null) {
-      this.bodyMeasurement.chestMM = this.measurementConverterPipe.transform(this.bodyMeasurement.chestMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.bicepMM !== null) {
-      this.bodyMeasurement.bicepMM = this.measurementConverterPipe.transform(this.bodyMeasurement.bicepMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.hipsMM !== null) {
-      this.bodyMeasurement.hipsMM = this.measurementConverterPipe.transform(this.bodyMeasurement.hipsMM, 'in', 'mm');
-    }
-    if (this.bodyMeasurement.thighMM !== null) {
-      this.bodyMeasurement.thighMM = this.measurementConverterPipe.transform(this.bodyMeasurement.thighMM, 'in', 'mm');
-    }
-  }
 
     // tslint:disable-next-line: max-line-length
-  if (confirm('Are you sure you want to UPDATE the Body Measurement for ' + this.bodyMeasurement.dateCreated + '?')) {
+    if (confirm('Are you sure you want to UPDATE the Body Measurement for ' + this.bodyMeasurement.dateMeasured + '?')) {
     this.bodyMeasurementSvc.updateBodyMeasurement(this.bodyMeasurement).subscribe(
       data => {
         this.bodyMeasurement = null;
@@ -451,7 +476,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   deleteBodyMeasurmentRecord(toDelete: Image) {
     // tslint:disable-next-line: max-line-length
-    if (confirm('Are you sure you want to DELETE the Body Measurement for ' + toDelete.dateCreated + '?')) {
+    if (confirm('Are you sure you want to DELETE the Body Measurement for ' + toDelete.dateMeasured + '?')) {
       this.bodyMeasurementSvc.deleteBodyMeasurement(toDelete.id).subscribe(
         data => {
 
