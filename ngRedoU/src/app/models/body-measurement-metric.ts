@@ -6,6 +6,7 @@ export class BodyMeasurementMetric {
   dateUpdated: Date;
   heightMM: number;
   weightKg: number;
+  goalWeightKg: number;
   waistMM: number;
   neckMM: number;
   shouldersMM: number;
@@ -21,6 +22,7 @@ export class BodyMeasurementMetric {
     dateUpdated?: Date,
     heightMM?: number,
     weightKg?: number,
+    goalWeightKg?: number,
     waistMM?: number,
     neckMM?: number,
     shouldersMM?: number,
@@ -35,6 +37,7 @@ export class BodyMeasurementMetric {
     this.dateUpdated = dateUpdated;
     this.heightMM = heightMM;
     this.weightKg = weightKg;
+    this.goalWeightKg = goalWeightKg;
     this.waistMM = waistMM;
     this.neckMM = neckMM;
     this.shouldersMM = shouldersMM;

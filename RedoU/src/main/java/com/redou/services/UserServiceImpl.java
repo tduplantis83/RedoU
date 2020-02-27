@@ -14,6 +14,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo repo;
+	
+	@Autowired
+	private AuthService authSvc;
 
 	@Override
 	public User getUserById(int id) {
@@ -67,7 +70,7 @@ public class UserServiceImpl implements UserService {
 			toUpdate.setUsername(user.getUsername());
 		}
 		if(user.getPassword() != null) {
-			toUpdate.setPassword(user.getPassword());
+			toUpdate.setPassword(authSvc.updateUserPassword(user, id));
 		}
 		if(user.getFirstName() != null) {
 			toUpdate.setFirstName(user.getFirstName());

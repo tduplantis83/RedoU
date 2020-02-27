@@ -22,42 +22,46 @@ public class BodyMeasurementMetric {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@JsonIgnoreProperties({"userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits", "userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies"})
+	@JsonIgnoreProperties({ "userCurrentGoals", "userDailyCaloricIntakes", "userDailyExerciseCaloricDeficits",
+			"userImages", "userAvatars", "userBodyMeasurementMetrics", "userPosts", "userPostReplies" })
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(name="datemeasured")
+	@Column(name = "datemeasured")
 	private LocalDate dateMeasured;
 
-	@Column(name="dateupdated")
+	@Column(name = "dateupdated")
 	private LocalDate dateUpdated;
 
-	@Column(name="heightmm")
+	@Column(name = "heightmm")
 	private int heightMM;
 
-	@Column(name="weightkg")
+	@Column(name = "weightkg")
 	private double weightKg;
 
-	@Column(name="waistmm")
+	@Column(name = "goalweightkg")
+	private double goalWeightKg;
+
+	@Column(name = "waistmm")
 	private int waistMM;
 
-	@Column(name="neckmm")
+	@Column(name = "neckmm")
 	private Integer neckMM;
 
-	@Column(name="shouldersmm")
+	@Column(name = "shouldersmm")
 	private Integer shouldersMM;
 
-	@Column(name="chestmm")
+	@Column(name = "chestmm")
 	private Integer chestMM;
 
-	@Column(name="bicepmm")
+	@Column(name = "bicepmm")
 	private Integer bicepMM;
 
-	@Column(name="hipsmm")
+	@Column(name = "hipsmm")
 	private Integer hipsMM;
 
-	@Column(name="thighmm")
+	@Column(name = "thighmm")
 	private Integer thighMM;
 
 	// CONSTRUCTOR
@@ -104,6 +108,14 @@ public class BodyMeasurementMetric {
 
 	public void setWeightKg(double weightKg) {
 		this.weightKg = weightKg;
+	}
+
+	public double getGoalWeightKg() {
+		return goalWeightKg;
+	}
+
+	public void setGoalWeightKg(double goalWeight) {
+		this.goalWeightKg = goalWeight;
 	}
 
 	public int getWaistMM() {
@@ -179,6 +191,9 @@ public class BodyMeasurementMetric {
 		result = prime * result + ((chestMM == null) ? 0 : chestMM.hashCode());
 		result = prime * result + ((dateMeasured == null) ? 0 : dateMeasured.hashCode());
 		result = prime * result + ((dateUpdated == null) ? 0 : dateUpdated.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(goalWeightKg);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + heightMM;
 		result = prime * result + ((hipsMM == null) ? 0 : hipsMM.hashCode());
 		result = prime * result + id;
@@ -187,7 +202,6 @@ public class BodyMeasurementMetric {
 		result = prime * result + ((thighMM == null) ? 0 : thighMM.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		result = prime * result + waistMM;
-		long temp;
 		temp = Double.doubleToLongBits(weightKg);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
@@ -221,6 +235,8 @@ public class BodyMeasurementMetric {
 			if (other.dateUpdated != null)
 				return false;
 		} else if (!dateUpdated.equals(other.dateUpdated))
+			return false;
+		if (Double.doubleToLongBits(goalWeightKg) != Double.doubleToLongBits(other.goalWeightKg))
 			return false;
 		if (heightMM != other.heightMM)
 			return false;
@@ -274,6 +290,8 @@ public class BodyMeasurementMetric {
 		builder.append(heightMM);
 		builder.append(", weightKg=");
 		builder.append(weightKg);
+		builder.append(", goalWeightKg=");
+		builder.append(goalWeightKg);
 		builder.append(", waistMM=");
 		builder.append(waistMM);
 		builder.append(", neckMM=");

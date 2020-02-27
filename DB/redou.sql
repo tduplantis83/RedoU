@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `body_measurement_metric` (
   `dateUpdated` DATE NOT NULL,
   `heightMM` INT NOT NULL,
   `weightKg` DECIMAL(5,2) NOT NULL,
+  `goalWeightKg` DECIMAL(5,2) NOT NULL,
   `waistMM` INT NOT NULL,
   `neckMM` INT NULL,
   `shouldersMM` INT NULL,
@@ -345,13 +346,14 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `redou`;
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (1, 2, '2020-01-15', '2020-01-15', 1854, 94.26, 1090, 400, 1220, 1075, 304, 1100, 630);
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (2, 3, '2020-01-18', '2020-01-18', 1549, 74.66, 1140, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (3, 2, '2020-01-20', '2020-01-20', 1854, 87.63, 1035, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (4, 2, '2020-01-29', '2020-01-29', 1854, 85.91, 1030, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (5, 2, '2020-02-05', '2020-02-05', 1854, 85.09, 1025, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (6, 2, '2020-02-12', '2020-02-12', 1854, 84.19, 1010, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (7, 2, '2020-02-19', '2020-02-19', 1854, 82.74, 1000, 395, 1190, 1010, 325, 980, 550);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (1, 2, '2020-01-15', '2020-01-15', 1854, 94.26, 79.38, 1090, 400, 1220, 1075, 304, 1100, 630);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (2, 3, '2020-01-18', '2020-01-18', 1549, 74.66, 70, 1140, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (3, 2, '2020-01-20', '2020-01-20', 1854, 87.63, 79.38, 1035, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (4, 2, '2020-01-29', '2020-01-29', 1854, 85.91, 79.38, 1030, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (5, 2, '2020-02-05', '2020-02-05', 1854, 85.09, 79.38, 1025, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (6, 2, '2020-02-12', '2020-02-12', 1854, 84.19, 79.38, 1010, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (7, 2, '2020-02-19', '2020-02-19', 1854, 82.74, 79.38, 1000, 395, 1190, 1010, 325, 980, 550);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (8, 2, '2020-02-27', '2020-02-27', 1854, 81.56, 77.11, 990, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -468,6 +470,7 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (68, 2, 4, 500, 'PB&J Sandwich on Raisin Bread', '2020-02-25', '2020-02-26');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (69, 2, 4, 200, 'Fig Bar', '2020-02-25', '2020-02-26');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (70, 2, 3, 0, 'Fasting', '2020-02-26', '2020-02-26');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (71, 2, 2, 200, 'Thai Veggie Bowl', '2020-02-27', '2020-02-27');
 
 COMMIT;
 
@@ -519,6 +522,7 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (42, 2, 1828, 'Basal Metabolic Rate', '2020-02-24', '2020-02-24');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (43, 2, 1828, 'Basal Metabolic Rate', '2020-02-25', '2020-02-25');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (44, 2, 1828, 'Basal Metabolic Rate', '2020-02-26', '2020-02-26');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (45, 2, 1817, 'Basal Metabolic Rate', '2020-02-27', '2020-02-27');
 
 COMMIT;
 
@@ -540,6 +544,8 @@ INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) 
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (10, 2, 'https://i.imgur.com/XUgd4tZ.jpg', '2020-02-12', '2020-02-12');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (11, 2, 'https://i.imgur.com/wGIuxwL.jpg', '2020-02-19', '2020-02-19');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (12, 2, 'https://i.imgur.com/CWYYi4g.jpg', '2020-02-19', '2020-02-19');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (13, 2, 'https://i.imgur.com/u3MvrGX.jpg', '2020-02-27', '2020-02-27');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (14, 2, 'https://i.imgur.com/8woD2WI.jpg', '2020-02-27', '2020-02-27');
 
 COMMIT;
 

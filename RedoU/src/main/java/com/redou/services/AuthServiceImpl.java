@@ -87,13 +87,12 @@ public class AuthServiceImpl implements AuthService{
 	}
 
 	@Override
-	public User updateUser(User user, int id) {
+	public String updateUserPassword(User user, int id) {
 		//ensures password changes are correct before doing update
 		
 		String encrypted = encoder.encode(user.getPassword());
-		user.setPassword(encrypted);
 		
-		return userSvc.updateUser(user, id);
+		return encrypted;
 	}
 
 }
