@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { PostReplyService } from './../../services/post-reply.service';
 import { Component, OnInit, OnDestroy, PipeTransform } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
@@ -30,6 +31,7 @@ import { DecimalPipe } from '@angular/common';
 export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(
     private userSvc: UserService,
+    private authSvc: AuthService,
     private router: Router,
     private postReplySvc: PostReplyService,
     private userAvatarSvc: UserAvatarService,
@@ -53,8 +55,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   user: User;
+  newUser: User = new User();
+  userUpdate = false;
   allUsers: User[] = [];
   userCurrentGoal: Goal = new Goal();
+  userMostCurrentGoalWeight: number;
+  userMostCurrentWeight: number;
   bmiAvatar: Avatar;
   currentAvatar: Avatar;
   postsWithNewReplies: Post[] = [];
@@ -82,6 +88,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userSvc.getLoggedInUser().subscribe(
       data => {
         this.user = data;
+        this.newUser = this.user;
         if (this.user.role === 'admin') {
           this.findAllUsers();
           this.getCurrentUserAvatar();
@@ -105,6 +112,27 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
+  updateUserInfo() {
+    this.userSvc.updateUser(this.newUser).subscribe(
+      data => {
+        this.user = data;
+        console.log(this.user);
+        this.userUpdate = false;
+        // console.log(this.newUser);
+        // this.authSvc.login(this.newUser.username, this.newUser.password).subscribe(
+        //   next => {
+        //     this.ngOnInit();
+        //   },
+        //   err => {
+        //     console.log('In User Component, Error Logging In DURING USER UPDATE');
+        //   }
+        // );
+
+      },
+      err => console.error('In User Component updateUserInfo Error')
+    );
+  }
+
   getMealTypes() {
     this.mealTypeSvc.getAllMealTypes().subscribe(
       data => {
@@ -125,6 +153,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         i = index;
       }
     });
+
+    //find and set user's most current weight and goal weight
+    this.userMostCurrentWeight = this.user.userBodyMeasurementMetrics[i].weightKg;
+    this.userMostCurrentGoalWeight = this.user.userBodyMeasurementMetrics[i].goalWeightKg;
 
     const heightm = this.measurementConverterPipe.transform(
       this.user.userBodyMeasurementMetrics[i].heightMM,
@@ -402,6 +434,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.bodyMeasurement.heightMM = this.decimalPipe.transform(this.bodyMeasurement.heightMM, '1.0-2');
       this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'kg', 'lb');
       this.bodyMeasurement.weightKg = this.decimalPipe.transform(this.bodyMeasurement.weightKg, '1.0-2');
+      this.bodyMeasurement.goalWeightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.goalWeightKg, 'kg', 'lb');
+      this.bodyMeasurement.goalWeightKg = this.decimalPipe.transform(this.bodyMeasurement.goalWeightKg, '1.0-2');
       this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'mm', 'in');
       this.bodyMeasurement.waistMM = this.decimalPipe.transform(this.bodyMeasurement.waistMM, '1.0-2');
 
@@ -435,6 +469,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
       this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
       this.bodyMeasurement.weightKg = this.decimalPipe.transform(this.bodyMeasurement.weightKg, '1.0-2');
+      this.bodyMeasurement.goalWeightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.goalWeightKg, 'lb', 'kg');
+      this.bodyMeasurement.goalWeightKg = this.decimalPipe.transform(this.bodyMeasurement.goalWeightKg, '1.0-2');
       this.bodyMeasurement.waistMM = this.measurementConverterPipe.transform(this.bodyMeasurement.waistMM, 'in', 'mm');
 
       if (this.bodyMeasurement.neckMM !== null) {

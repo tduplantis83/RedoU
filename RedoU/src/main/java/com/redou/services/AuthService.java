@@ -11,5 +11,5 @@ public interface AuthService {
 
 	public boolean isUserUnique(String username, String email);
 	
-	public User updateUser(User user, int id);
+	public String updateUserPassword(User user, int id);
 }

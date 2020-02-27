@@ -60,6 +60,9 @@ public class BodyMeasurementMetricServiceImpl implements BodyMeasurementMetricSe
 		if(measurement.getWeightKg() > 0) {
 			toUpdate.setWeightKg(measurement.getWeightKg());
 		}
+		if(measurement.getGoalWeightKg() != 0) {
+			toUpdate.setGoalWeightKg(measurement.getGoalWeightKg());
+		}
 		if(measurement.getWaistMM() != 0) {
 			toUpdate.setWaistMM(measurement.getWaistMM());
 		}

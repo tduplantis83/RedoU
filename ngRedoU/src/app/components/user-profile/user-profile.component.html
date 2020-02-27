@@ -2,16 +2,18 @@
 <!-- ADD ABILITY TO UPDATE USER CURRENT GOAL -->
 <!-- ADD TIPS FOR CALORIE INTAKE -->
 <!-- ADD TIPS FOR CALORIE DEFICIT -->
+<!-- FOR DAYS WITH NO RECORD, CALCULATE & USE BMR FOR CALORIE DEFICIT -->
 <!-- ADD TIPS FOR BODY MEASURING -->
 <!-- MAKE GAIN/LOSS RED/GREEN ON CALORIC PERFORMANCE TABLE -->
 <!-- ADD DAILY AVATAR TO CALORIC PERFORMANCE TABLE -->
 <!-- ADD ABILITY TO SHARE A DAY'S CALORIC PERFORMANCE WITH COMMUNITY (AS A FORUM POST?) -->
-<!-- ADD WEIGHT YOU SHOULD LOSE/GAIN BETWEEN USER PROVIDED DATES -->
+<!-- ADD WEIGHT YOU SHOULD LOSE/GAIN BETWEEN USER PROVIDED DATES BASED ON INPUT CALORIE INTAKE & DEFICIT -->
 <!-- ADD CHART(S) -->
 
 <!-- USER DIRECT MESSAGING FEATURE? -->
 
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
+
   <!-- BASIC USER INFO START -->
   <div
     class="container"
@@ -21,10 +23,37 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">User Info</h3>
+    <h3 class="text-center">
+      <button class="btn btn-warning" (click)="userUpdate = true">
+        Edit User Info
+      </button>
+    </h3>
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="system1"
+        id="system1"
+        value="US"
+        [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system1">US</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="system1"
+        id="system1"
+        value="metric"
+        [(ngModel)]="measurementSystem"
+      />
+      <label class="form-check-label" for="system1">Metric</label>
+    </div>
     <table class="table table-bordered table-hover table-striped">
       <thead class="thead-dark">
         <tr>
@@ -35,6 +64,10 @@
           <th>Birthday</th>
           <th>Sex</th>
           <th>Current Goal</th>
+          <th *ngIf="measurementSystem === 'US'">Current Weight (lbs)</th>
+          <th *ngIf="measurementSystem === 'metric'">Current Weight (kg)</th>
+          <th *ngIf="measurementSystem === 'US'">Goal Weight (lbs)</th>
+          <th *ngIf="measurementSystem === 'metric'">Goal Weight (kg)</th>
         </tr>
       </thead>
       <tbody>
@@ -46,12 +79,134 @@
           <td>{{ user.birthday | date: "shortDate" }}</td>
           <td>{{ user.sex }}</td>
           <td>{{ userCurrentGoal.goalName }}</td>
+          <td *ngIf="measurementSystem === 'US'">{{ userMostCurrentWeight | measurementConverter: "kg":"lb" | number: "1.0-2" }}</td>
+          <td *ngIf="measurementSystem === 'metric'">{{ userMostCurrentWeight }}</td>
+          <td *ngIf="measurementSystem === 'US'">{{ userMostCurrentGoalWeight | measurementConverter: "kg":"lb" | number: "1.0-2" }}</td>
+          <td *ngIf="measurementSystem === 'metric'">{{ userMostCurrentGoalWeight }}</td>
         </tr>
       </tbody>
     </table>
     <br />
   </div>
   <!-- BASIC USER INFO END -->
+
+  <!-- BASIC USER UPDATE INFO START -->
+  <div
+    class="container"
+    *ngIf="
+      !caloricIntake &&
+      !caloricDeficit &&
+      !newprogressImages &&
+      !progressImage &&
+      !newBodyMeasurement &&
+      !bodyMeasurement && userUpdate
+    "
+  >
+  <h3 class="text-center">Edit User Info</h3>
+    <form name="updateUserInfoForm">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            [(ngModel)]="newUser.username"
+          />
+        </div>
+        <div class="col-4">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            [(ngModel)]="newUser.password"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="fname">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fname"
+            name="fname"
+            [(ngModel)]="newUser.firstName"
+          />
+        </div>
+        <div class="col-4">
+          <label for="lname">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lname"
+            name="lname"
+            [(ngModel)]="newUser.lastName"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="bday">Birthday</label>
+          <input
+            type="date"
+            class="form-control"
+            id="bday"
+            name="bday"
+            [(ngModel)]="newUser.birthday"
+          />
+        </div>
+        <div class="col-4">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            [(ngModel)]="newUser.email"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-secondary"
+            style="float:left;"
+            (click)="userUpdate = false"
+            [routerLink]="['/users']"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="submit"
+            class="btn btn-warning"
+            style="float:right;"
+            (click)="updateUserInfo()"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+  </div>
+  <!-- BASIC USER UPDATE INFO END -->
+
 
   <!-- USER'S AVATAR START -->
   <div
@@ -64,7 +219,7 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <div class="row">
@@ -103,7 +258,7 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">Caloric Performance</h3>
@@ -211,7 +366,7 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">Caloric Intake</h3>
@@ -457,7 +612,7 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">Calories Burned</h3>
@@ -671,7 +826,7 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">Progress Images</h3>
@@ -903,7 +1058,7 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">Body Measurements</h3>
@@ -944,6 +1099,7 @@
           <tr>
             <th>Date Measured</th>
             <th>Weight (kg)</th>
+            <th>Goal Weight (kg)</th>
             <th>Waist (mm)</th>
             <th>Height (mm)</th>
             <th>Neck (mm)</th>
@@ -966,6 +1122,7 @@
           >
             <td>{{ m.dateMeasured | date: "shortDate" }}</td>
             <td>{{ m.weightKg }}</td>
+            <td>{{ m.goalWeightKg }}</td>
             <td>{{ m.waistMM }}</td>
             <td>{{ m.heightMM }}</td>
             <td *ngIf="m.neckMM">{{ m.neckMM }}</td>
@@ -1016,6 +1173,7 @@
           <tr>
             <th>Date Measured</th>
             <th>Weight (lbs)</th>
+            <th>Goal Weight (lbs)</th>
             <th>Waist (in)</th>
             <th>Height (in)</th>
             <th>Neck (in)</th>
@@ -1040,6 +1198,13 @@
             <td>
               {{
                 m.weightKg | measurementConverter: "kg":"lb" | number: "1.0-2"
+              }}
+            </td>
+            <td>
+              {{
+                m.goalWeightKg
+                  | measurementConverter: "kg":"lb"
+                  | number: "1.0-2"
               }}
             </td>
             <td>
@@ -1195,6 +1360,21 @@
         </div>
         <div class="col-4">
           <small style="color: red;">*</small
+          ><label for="goalWeightKg">Goal Weight (kg)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="goalWeightKg"
+            name="goalWeightKg"
+            [(ngModel)]="bodyMeasurement.goalWeightKg"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <small style="color: red;">*</small
           ><label for="waistMM">Waist (mm)</label>
           <input
             type="number"
@@ -1206,6 +1386,9 @@
         </div>
         <div class="col-2"></div>
       </div>
+      <br />
+      <hr />
+      <h5 class="text-center">Optional</h5>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -1349,6 +1532,21 @@
         </div>
         <div class="col-4">
           <small style="color: red;">*</small
+          ><label for="goalWeightKg">Goal Weight (lb)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="goalWeightKg"
+            name="goalWeightKg"
+            [(ngModel)]="bodyMeasurement.goalWeightKg"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <small style="color: red;">*</small
           ><label for="waistMM">Waist (in)</label>
           <input
             type="number"
@@ -1360,6 +1558,9 @@
         </div>
         <div class="col-2"></div>
       </div>
+      <br />
+      <hr />
+      <h5 class="text-center">Optional</h5>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -1544,6 +1745,21 @@
         </div>
         <div class="col-4">
           <small style="color: red;">*</small
+          ><label for="goalWeightKg">Goal Weight (kg)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="goalWeightKg"
+            name="goalWeightKg"
+            [(ngModel)]="bodyMeasurement.goalWeightKg"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <small style="color: red;">*</small
           ><label for="waistMM">Waist (mm)</label>
           <input
             type="number"
@@ -1555,6 +1771,9 @@
         </div>
         <div class="col-2"></div>
       </div>
+      <br />
+      <hr />
+      <h5 class="text-center">Optional</h5>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -1698,6 +1917,21 @@
         </div>
         <div class="col-4">
           <small style="color: red;">*</small
+          ><label for="goalWeightKg">Goal Weight (lb)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="goalWeightKg"
+            name="goalWeightKg"
+            [(ngModel)]="bodyMeasurement.goalWeightKg"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <small style="color: red;">*</small
           ><label for="waistMM">Waist (in)</label>
           <input
             type="number"
@@ -1709,6 +1943,9 @@
         </div>
         <div class="col-2"></div>
       </div>
+      <br />
+      <hr />
+      <h5 class="text-center">Optional</h5>
       <div class="form-row">
         <div class="col-2"></div>
         <div class="col-4">
@@ -1820,7 +2057,7 @@
       !caloricDeficit &&
       !newprogressImages &&
       !newBodyMeasurement &&
-      !bodyMeasurement
+      !bodyMeasurement && !userUpdate
     "
   >
     <h3 class="text-center">Posts with New Replies</h3>
