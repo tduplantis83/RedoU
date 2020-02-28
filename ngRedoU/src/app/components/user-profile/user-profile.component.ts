@@ -57,6 +57,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   user: User;
   newUser: User = new User();
   userUpdate = false;
+  userPassUpdate = false;
   allUsers: User[] = [];
   userCurrentGoal: Goal = new Goal();
   userMostCurrentGoalWeight: number;
@@ -88,7 +89,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userSvc.getLoggedInUser().subscribe(
       data => {
         this.user = data;
-        this.newUser = this.user;
+        this.newUser.id = this.user.id;
+        this.newUser.username = this.user.username;
+        this.newUser.firstName = this.user.firstName;
+        this.newUser.lastName = this.user.lastName;
+        this.newUser.birthday = this.user.birthday;
+        this.newUser.sex = this.user.sex;
+        this.newUser.email = this.user.email;
+        this.newUser.enabled = this.user.enabled;
+        this.newUser.role = this.user.role;
         if (this.user.role === 'admin') {
           this.findAllUsers();
           this.getCurrentUserAvatar();
@@ -113,21 +122,16 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   updateUserInfo() {
+    // const newPasswordEntered = (typeof this.newUser.password !== 'undefined');
     this.userSvc.updateUser(this.newUser).subscribe(
       data => {
         this.user = data;
-        console.log(this.user);
         this.userUpdate = false;
-        // console.log(this.newUser);
-        // this.authSvc.login(this.newUser.username, this.newUser.password).subscribe(
-        //   next => {
-        //     this.ngOnInit();
-        //   },
-        //   err => {
-        //     console.log('In User Component, Error Logging In DURING USER UPDATE');
-        //   }
-        // );
-
+        if (this.userPassUpdate === true) {
+          console.log('Username &/or Password changed: You must login again');
+          this.authSvc.logout();
+          this.router.navigateByUrl('/home');
+        }
       },
       err => console.error('In User Component updateUserInfo Error')
     );
