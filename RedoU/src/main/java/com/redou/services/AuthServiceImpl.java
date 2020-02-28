@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService{
 	
 	@Override
 	public User register(User user) {
-
+		
 		String encrypted = encoder.encode(user.getPassword());
 		user.setPassword(encrypted);
 		user.setEnabled(true);
@@ -91,9 +91,8 @@ public class AuthServiceImpl implements AuthService{
 		//ensures password changes are correct before doing update
 		
 		String encrypted = encoder.encode(user.getPassword());
-		
 		return encrypted;
 	}
-
+	
 }
 
