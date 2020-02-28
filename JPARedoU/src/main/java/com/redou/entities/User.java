@@ -3,6 +3,7 @@ package com.redou.entities;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,35 +48,35 @@ public class User {
 	private LocalDate dateUpdated;
 
 	@JsonIgnoreProperties({"user"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<UserCurrentGoal> userCurrentGoals;
 
 	@JsonIgnoreProperties({"user"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<DailyCaloricIntake> userDailyCaloricIntakes;
 
 	@JsonIgnoreProperties({"user"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<DailyExerciseCaloricDeficit> userDailyExerciseCaloricDeficits;
 
 	@JsonIgnoreProperties({"user"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Image> userImages;
 
 	@JsonIgnoreProperties({"user"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<UserAvatar> userAvatars;
 
 	@JsonIgnoreProperties({"user"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<BodyMeasurementMetric> userBodyMeasurementMetrics;
 
 	@JsonIgnoreProperties({"id", "password", "birthday", "sex", "email", "enabled", "role", "dateCreated", "dateUpdated"})
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Post> userPosts;
 
 	@JsonIgnoreProperties({"id", "password", "birthday", "sex", "email", "enabled", "role", "dateCreated", "dateUpdated"})
-	@OneToMany(mappedBy = "replyUser")
+	@OneToMany(mappedBy = "replyUser", cascade = CascadeType.REMOVE)
 	private List<PostReply> userPostReplies;
 
 	// CONSTRUCTOR

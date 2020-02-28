@@ -474,6 +474,7 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (72, 2, 4, 250, 'Mixed Nuts', '2020-02-27', '2020-02-27');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (73, 2, 3, 750, 'Just Eggs with Veggies', '2020-02-27', '2020-02-27');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (74, 2, 4, 400, 'PB&J', '2020-02-27', '2020-02-27');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (75, 2, 3, 0, 'Fasting', '2020-02-28', '2020-02-28');
 
 COMMIT;
 

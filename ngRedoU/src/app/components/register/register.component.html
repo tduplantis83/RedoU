@@ -4,8 +4,11 @@
 <br />
 <div class="container-fluid">
   <h3 class="text-center text-primary">New User Registration</h3>
+  <h6 class="text-center" *ngIf="loggedIn === true && error === true">
+    <button class="btn btn-warning" (click)="cancelRegistration()">ERROR - restart registration</button>
+  </h6>
   <h5 class="text-center">
-    <small style="color: red;">* Required Fields</small>
+    <small style="color: red;" *ngIf="error === false">* Required Fields</small>
   </h5>
 
   <!-- USER'S BASIC INFO START -->
@@ -14,11 +17,9 @@
     <h6 class="text-center" *ngIf="error === true" style="color: red;">
       * An account with that Username &/or Password may already exist *
     </h6>
-
     <h6 class="text-center" *ngIf="error === true" style="color: red;">
-      * OR *
+      OR
     </h6>
-
     <h6 class="text-center" *ngIf="error === true" style="color: red;">
       * A REQUIRED field may not have been completed *
     </h6>
@@ -169,7 +170,7 @@
   <!-- USER'S BASIC INFO END -->
 
   <!-- USER'S GOAL START -->
-  <div class="container" *ngIf="loggedIn === true && ucgChosen === false">
+  <div class="container" *ngIf="loggedIn === true && ucgChosen === false && error === false">
     <h5 class="text-center">
       <small style="color: red;">*</small>Fitness Goal:
     </h5>
@@ -184,7 +185,7 @@
             id="goal"
             [(ngModel)]="userCurrGoal.goal"
           >
-            <option selected diabled>Choose a Fitness Goal</option>
+            <option selected disabled>Choose a Fitness Goal</option>
             <option
               [ngValue]="g"
               name="goal"
@@ -227,7 +228,7 @@
   <!-- CHOOSE AN AVATAR SET START -->
   <div
     class="container"
-    *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === false"
+    *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === false && error === false"
   >
     <h5 class="text-center">
       <small style="color: red;">*</small>Choose a Set of Avatars
@@ -267,8 +268,7 @@
   <!-- INTIAL BODY MEASUREMENTS SET START -->
   <div
     class="container"
-    *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === true"
-  >
+    *ngIf="loggedIn === true && ucgChosen === true && uavgroupChosen === true && error === false">
     <h5 class="text-center">Body Measurements:</h5>
     <div class="row">
       <div class="col-2"></div>

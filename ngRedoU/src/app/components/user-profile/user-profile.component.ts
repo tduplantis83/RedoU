@@ -20,6 +20,9 @@ import { ImageService } from 'src/app/services/image.service';
 import { BodyMeasurementMetricService } from 'src/app/services/body-measurement-metric.service';
 import { BodyMeasurementMetric } from 'src/app/models/body-measurement-metric';
 import { DecimalPipe } from '@angular/common';
+import { UserCurrentGoal } from 'src/app/models/user-current-goal';
+import { GoalService } from 'src/app/services/goal.service';
+import { UserCurrentGoalService } from 'src/app/services/user-current-goal.service';
 
 
 
@@ -41,7 +44,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private measurementConverterPipe: MeasurementConverterPipe,
     private decimalPipe: DecimalPipe,
     private imgSvc: ImageService,
-    private bodyMeasurementSvc: BodyMeasurementMetricService
+    private bodyMeasurementSvc: BodyMeasurementMetricService,
+    private goalSvc: GoalService,
+    private userGoalSvc: UserCurrentGoalService
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -84,6 +89,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   progressImageSide = null;
   newprogressImages = false;
   progressImage = null;
+  allGoals: Goal [] = [];
+  userCurrGoal: UserCurrentGoal = new UserCurrentGoal();
+  updateUCG = false;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -103,6 +111,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.getCurrentUserAvatar();
         }
         else {
+          this.getAllGoals();
           this.getUserCurrentGoal();
           this.getBMIUserAvatar();
           this.getNewPostReplies();
@@ -723,6 +732,36 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/users');
       },
       err => console.error('In User Component enableUser Error')
+    );
+  }
+
+  getAllGoals() {
+    this.goalSvc.getAllGoals().subscribe(
+      data => {
+        this.allGoals = data;
+      },
+      err => {
+        console.log('In User Component, Error gettingAllGoals');
+      }
+    );
+  }
+
+  updateUserGoal() {
+    this.user.userCurrentGoals.forEach(g => {
+      if (g.enabled === true) {
+        this.userCurrGoal.id = g.id;
+      }
+    });
+    this.userCurrGoal.user = this.user;
+    this.userCurrGoal.enabled = true;
+    this.userGoalSvc.updateUserCurrentGoal(this.userCurrGoal).subscribe(
+      data => {
+        this.updateUCG = false;
+        this.userCurrGoal = null;
+      },
+      err => {
+        console.log('In User Component, Error creatingUserCurrentGoal');
+      }
     );
   }
 
