@@ -24,14 +24,14 @@ export class RegisterComponent implements OnInit, OnDestroy  {
 
   // tslint:disable-next-line: max-line-length
   constructor(private authSvc: AuthService,
-    private router: Router,
-    private usersvc: UserService,
-    private goalSvc: GoalService,
-    private userGoalSvc: UserCurrentGoalService,
-    private avatarSvc: AvatarService,
-    private userAvatarSvc: UserAvatarService,
-    private bodyMeasureSvc: BodyMeasurementMetricService,
-    private measurementConverterPipe: MeasurementConverterPipe
+              private router: Router,
+              private usersvc: UserService,
+              private goalSvc: GoalService,
+              private userGoalSvc: UserCurrentGoalService,
+              private avatarSvc: AvatarService,
+              private userAvatarSvc: UserAvatarService,
+              private bodyMeasureSvc: BodyMeasurementMetricService,
+              private measurementConverterPipe: MeasurementConverterPipe
     ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -80,9 +80,11 @@ export class RegisterComponent implements OnInit, OnDestroy  {
         this.authSvc.login(this.newUser.username, this.newUser.password).subscribe(
           next => {
             this.loggedIn = true;
+            this.error = false;
           },
           err => {
             console.log('In RegisterComponent, Error Logging In');
+            this.error = true;
           }
         );
       },
@@ -111,9 +113,11 @@ export class RegisterComponent implements OnInit, OnDestroy  {
       data => {
         this.getAllAvatars();
         this.ucgChosen = true;
+        this.error = false;
       },
       err => {
         console.log('In RegisterComponent, Error creatingUserCurrentGoal');
+        this.error = true;
       }
     );
   }
@@ -140,65 +144,79 @@ createUserAvatar(avGroup: number) {
   this.userAvatarSvc.createUserAvatar(this.newUser.id, avGroup).subscribe(
     data => {
       this.uavgroupChosen = true;
+      this.error = false;
     },
-    err => console.error('In RegisterComponent createUserAvatar Error')
-  );
+    err => {
+      console.error('In RegisterComponent createUserAvatar Error')
+      this.error = true;
+    });
 }
 
 createBodyMeasurement() {
-  // if US selected, convert to metric first
-  if (this.measurementSystem === 'US') {
-    this.measurement.heightMM = this.measurementConverterPipe.transform(this.measurement.heightMM, 'in', 'mm');
-    this.measurement.weightKg = this.measurementConverterPipe.transform(this.measurement.weightKg, 'lb', 'kg');
-    this.measurement.waistMM = this.measurementConverterPipe.transform(this.measurement.waistMM, 'in', 'mm');
-
-    if (this.measurement.neckMM !== null) {
-      this.measurement.neckMM = this.measurementConverterPipe.transform(this.measurement.neckMM, 'in', 'mm');
-    }
-    if (this.measurement.shouldersMM !== null) {
-      this.measurement.shouldersMM = this.measurementConverterPipe.transform(this.measurement.shouldersMM, 'in', 'mm');
-    }
-    if (this.measurement.chestMM !== null) {
-      this.measurement.chestMM = this.measurementConverterPipe.transform(this.measurement.chestMM, 'in', 'mm');
-    }
-    if (this.measurement.bicepMM !== null) {
-      this.measurement.bicepMM = this.measurementConverterPipe.transform(this.measurement.bicepMM, 'in', 'mm');
-    }
-    if (this.measurement.hipsMM !== null) {
-      this.measurement.hipsMM = this.measurementConverterPipe.transform(this.measurement.hipsMM, 'in', 'mm');
-    }
-    if (this.measurement.thighMM !== null) {
-      this.measurement.thighMM = this.measurementConverterPipe.transform(this.measurement.thighMM, 'in', 'mm');
-    }
+  if (typeof this.measurement.dateMeasured === 'undefined' || typeof this.measurement.weightKg === 'undefined' || typeof this.measurement.waistMM === 'undefined') {
+    this.error = true;
   }
+  else {
+    // if US selected, convert to metric first
+    if (this.measurementSystem === 'US') {
+      this.measurement.heightMM = this.measurementConverterPipe.transform(this.measurement.heightMM, 'in', 'mm');
+      this.measurement.weightKg = this.measurementConverterPipe.transform(this.measurement.weightKg, 'lb', 'kg');
+      this.measurement.waistMM = this.measurementConverterPipe.transform(this.measurement.waistMM, 'in', 'mm');
 
-  this.bodyMeasureSvc.createBodyMeasurement(this.measurement).subscribe(
-    data => {
-      // choose initial avatar based on BMI
-      this.setCurrentAvatar();
-    },
-    err => {
-      console.error('In RegisterComponent createBodyMeasurement Error');
+      if (this.measurement.neckMM !== null) {
+        this.measurement.neckMM = this.measurementConverterPipe.transform(this.measurement.neckMM, 'in', 'mm');
+      }
+      if (this.measurement.shouldersMM !== null) {
+        this.measurement.shouldersMM = this.measurementConverterPipe.transform(this.measurement.shouldersMM, 'in', 'mm');
+      }
+      if (this.measurement.chestMM !== null) {
+        this.measurement.chestMM = this.measurementConverterPipe.transform(this.measurement.chestMM, 'in', 'mm');
+      }
+      if (this.measurement.bicepMM !== null) {
+        this.measurement.bicepMM = this.measurementConverterPipe.transform(this.measurement.bicepMM, 'in', 'mm');
+      }
+      if (this.measurement.hipsMM !== null) {
+        this.measurement.hipsMM = this.measurementConverterPipe.transform(this.measurement.hipsMM, 'in', 'mm');
+      }
+      if (this.measurement.thighMM !== null) {
+        this.measurement.thighMM = this.measurementConverterPipe.transform(this.measurement.thighMM, 'in', 'mm');
+      }
     }
-  );
+
+    this.bodyMeasureSvc.createBodyMeasurement(this.measurement).subscribe(
+      data => {
+        this.error = false;
+        // choose initial avatar based on BMI
+        this.setCurrentAvatar();
+      },
+      err => {
+        console.error('In RegisterComponent createBodyMeasurement Error');
+        this.error = true;
+      }
+    );
+  }
 }
 
 setCurrentAvatar() {
   // find BMI
-  let heightm = this.measurementConverterPipe.transform(this.measurement.heightMM, 'mm', 'm');
+  const heightm = this.measurementConverterPipe.transform(this.measurement.heightMM, 'mm', 'm');
   this.bmi = this.measurement.weightKg / (heightm * heightm);
+
+  if (this.bmi === 0) {
+    this.cancelRegistration();
+  }
 
   let bodyType;
   if (this.bmi < 18.5) {
-    //thin avatar
+    // thin avatar
     bodyType = 'Thin';
   }
   else if (this.bmi >= 18.5 && this.bmi <= 24.9) {
-    //average avatar
+    // average avatar
     bodyType = 'Average';
   }
   else {
-    //fat avatar
+    // fat avatar
     bodyType = 'Fat';
   }
 
@@ -206,15 +224,19 @@ setCurrentAvatar() {
     data => {
       this.userAvatarSvc.updateCURRENTUserAvatar(bodyType, this.newUser.id).subscribe(
         good => {
+          this.error = false;
           this.router.navigateByUrl('/users');
         },
         error => {
           console.error('In RegisterComponent updateCURRENTUserAvatar Error');
+          this.error = true;
+          this.cancelRegistration();
         }
       );
     },
     err => {
       console.error('In RegisterComponent getUserAvatarByUserId Error');
+      this.error = true;
     }
   );
 }
@@ -223,7 +245,7 @@ cancelRegistration() {
   this.usersvc.deleteUser(this.newUser.id).subscribe(
     data => {
       this.authSvc.logout();
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/register');
     },
     err => {
       console.error('In RegisterComponent cancelRegistration/deleteUser Error');
