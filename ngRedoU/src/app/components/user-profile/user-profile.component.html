@@ -2,7 +2,6 @@
 <!-- ADD TIPS FOR CALORIE DEFICIT -->
 <!-- FOR DAYS WITH NO RECORD, CALCULATE & USE BMR FOR CALORIE DEFICIT -->
 <!-- ADD TIPS FOR BODY MEASURING -->
-<!-- MAKE GAIN/LOSS RED/GREEN ON CALORIC PERFORMANCE TABLE -->
 <!-- ADD DAILY AVATAR TO CALORIC PERFORMANCE TABLE -->
 <!-- ADD ABILITY TO SHARE A DAY'S CALORIC PERFORMANCE WITH COMMUNITY (AS A FORUM POST?) -->
 <!-- ADD WEIGHT YOU SHOULD LOSE/GAIN BETWEEN USER PROVIDED DATES BASED ON INPUT CALORIE INTAKE & DEFICIT -->
@@ -11,7 +10,6 @@
 <!-- USER DIRECT MESSAGING FEATURE? -->
 
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
-
   <!-- BASIC USER INFO START -->
   <div
     class="container"
@@ -21,7 +19,9 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">User Info</h3>
@@ -52,7 +52,9 @@
       />
       <label class="form-check-label" for="system1">US</label>
     </div>
-    <table class="table table-bordered table-hover table-striped text-center align-middle">
+    <table
+      class="table table-bordered table-hover table-striped text-center align-middle"
+    >
       <thead class="thead-dark align-bottom text-center">
         <tr>
           <th>Username</th>
@@ -76,11 +78,34 @@
           <td>{{ user.email }}</td>
           <td>{{ user.birthday | date: "shortDate" }}</td>
           <td>{{ user.sex }}</td>
-          <td>{{ userCurrentGoal.goalName }}<br><button class="btn btn-warning btn-sm" (click)="updateUCG = true">Edit</button></td>
-          <td *ngIf="measurementSystem === 'US'">{{ userMostCurrentWeight | measurementConverter: "kg":"lb" | number: "1.0-2" }}</td>
-          <td *ngIf="measurementSystem === 'metric'">{{ userMostCurrentWeight }}</td>
-          <td *ngIf="measurementSystem === 'US'">{{ userMostCurrentGoalWeight | measurementConverter: "kg":"lb" | number: "1.0-2" }}</td>
-          <td *ngIf="measurementSystem === 'metric'">{{ userMostCurrentGoalWeight }}</td>
+          <td>
+            {{ userCurrentGoal.goalName }}<br /><button
+              class="btn btn-warning btn-sm"
+              (click)="updateUCG = true"
+            >
+              Edit
+            </button>
+          </td>
+          <td *ngIf="measurementSystem === 'US'">
+            {{
+              userMostCurrentWeight
+                | measurementConverter: "kg":"lb"
+                | number: "1.0-2"
+            }}
+          </td>
+          <td *ngIf="measurementSystem === 'metric'">
+            {{ userMostCurrentWeight }}
+          </td>
+          <td *ngIf="measurementSystem === 'US'">
+            {{
+              userMostCurrentGoalWeight
+                | measurementConverter: "kg":"lb"
+                | number: "1.0-2"
+            }}
+          </td>
+          <td *ngIf="measurementSystem === 'metric'">
+            {{ userMostCurrentGoalWeight }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -97,54 +122,43 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && userUpdate
+      !bodyMeasurement &&
+      userUpdate && !calcWeightLoss
     "
   >
-  <h3 class="text-center">Edit User Info</h3>
-  <form name="updateUserInfoForm">
-    <div class="form-row">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <h3 class="text-center"><button class="btn btn-danger" (click)="userPassUpdate = !userPassUpdate">Update Username/Password</button></h3>
-      </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="form-row" *ngIf="userPassUpdate === true">
+    <h3 class="text-center">Edit User Info</h3>
+    <form name="updateUserInfoForm">
+      <div class="form-row">
         <div class="col-3"></div>
         <div class="col-6">
-          <h6 class="text-center"><small style="color: red;">* Username or Password changes require you to login again *</small></h6>
+          <h3 class="text-center">
+            <button
+              class="btn btn-danger"
+              (click)="userPassUpdate = !userPassUpdate"
+            >
+              Update Username/Password
+            </button>
+          </h3>
         </div>
         <div class="col-3"></div>
-    </div>
-    <div class="form-row" *ngIf="userPassUpdate === true">
-      <div class="col-2"></div>
-          <div class="col-4">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              name="username"
-              [(ngModel)]="newUser.username"
-            />
-          </div>
-          <div class="col-4">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              [(ngModel)]="newUser.password"
-            />
-          </div>
-        <div class="col-2"></div>
       </div>
-      <div class="form-row" *ngIf="userPassUpdate === false">
+      <div class="form-row" *ngIf="userPassUpdate === true">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <h6 class="text-center">
+            <small style="color: red;"
+              >* Username or Password changes require you to login again
+              *</small
+            >
+          </h6>
+        </div>
+        <div class="col-3"></div>
+      </div>
+      <div class="form-row" *ngIf="userPassUpdate === true">
         <div class="col-2"></div>
         <div class="col-4">
           <label for="username">Username</label>
-          <input disabled
+          <input
             type="text"
             class="form-control"
             id="username"
@@ -154,7 +168,33 @@
         </div>
         <div class="col-4">
           <label for="password">Password</label>
-          <input disabled
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            [(ngModel)]="newUser.password"
+          />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-row" *ngIf="userPassUpdate === false">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="username">Username</label>
+          <input
+            disabled
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            [(ngModel)]="newUser.username"
+          />
+        </div>
+        <div class="col-4">
+          <label for="password">Password</label>
+          <input
+            disabled
             type="password"
             class="form-control"
             id="password"
@@ -257,7 +297,9 @@
             id="goal"
             [(ngModel)]="userCurrGoal.goal"
           >
-            <option [ngValue]="userCurrentGoal.goal" disabled selected>{{ userCurrentGoal.goalName }}</option>
+            <option [ngValue]="userCurrentGoal.goal" disabled selected>{{
+              userCurrentGoal.goalName
+            }}</option>
             <option
               [ngValue]="g"
               name="goal"
@@ -298,7 +340,6 @@
   </div>
   <!-- UPDATE CURRENT GOAL END -->
 
-
   <!-- USER'S AVATAR START -->
   <div
     class="container"
@@ -310,7 +351,9 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <div class="row">
@@ -349,11 +392,16 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">Caloric Performance</h3>
-    <table class="table table-bordered table-hover table-striped text-center align-middle">
+    <h3 class="text-center"><button class="btn btn-success" (click)="calcWeightLoss = true">Calculate Weight Loss Between Dates</button></h3>
+    <table
+      class="table table-bordered table-hover table-striped text-center align-middle"
+    >
       <thead class="thead-dark align-bottom text-center">
         <tr>
           <th>Date</th>
@@ -444,9 +492,118 @@
         </tr>
       </tbody>
     </table>
+    <br />
   </div>
-  <br />
   <!-- USER'S CALORIC PERFORMANCE END -->
+
+  <!-- USER'S CALCULATE WEIGHT LOSS START -->
+  <div class="container" *ngIf="calcWeightLoss === true">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="systemWL"
+            id="systemWL"
+            value="metric"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="systemWL">Metric</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="systemWL"
+            id="systemWL"
+            value="US"
+            [(ngModel)]="measurementSystem"
+          />
+          <label class="form-check-label" for="systemWL">US</label>
+        </div>
+      </div>
+    <div class="col-2"></div>
+    </div>
+    <form name="calculateWeightLossForm">
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <label for="startDate">Start Date</label>
+          <input
+              type="date"
+              class="form-control"
+              id="startDate"
+              name="startDate"
+              [(ngModel)]="calcWeightLossStart"
+            />
+        </div>
+        <div class="col-4">
+          <label for="endDate">End Date</label>
+          <input
+              type="date"
+              class="form-control"
+              id="endDate"
+              name="endDate"
+              [(ngModel)]="calcWeightLossEnd"
+            />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <br />
+      <div class="form-row">
+        <div class="col-2"></div>
+        <div class="col-4">
+          <button
+              type="submit"
+              class="btn btn-secondary"
+              style="float:left;"
+              (click)="calcWeightLoss = false; weightLoss = null"
+              [routerLink]="['/users']"
+            >
+              Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+              type="submit"
+              class="btn btn-success"
+              style="float:right;"
+              (click)="calculateWeightLoss()"
+            >
+              Submit
+          </button>
+        </div>
+        <div class="col-2"></div>
+      </div>
+    </form>
+    <br>
+    <!-- USER'S CALCULATE RESULT START -->
+    <div *ngIf="weightLoss !== null">
+      <table class="table table-bordered table-hover table-striped text-center align-middle">
+        <thead class="thead-dark align-bottom text-center">
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Caloric Gain/Loss</th>
+            <th *ngIf="measurementSystem === 'US'">+Gained / -Lost (Lbs)</th>
+            <th *ngIf="measurementSystem === 'metric'">+Gained/ -Lost (Kgs)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ calcWeightLossStart | date: 'shortDate' }}</td>
+            <td>{{ calcWeightLossEnd | date: 'shortDate' }}</td>
+            <td>{{ calTotal }}</td>
+            <td>{{ weightLoss }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- USER'S CALCULATE RESULT END -->
+  </div>
+  <!-- USER'S CALCULATE WEIGHT LOSS END -->
 
   <!-- USER'S CALORIC INTAKE START -->
   <div
@@ -457,7 +614,9 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">Caloric Intake</h3>
@@ -703,7 +862,9 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">Calories Burned</h3>
@@ -917,7 +1078,9 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">Progress Images</h3>
@@ -1149,7 +1312,9 @@
       !newprogressImages &&
       !progressImage &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">Body Measurements</h3>
@@ -2148,7 +2313,9 @@
       !caloricDeficit &&
       !newprogressImages &&
       !newBodyMeasurement &&
-      !bodyMeasurement && !userUpdate && !updateUCG
+      !bodyMeasurement &&
+      !userUpdate &&
+      !updateUCG && !calcWeightLoss
     "
   >
     <h3 class="text-center">Posts with New Replies</h3>
@@ -2219,7 +2386,9 @@
   </div>
   <br />
   <h3 class="text-center">User Administration</h3>
-  <table class="table table-bordered table-hover table-striped text-center align-middle">
+  <table
+    class="table table-bordered table-hover table-striped text-center align-middle"
+  >
     <thead class="thead-dark align-bottom text-center">
       <tr>
         <th>ID</th>

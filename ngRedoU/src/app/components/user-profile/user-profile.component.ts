@@ -54,6 +54,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.currentAvatar = null;
         this.postsWithNewReplies = [];
         this.newCalorieRecord = false;
+        this.weightLoss = null;
         this.ngOnInit();
       }
     });
@@ -92,6 +93,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   allGoals: Goal [] = [];
   userCurrGoal: UserCurrentGoal = new UserCurrentGoal();
   updateUCG = false;
+  calcWeightLoss = false;
+  calcWeightLossStart: Date;
+  calcWeightLossEnd: Date;
+  calTotal: number;
+  weightLoss: number;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -525,7 +531,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   deleteBodyMeasurmentRecord(toDelete: Image) {
     // tslint:disable-next-line: max-line-length
-    if (confirm('Are you sure you want to DELETE the Body Measurement for ' + toDelete.dateMeasured + '?')) {
+    if (confirm('Are you sure you want to DELETE the Body Measurement for ' + this.bodyMeasurement.dateMeasured + '?')) {
       this.bodyMeasurementSvc.deleteBodyMeasurement(toDelete.id).subscribe(
         data => {
 
@@ -763,6 +769,36 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         console.log('In User Component, Error creatingUserCurrentGoal');
       }
     );
+  }
+
+  calculateWeightLoss() {
+    let calIn = 0;
+    let calOut = 0;
+    const diff = this.calcWeightLossEnd.valueOf() - this.calcWeightLossStart.valueOf();
+    console.log(diff);
+
+    for(let i = 0; i <= diff; i++) {
+      if (i === 0) {
+        calIn += this.caloricIntakeByDateMap.get(this.calcWeightLossStart);
+        calOut += this.caloricDeficitByDateMap.get(this.calcWeightLossStart);
+        console.log(calIn);
+        console.log(calOut);
+      }
+      else {
+        let startPlus1 = new Date(this.calcWeightLossStart.setDate(this.calcWeightLossStart.getDate() + 1));
+        calIn += this.caloricIntakeByDateMap.get(startPlus1);
+        calOut += this.caloricDeficitByDateMap.get(startPlus1);
+        startPlus1 = new Date(startPlus1.setDate(startPlus1.getDate() + 1));
+      }
+    }
+    this.calTotal = calIn = calOut;
+
+    if (this.measurementSystem === 'US') {
+      this.weightLoss = this.calTotal / 3500;
+    }
+    else {
+      this.weightLoss = this.calTotal / 7700;
+    }
   }
 
   ngOnDestroy() {
