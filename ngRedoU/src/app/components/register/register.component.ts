@@ -153,7 +153,8 @@ createUserAvatar(avGroup: number) {
 }
 
 createBodyMeasurement() {
-  if (typeof this.measurement.dateMeasured === 'undefined' || typeof this.measurement.weightKg === 'undefined' || typeof this.measurement.waistMM === 'undefined') {
+  // tslint:disable-next-line: max-line-length
+  if (typeof this.measurement.weightKg === 'undefined' || typeof this.measurement.waistMM === 'undefined') {
     this.error = true;
   }
   else {
