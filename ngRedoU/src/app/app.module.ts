@@ -15,7 +15,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { ArraySortPipe } from './Pipes/array-sort.pipe';
 import { MeasurementConverterPipe } from './Pipes/measurement-converter.pipe';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
 
 
 
@@ -39,7 +39,7 @@ import { DecimalPipe } from '@angular/common';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthService, ArraySortPipe, MeasurementConverterPipe, DecimalPipe],
+  providers: [AuthService, ArraySortPipe, MeasurementConverterPipe, DecimalPipe, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

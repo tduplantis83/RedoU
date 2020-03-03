@@ -498,34 +498,7 @@
 
   <!-- USER'S CALCULATE WEIGHT LOSS START -->
   <div class="container" *ngIf="calcWeightLoss === true">
-    <div class="row">
-      <div class="col-2"></div>
-      <div class="col-8">
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="systemWL"
-            id="systemWL"
-            value="metric"
-            [(ngModel)]="measurementSystem"
-          />
-          <label class="form-check-label" for="systemWL">Metric</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="systemWL"
-            id="systemWL"
-            value="US"
-            [(ngModel)]="measurementSystem"
-          />
-          <label class="form-check-label" for="systemWL">US</label>
-        </div>
-      </div>
-    <div class="col-2"></div>
-    </div>
+    <h3 class="text-center">Weight Loss Estimator</h3>
     <form name="calculateWeightLossForm">
       <div class="form-row">
         <div class="col-2"></div>
@@ -559,10 +532,10 @@
               type="submit"
               class="btn btn-secondary"
               style="float:left;"
-              (click)="calcWeightLoss = false; weightLoss = null"
+              (click)="calcWeightLoss = false; weightLossUS !== null && weightLossMetric !== null"
               [routerLink]="['/users']"
             >
-              Cancel
+              Back
           </button>
         </div>
         <div class="col-4">
@@ -580,7 +553,35 @@
     </form>
     <br>
     <!-- USER'S CALCULATE RESULT START -->
-    <div *ngIf="weightLoss !== null">
+    <div *ngIf="weightLossUS !== null && weightLossMetric !== null">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="systemWL"
+              id="systemWL"
+              value="metric"
+              [(ngModel)]="measurementSystem"
+            />
+            <label class="form-check-label" for="systemWL">Metric</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="systemWL"
+              id="systemWL"
+              value="US"
+              [(ngModel)]="measurementSystem"
+            />
+            <label class="form-check-label" for="systemWL">US</label>
+          </div>
+        </div>
+      <div class="col-2"></div>
+      </div>
       <table class="table table-bordered table-hover table-striped text-center align-middle">
         <thead class="thead-dark align-bottom text-center">
           <tr>
@@ -596,7 +597,8 @@
             <td>{{ calcWeightLossStart | date: 'shortDate' }}</td>
             <td>{{ calcWeightLossEnd | date: 'shortDate' }}</td>
             <td>{{ calTotal }}</td>
-            <td>{{ weightLoss }}</td>
+            <td *ngIf="measurementSystem === 'US'">{{ weightLossUS | number: "1.0-2"}}</td>
+            <td *ngIf="measurementSystem === 'metric'">{{ weightLossMetric | number: "1.0-2"}}</td>
           </tr>
         </tbody>
       </table>
