@@ -19,7 +19,7 @@ import { DailyExerciseCaloricDeficitService } from 'src/app/services/daily-exerc
 import { ImageService } from 'src/app/services/image.service';
 import { BodyMeasurementMetricService } from 'src/app/services/body-measurement-metric.service';
 import { BodyMeasurementMetric } from 'src/app/models/body-measurement-metric';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
 import { UserCurrentGoal } from 'src/app/models/user-current-goal';
 import { GoalService } from 'src/app/services/goal.service';
 import { UserCurrentGoalService } from 'src/app/services/user-current-goal.service';
@@ -46,7 +46,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private imgSvc: ImageService,
     private bodyMeasurementSvc: BodyMeasurementMetricService,
     private goalSvc: GoalService,
-    private userGoalSvc: UserCurrentGoalService
+    private userGoalSvc: UserCurrentGoalService,
+    private datePipe: DatePipe
   ) {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
@@ -97,7 +98,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   calcWeightLossStart: Date;
   calcWeightLossEnd: Date;
   calTotal: number;
-  weightLoss: number;
+  weightLossUS: number;
+  weightLossMetric: number;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -774,31 +776,32 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   calculateWeightLoss() {
     let calIn = 0;
     let calOut = 0;
-    const diff = this.calcWeightLossEnd.valueOf() - this.calcWeightLossStart.valueOf();
-    console.log(diff);
 
-    for(let i = 0; i <= diff; i++) {
-      if (i === 0) {
-        calIn += this.caloricIntakeByDateMap.get(this.calcWeightLossStart);
-        calOut += this.caloricDeficitByDateMap.get(this.calcWeightLossStart);
-        console.log(calIn);
-        console.log(calOut);
-      }
-      else {
-        let startPlus1 = new Date(this.calcWeightLossStart.setDate(this.calcWeightLossStart.getDate() + 1));
-        calIn += this.caloricIntakeByDateMap.get(startPlus1);
-        calOut += this.caloricDeficitByDateMap.get(startPlus1);
-        startPlus1 = new Date(startPlus1.setDate(startPlus1.getDate() + 1));
+    // GET CALORIES EATEN DURING THE GIVEN TIMEFRAME
+    for(let i = 0; i < this.user.userDailyCaloricIntakes.length; i++) {
+      if (this.checkDateInRange(this.user.userDailyCaloricIntakes[i].dateCreated, this.calcWeightLossStart, this.calcWeightLossEnd)) {
+        calIn += this.user.userDailyCaloricIntakes[i].caloriesThisMeal;
       }
     }
-    this.calTotal = calIn = calOut;
 
-    if (this.measurementSystem === 'US') {
-      this.weightLoss = this.calTotal / 3500;
+    // GET CALORIES EATEN DURING THE GIVEN TIMEFRAME
+    for(let i = 0; i < this.user.userDailyExerciseCaloricDeficits.length; i++) {
+      if (this.checkDateInRange(this.user.userDailyExerciseCaloricDeficits[i].dateCreated, this.calcWeightLossStart, this.calcWeightLossEnd)) {
+        calOut += this.user.userDailyExerciseCaloricDeficits[i].totalCaloriesBurned;
+      }
     }
-    else {
-      this.weightLoss = this.calTotal / 7700;
+    this.calTotal = calIn - calOut;
+    this.weightLossUS = this.calTotal / 3500;
+    this.weightLossMetric = this.calTotal / 7700;
+  }
+
+  checkDateInRange(dateToCheck: any, minInput: Date, maxInput: Date): boolean {
+    if(minInput <= dateToCheck && dateToCheck <= maxInput){
+        return true;
+    } else {
+      return false;
     }
+
   }
 
   ngOnDestroy() {
