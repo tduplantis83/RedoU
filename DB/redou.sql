@@ -354,6 +354,7 @@ INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpd
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (6, 2, '2020-02-12', '2020-02-12', 1854, 84.19, 79.38, 1010, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (7, 2, '2020-02-19', '2020-02-19', 1854, 82.74, 79.38, 1000, 395, 1190, 1010, 325, 980, 550);
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (8, 2, '2020-02-27', '2020-02-27', 1854, 81.56, 77.11, 990, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (9, 2, '2020-03-04', '2020-03-04', 1854, 79.92, 77.11, 970, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -482,6 +483,11 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (80, 2, 3, 0, 'Fasting', '2020-03-01', '2020-03-01');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (81, 2, 3, 0, 'Fasting', '2020-03-02', '2020-03-02');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (82, 2, 3, 0, 'Fasting', '2020-03-03', '2020-03-03');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (83, 2, 1, 125, 'Banana', '2020-03-04', '2020-03-04');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (84, 2, 2, 270, 'Indian Bombay Potatoes', '2020-03-04', '2020-03-04');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (85, 2, 2, 900, 'Papa Murphy\'s Gourmet Veggie Pizza', '2020-03-04', '2020-03-04');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (86, 2, 3, 400, 'Vegetable Soup (1 bowl)', '2020-03-04', '2020-03-04');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (87, 2, 4, 200, 'Fig Bar', '2020-03-04', '2020-03-04');
 
 COMMIT;
 
@@ -563,6 +569,8 @@ INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) 
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (12, 2, 'https://i.imgur.com/CWYYi4g.jpg', '2020-02-19', '2020-02-19');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (13, 2, 'https://i.imgur.com/u3MvrGX.jpg', '2020-02-27', '2020-02-27');
 INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (14, 2, 'https://i.imgur.com/8woD2WI.jpg', '2020-02-27', '2020-02-27');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (15, 2, 'https://i.imgur.com/bt90H59.jpg', '2020-03-04', '2020-03-04');
+INSERT INTO `image` (`id`, `user_id`, `imageUrl`, `dateCreated`, `dateUpdated`) VALUES (16, 2, 'https://i.imgur.com/9nP5S36.jpg', '2020-03-04', '2020-03-04');
 
 COMMIT;
 
@@ -617,6 +625,7 @@ INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUE
 INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (4, 'Recipes', '2020-01-18', '2020-01-18');
 INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (5, 'Medical Conditions', '2020-01-18', '2020-01-18');
 INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (6, 'Tips & Tricks', '2020-01-18', '2020-01-18');
+INSERT INTO `post_topic` (`id`, `topicName`, `dateCreated`, `dateUpdated`) VALUES (7, 'Share Performance', '2020-03-04', '2020-03-04');
 
 COMMIT;
 
