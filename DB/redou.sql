@@ -538,6 +538,8 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (47, 2, 1817, 'Basal Metabolic Rate', '2020-02-29', '2020-02-29');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (48, 2, 1817, 'Basal Metabolic Rate', '2020-03-01', '2020-03-01');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (49, 2, 1817, 'Basal Metabolic Rate', '2020-03-02', '2020-03-02');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (50, 2, 1817, 'Basal Metabolic Rate', '2020-03-03', '2020-03-03');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (51, 2, 1817, 'Basal Metabolic Rate', '2020-03-04', '2020-03-04');
 
 COMMIT;
 
