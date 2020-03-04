@@ -1,10 +1,8 @@
 <!-- ADD TIPS FOR CALORIE INTAKE -->
 <!-- ADD TIPS FOR CALORIE DEFICIT -->
-<!-- FOR DAYS WITH NO RECORD, CALCULATE & USE BMR FOR CALORIE DEFICIT -->
 <!-- ADD TIPS FOR BODY MEASURING -->
 <!-- ADD DAILY AVATAR TO CALORIC PERFORMANCE TABLE -->
 <!-- ADD ABILITY TO SHARE A DAY'S CALORIC PERFORMANCE WITH COMMUNITY (AS A FORUM POST?) -->
-<!-- ADD WEIGHT YOU SHOULD LOSE/GAIN BETWEEN USER PROVIDED DATES BASED ON INPUT CALORIE INTAKE & DEFICIT -->
 <!-- ADD CHART(S) -->
 
 <!-- USER DIRECT MESSAGING FEATURE? -->
@@ -62,6 +60,7 @@
           <th>Last Name</th>
           <th>Email</th>
           <th>Birthday</th>
+          <th>Age</th>
           <th>Sex</th>
           <th>Current Goal</th>
           <th *ngIf="measurementSystem === 'US'">Current Weight (lbs)</th>
@@ -77,6 +76,7 @@
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.birthday | date: "shortDate" }}</td>
+          <td>{{ age }}</td>
           <td>{{ user.sex }}</td>
           <td>
             {{ userCurrentGoal.goalName }}<br /><button
@@ -869,7 +869,8 @@
       !updateUCG && !calcWeightLoss
     "
   >
-    <h3 class="text-center">Calories Burned</h3>
+    <h3 class="text-center">Calories Burned:</h3>
+    <h5 class="text-center">Calculated BMR: {{ BMR }} Calories</h5>
     <h3 class="text-center">
       <button class="btn btn-success" (click)="addACaloricBurnRecord()">
         New Caloric Deficit Record
@@ -927,10 +928,11 @@
     *ngIf="caloricDeficit && newCalorieBurnRecord === true"
   >
     <h3 class="text-center">New Calories Burned</h3>
+    <h5 class="text-center">Calculated BMR: {{ BMR }} Calories</h5>
     <form name="addCaloricDeficitForm">
       <div class="form-row">
-        <div class="col-2"></div>
-        <div class="col-4">
+        <div class="col-1"></div>
+        <div class="col-5">
           <label for="date">Date</label>
           <input
             type="date"
@@ -940,8 +942,8 @@
             [(ngModel)]="caloricDeficit.dateCreated"
           />
         </div>
-        <div class="col-4">
-          <label for="calories">Total Calories Burned Today</label>
+        <div class="col-5">
+          <label for="calories">Total Calories Burned Today (BMR by default)</label>
           <input
             type="number"
             class="form-control"
@@ -950,11 +952,11 @@
             [(ngModel)]="caloricDeficit.totalCaloriesBurned"
           />
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
       </div>
       <div class="form-row">
-        <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-1"></div>
+        <div class="col-10">
           <label for="description">Activity Description</label>
           <input
             type="text"
@@ -964,12 +966,12 @@
             [(ngModel)]="caloricDeficit.activityDescription"
           />
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
       </div>
       <br />
       <div class="form-row">
-        <div class="col-2"></div>
-        <div class="col-4">
+        <div class="col-1"></div>
+        <div class="col-5">
           <button
             type="submit"
             class="btn btn-secondary"
@@ -980,7 +982,7 @@
             Cancel
           </button>
         </div>
-        <div class="col-4">
+        <div class="col-5">
           <button
             type="submit"
             class="btn btn-success"
@@ -990,7 +992,7 @@
             Submit
           </button>
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
       </div>
     </form>
   </div>

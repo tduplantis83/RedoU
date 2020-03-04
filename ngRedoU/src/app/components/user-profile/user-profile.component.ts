@@ -55,7 +55,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.currentAvatar = null;
         this.postsWithNewReplies = [];
         this.newCalorieRecord = false;
-        this.weightLoss = null;
+        this.weightLossUS = null;
+        this.weightLossMetric = null;
         this.ngOnInit();
       }
     });
@@ -69,6 +70,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   userCurrentGoal: Goal = new Goal();
   userMostCurrentGoalWeight: number;
   userMostCurrentWeight: number;
+  userMostCurrentHeight: number;
   bmiAvatar: Avatar;
   currentAvatar: Avatar;
   postsWithNewReplies: Post[] = [];
@@ -100,6 +102,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   calTotal: number;
   weightLossUS: number;
   weightLossMetric: number;
+  BMR: number;
+  age: number;
 
   ngOnInit() {
     this.userSvc.getLoggedInUser().subscribe(
@@ -122,13 +126,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           this.getAllGoals();
           this.getUserCurrentGoal();
           this.getBMIUserAvatar();
+          this.getAge();
+          this.getBMR();
           this.getNewPostReplies();
           this.getMealTypes();
           if (this.user.userDailyCaloricIntakes.length > 0) {
-              this.caloricIntakeByDateMap = this.groupCaloricIntakeByDate(this.user.userDailyCaloricIntakes);
+            this.caloricIntakeByDateMap = this.groupCaloricIntakeByDate(this.user.userDailyCaloricIntakes);
           }
           if (this.user.userDailyExerciseCaloricDeficits.length > 0) {
-              this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(this.user.userDailyExerciseCaloricDeficits);
+            this.caloricDeficitByDateMap = this.groupCaloricDeficitByDate(this.user.userDailyExerciseCaloricDeficits);
           }
           this.getCurrentUserAvatar();
           this.userImagesByDate = this.groupUserImagesByDate(this.user.userImages);
@@ -177,6 +183,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     //find and set user's most current weight and goal weight
     this.userMostCurrentWeight = this.user.userBodyMeasurementMetrics[i].weightKg;
+    this.userMostCurrentHeight = this.user.userBodyMeasurementMetrics[i].heightMM;
     this.userMostCurrentGoalWeight = this.user.userBodyMeasurementMetrics[i].goalWeightKg;
 
     const heightm = this.measurementConverterPipe.transform(
@@ -208,6 +215,29 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         },
         error => console.error('In User Component getBMIUserAvatar Error')
       );
+  }
+
+  getAge() {
+    const today = new Date();
+    const bday = new Date(this.user.birthday);
+    this.age = today.getFullYear() - bday.getFullYear();
+    const m = today.getMonth() - bday.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < bday.getDate())) {
+      this.age--;
+    }
+  }
+
+  getBMR() {
+    if (this.user.sex === 'M') {
+      // 10 * weight (kg) + 6.25 * height (cm) – 5 * age (y) + s (kcal / day) , where s is +5 for males and -161 for females.
+      this.BMR = (10 * this.userMostCurrentWeight) + (6.25 * (this.userMostCurrentHeight / 10)) - (5 * this.age) + 5;
+      this.BMR = Math.round(this.BMR);
+    }
+    if (this.user.sex === 'F') {
+      // 10 * weight (kg) + 6.25 * height (cm) – 5 * age (y) + s (kcal / day) , where s is +5 for males and -161 for females.
+      this.BMR = (10 * this.userMostCurrentWeight) + (6.25 * (this.userMostCurrentHeight / 10)) - (5 * this.age) + (-161);
+      this.BMR = Math.round(this.BMR);
+    }
   }
 
   getCurrentUserAvatar() {
@@ -324,7 +354,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  getUserCurrentGoal() {
+getUserCurrentGoal() {
     this.user.userCurrentGoals.forEach(ucg => {
       if (ucg.enabled === true) {
         this.userCurrentGoal = ucg.goal;
@@ -332,7 +362,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNewPostReplies() {
+getNewPostReplies() {
     this.user.userPosts.forEach(p => {
       p.originalPostReplies.forEach(pr => {
         if (pr.unread === true) {
@@ -351,7 +381,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  groupCaloricIntakeByDate(arr: any[]) {
+groupCaloricIntakeByDate(arr: any[]) {
     const res = new Map<Date, number>();
     let sum = 0;
     // tslint:disable-next-line: prefer-for-of
@@ -368,7 +398,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  groupCaloricDeficitByDate(arr: any[]) {
+groupCaloricDeficitByDate(arr: any[]) {
     const res = new Map<Date, number>();
     let sum = 0;
     // tslint:disable-next-line: prefer-for-of
@@ -385,7 +415,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  groupUserImagesByDate(arr: any[]) {
+groupUserImagesByDate(arr: any[]) {
     // this gives an object with dates as keys
     const groups = arr.reduce((groups, image) => {
       const date = image.dateCreated;
@@ -408,22 +438,23 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     return groupArrays;
   }
 
-  addACaloricRecord() {
+addACaloricRecord() {
     this.caloricIntake = new DailyCaloricIntake();
     this.newCalorieRecord = true;
   }
 
-  addACaloricBurnRecord() {
+addACaloricBurnRecord() {
     this.caloricDeficit = new DailyExerciseCaloricDeficit();
+    this.caloricDeficit.totalCaloriesBurned = this.BMR;
     this.newCalorieBurnRecord = true;
   }
 
-  addNewBodyMeasurementRecord() {
+addNewBodyMeasurementRecord() {
     this.newBodyMeasurement = true;
     this.bodyMeasurement = new BodyMeasurementMetric();
   }
 
-  createBodyMeasurement() {
+createBodyMeasurement() {
     if (this.measurementSystem === 'US') {
       this.convertBodyMeasurementsToMetric();
     }
@@ -440,7 +471,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       );
   }
 
-  setUpdateBodyMeasurmentRecord(toUpdate: BodyMeasurementMetric) {
+setUpdateBodyMeasurmentRecord(toUpdate: BodyMeasurementMetric) {
     if (this.measurementSystem === 'metric') {
       this.bodyMeasurement = Object.assign({}, toUpdate);
     }
@@ -450,7 +481,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  convertBodyMeasurementsToUS() {
+convertBodyMeasurementsToUS() {
       this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'mm', 'in');
       this.bodyMeasurement.heightMM = this.decimalPipe.transform(this.bodyMeasurement.heightMM, '1.0-2');
       this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'kg', 'lb');
@@ -486,7 +517,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
   }
 
-  convertBodyMeasurementsToMetric() {
+convertBodyMeasurementsToMetric() {
       this.bodyMeasurement.heightMM = this.measurementConverterPipe.transform(this.bodyMeasurement.heightMM, 'in', 'mm');
       this.bodyMeasurement.weightKg = this.measurementConverterPipe.transform(this.bodyMeasurement.weightKg, 'lb', 'kg');
       this.bodyMeasurement.weightKg = this.decimalPipe.transform(this.bodyMeasurement.weightKg, '1.0-2');
@@ -514,7 +545,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
   }
 
-  updateBodyMeasurmentRecord() {
+updateBodyMeasurmentRecord() {
     if (this.measurementSystem === 'US') {
       this.convertBodyMeasurementsToMetric();
     }
@@ -531,7 +562,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  deleteBodyMeasurmentRecord(toDelete: Image) {
+deleteBodyMeasurmentRecord(toDelete: Image) {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to DELETE the Body Measurement for ' + this.bodyMeasurement.dateMeasured + '?')) {
       this.bodyMeasurementSvc.deleteBodyMeasurement(toDelete.id).subscribe(
@@ -544,7 +575,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  addCalories() {
+addCalories() {
     this.dailyCalorieSvc.createDailyCaloricIntake(this.caloricIntake).subscribe(
       data => {
         this.newCalorieRecord = false;
@@ -555,7 +586,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  addCalorieBurn() {
+addCalorieBurn() {
     this.dailyCalorieBurnSvc.createDailyExerciseCaloricDeficit(this.caloricDeficit).subscribe(
       data => {
         this.newCalorieBurnRecord = false;
@@ -566,13 +597,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  addAProgressImage() {
+addAProgressImage() {
     this.progressImageFront = new Image();
     this.progressImageSide = new Image();
     this.newprogressImages = true;
   }
 
-  createNewProgressImages() {
+createNewProgressImages() {
     if(this.progressImageFront.imageUrl !== null && this.progressImageSide.imageUrl !== null) {
       //front facing image
       this.imgSvc.createImage(this.progressImageFront).subscribe(
@@ -617,11 +648,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  setUpdateAProgressImage(toUpdate: Image) {
+setUpdateAProgressImage(toUpdate: Image) {
     this.progressImage = Object.assign({}, toUpdate);
   }
 
-  updateAProgressImage() {
+updateAProgressImage() {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to UPDATE the Progress Image for ' + this.progressImage.dateCreated + '?')) {
       this.imgSvc.updateImage(this.progressImage).subscribe(
@@ -634,7 +665,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  deleteAProgressImage(toDelete: Image) {
+deleteAProgressImage(toDelete: Image) {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to DELETE the Progress Image for ' + toDelete.dateCreated + '?')) {
       this.imgSvc.deleteImage(toDelete.id).subscribe(
@@ -647,15 +678,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  setUpdateCalorieRecord(toUpdate: DailyCaloricIntake) {
+setUpdateCalorieRecord(toUpdate: DailyCaloricIntake) {
     this.caloricIntake = Object.assign({}, toUpdate);
   }
 
-  setUpdateCalorieBurnRecord(toUpdate: DailyExerciseCaloricDeficit) {
+setUpdateCalorieBurnRecord(toUpdate: DailyExerciseCaloricDeficit) {
     this.caloricDeficit = Object.assign({}, toUpdate);
   }
 
-  updateCalories() {
+updateCalories() {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to UPDATE the Calorie Intake record for ' + this.caloricIntake.mealType.mealTypeName + ' on ' + this.caloricIntake.dateCreated + '?')) {
       this.dailyCalorieSvc.updateDailyCaloricIntake(this.caloricIntake).subscribe(
@@ -668,7 +699,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  updateCalorieBurn() {
+updateCalorieBurn() {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to UPDATE the Calorie Deficit record for ' + this.caloricDeficit.activityDescription + ' on ' + this.caloricDeficit.dateCreated + '?')) {
       this.dailyCalorieBurnSvc.updateDailyExerciseCaloricDeficit(this.caloricDeficit).subscribe(
@@ -681,7 +712,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  deleteCalories(toDelete: DailyCaloricIntake) {
+deleteCalories(toDelete: DailyCaloricIntake) {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to DELETE the Calorie Intake record for ' + toDelete.mealType.mealTypeName + ' on ' + toDelete.dateCreated + '?')) {
       this.dailyCalorieSvc.deleteDailyCaloricIntake(toDelete.id).subscribe(
@@ -694,7 +725,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  deleteCalorieBurn(toDelete: DailyExerciseCaloricDeficit) {
+deleteCalorieBurn(toDelete: DailyExerciseCaloricDeficit) {
     // tslint:disable-next-line: max-line-length
     if (confirm('Are you sure you want to DELETE the Calorie Deficit record for ' + toDelete.activityDescription + ' on ' + toDelete.dateCreated + '?')) {
       this.dailyCalorieBurnSvc.deleteDailyExerciseCaloricDeficit(toDelete.id).subscribe(
@@ -707,7 +738,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/users');
   }
 
-  markReplyAsRead(replyID: number) {
+markReplyAsRead(replyID: number) {
     this.postReplySvc.markPostReplyRead(replyID).subscribe(
       data => {
         this.ngOnInit();
@@ -716,7 +747,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  findAllUsers() {
+findAllUsers() {
     this.userSvc.getAllUsers().subscribe(
       data => {
         this.allUsers = data;
@@ -725,7 +756,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  disableUser(u: User) {
+disableUser(u: User) {
     this.userSvc.disableUser(u.id).subscribe(
       data => {
         this.router.navigateByUrl('/users');
@@ -734,7 +765,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  enableUser(u: User) {
+enableUser(u: User) {
     this.userSvc.enableUser(u.id).subscribe(
       data => {
         this.router.navigateByUrl('/users');
@@ -743,7 +774,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  getAllGoals() {
+getAllGoals() {
     this.goalSvc.getAllGoals().subscribe(
       data => {
         this.allGoals = data;
@@ -754,7 +785,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateUserGoal() {
+updateUserGoal() {
     this.user.userCurrentGoals.forEach(g => {
       if (g.enabled === true) {
         this.userCurrGoal.id = g.id;
@@ -773,7 +804,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  calculateWeightLoss() {
+calculateWeightLoss() {
     let calIn = 0;
     let calOut = 0;
 
@@ -795,7 +826,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.weightLossMetric = this.calTotal / 7700;
   }
 
-  checkDateInRange(dateToCheck: any, minInput: Date, maxInput: Date): boolean {
+checkDateInRange(dateToCheck: any, minInput: Date, maxInput: Date): boolean {
     if(minInput <= dateToCheck && dateToCheck <= maxInput){
         return true;
     } else {
@@ -804,7 +835,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
+ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
     // don't then we will continue to run our initialiseInvites()
     // method on every navigationEnd event.
