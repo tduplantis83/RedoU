@@ -23,6 +23,9 @@ import { DecimalPipe, DatePipe } from '@angular/common';
 import { UserCurrentGoal } from 'src/app/models/user-current-goal';
 import { GoalService } from 'src/app/services/goal.service';
 import { UserCurrentGoalService } from 'src/app/services/user-current-goal.service';
+import { PostService } from 'src/app/services/post.service';
+import { PostTopicService } from 'src/app/services/post-topic.service';
+import { PostTopic } from 'src/app/models/post-topic';
 
 
 
@@ -37,6 +40,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private authSvc: AuthService,
     private router: Router,
     private postReplySvc: PostReplyService,
+    private postSvc: PostService,
+    private postTopicSvc: PostTopicService,
     private userAvatarSvc: UserAvatarService,
     private dailyCalorieSvc: DailyCaloricIntakeService,
     private dailyCalorieBurnSvc: DailyExerciseCaloricDeficitService,
@@ -839,8 +844,34 @@ checkDateInRange(dateToCheck: any, minInput: Date, maxInput: Date): boolean {
     } else {
       return false;
     }
-
   }
+
+postCaloricPerformance(performanceDate: any) {
+  let performancePost: Post = new Post();
+  this.postTopicSvc.getPostTopicByName('Share Performance').subscribe(
+    data => {
+      performancePost.postTopic = data;
+      performancePost.user = this.user;
+      performancePost.title = 'My Caloric Performance on ' + performanceDate;
+      // tslint:disable-next-line: max-line-length
+      performancePost.content = 'Calories Eaten: ' + this.caloricIntakeByDateMap.get(performanceDate) + '  ||  Calories Burned: ' + this.caloricDeficitByDateMap.get(performanceDate) + '  ||  Gain/-Loss: ' + (this.caloricIntakeByDateMap.get(performanceDate) - this.caloricDeficitByDateMap.get(performanceDate));
+
+      this.postSvc.createPost(performancePost).subscribe(
+        data => {
+          if(confirm('Shared Succcessfully. Would you like to view the Forums?')) {
+            this.router.navigateByUrl('/posts');
+          }
+        },
+        err => {
+          console.log('In User Component, Error postCaloricPerformance');
+        }
+      );
+    },
+    err => {
+      console.log('In User Component, Error postCaloricPerformance getting Post Topic');
+    }
+  );
+}
 
 ngOnDestroy() {
     // avoid memory leaks here by cleaning up after ourselves. If we
