@@ -4,7 +4,6 @@
 <!-- ADD DAILY AVATAR TO CALORIC PERFORMANCE TABLE -->
 <!-- ADD ABILITY TO SHARE A DAY'S CALORIC PERFORMANCE WITH COMMUNITY (AS A FORUM POST?) -->
 <!-- ADD CHART(S) -->
-
 <!-- USER DIRECT MESSAGING FEATURE? -->
 
 <div class="container-fluid" *ngIf="user && user.role !== 'admin'">
@@ -589,7 +588,7 @@
             <th>End Date</th>
             <th>Total Caloric Gain/Loss</th>
             <th *ngIf="measurementSystem === 'US'">+Gained / -Lost (Lbs)</th>
-            <th *ngIf="measurementSystem === 'metric'">+Gained/ -Lost (Kgs)</th>
+            <th *ngIf="measurementSystem === 'metric'">+Gained / -Lost (Kgs)</th>
           </tr>
         </thead>
         <tbody>

@@ -55,8 +55,15 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.currentAvatar = null;
         this.postsWithNewReplies = [];
         this.newCalorieRecord = false;
+        this.newCalorieBurnRecord = false;
+        this.userUpdate = false;
+        this.userPassUpdate = false;
+        this.calcWeightLoss = false;
         this.weightLossUS = null;
         this.weightLossMetric = null;
+        this.newBodyMeasurement = false;
+        this.newprogressImages = false;
+        this.updateUCG = false;
         this.ngOnInit();
       }
     });
