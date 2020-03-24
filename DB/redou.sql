@@ -355,6 +355,7 @@ INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpd
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (7, 2, '2020-02-19', '2020-02-19', 1854, 82.74, 79.38, 1000, 395, 1190, 1010, 325, 980, 550);
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (8, 2, '2020-02-27', '2020-02-27', 1854, 81.56, 77.11, 990, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (9, 2, '2020-03-04', '2020-03-04', 1854, 79.92, 77.11, 970, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `body_measurement_metric` (`id`, `user_id`, `dateMeasured`, `dateUpdated`, `heightMM`, `weightKg`, `goalWeightKg`, `waistMM`, `neckMM`, `shouldersMM`, `chestMM`, `bicepMM`, `hipsMM`, `thighMM`) VALUES (10, 2, '2020-03-18', '2020-03-18', 1854, 80.56, 77.11, 980, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
@@ -483,9 +484,17 @@ INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThi
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (80, 2, 3, 0, 'Fasting', '2020-03-01', '2020-03-01');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (81, 2, 3, 0, 'Fasting', '2020-03-02', '2020-03-02');
 INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (82, 2, 3, 0, 'Fasting', '2020-03-03', '2020-03-03');
-INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (83, 2, 3, 3500, 'Splurge', '2020-03-04', '2020-03-04');
-INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (84, 2, 3, 0, 'Fasting', '2020-03-05', '2020-03-05');
-INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (85, 2, 3, 3500, 'Melting Pot Vegetarian (best guess)', '2020-03-06', '2020-03-06');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (83, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-04', '2020-03-04');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (84, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-05', '2020-03-05');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (85, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-06', '2020-03-06');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (86, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-07', '2020-03-07');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (87, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-08', '2020-03-08');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (88, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-09', '2020-03-09');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (89, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-10', '2020-03-10');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (90, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-11', '2020-03-11');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (91, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-12', '2020-03-12');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (92, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-13', '2020-03-13');
+INSERT INTO `daily_caloric_intake` (`id`, `user_id`, `mealType_id`, `caloriesThisMeal`, `mealDescription`, `dateCreated`, `dateUpdated`) VALUES (93, 2, 3, 2135, 'Injured/Untracked (15 days)', '2020-03-14', '2020-03-14');
 
 COMMIT;
 
@@ -546,6 +555,14 @@ INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBur
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (51, 2, 1800, 'Basal Metabolic Rate', '2020-03-04', '2020-03-04');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (52, 2, 1800, 'Basal Metabolic Rate', '2020-03-05', '2020-03-05');
 INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (53, 2, 1800, 'Basal Metabolic Rate', '2020-03-06', '2020-03-06');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (54, 2, 1808, 'Basal Metabolic Rate', '2020-03-07', '2020-03-07');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (55, 2, 1808, 'Basal Metabolic Rate', '2020-03-08', '2020-03-08');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (56, 2, 1808, 'Basal Metabolic Rate', '2020-03-09', '2020-03-09');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (57, 2, 1808, 'Basal Metabolic Rate', '2020-03-10', '2020-03-10');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (58, 2, 1808, 'Basal Metabolic Rate', '2020-03-11', '2020-03-11');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (59, 2, 1808, 'Basal Metabolic Rate', '2020-03-12', '2020-03-12');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (60, 2, 1808, 'Basal Metabolic Rate', '2020-03-13', '2020-03-13');
+INSERT INTO `daily_exercise_caloric_deficit` (`id`, `user_id`, `totalCaloriesBurned`, `activityDescription`, `dateCreated`, `dateUpdated`) VALUES (61, 2, 1808, 'Basal Metabolic Rate', '2020-03-14', '2020-03-14');
 
 COMMIT;
 
