@@ -514,7 +514,7 @@
             />
         </div>
         <div class="col-4">
-          <label for="endDate">End Date (inclusive)</label>
+          <label for="endDate">End Date (exclusive)</label>
           <input
               type="date"
               class="form-control"
@@ -556,8 +556,7 @@
     <!-- USER'S CALCULATE RESULT START -->
     <div *ngIf="weightLossUS !== null && weightLossMetric !== null">
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-4">
           <div class="form-check form-check-inline">
             <input
               class="form-check-input"
@@ -581,7 +580,8 @@
             <label class="form-check-label" for="systemWL">US</label>
           </div>
         </div>
-      <div class="col-2"></div>
+        <div class="col-4"></div>
+      <div class="col-4"></div>
       </div>
       <table class="table table-bordered table-hover table-striped text-center align-middle">
         <thead class="thead-dark align-bottom text-center">

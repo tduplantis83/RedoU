@@ -839,7 +839,7 @@ calculateWeightLoss() {
   }
 
 checkDateInRange(dateToCheck: any, minInput: Date, maxInput: Date): boolean {
-    if(minInput <= dateToCheck && dateToCheck <= maxInput){
+    if(minInput <= dateToCheck && dateToCheck < maxInput){
         return true;
     } else {
       return false;
